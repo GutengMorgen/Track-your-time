@@ -7,7 +7,7 @@ public class MainFrame implements ActionListener {
     JButton saveBtn;
 
     MainFrame() {
-        saveBtn = new JButton("SAVE");
+        saveBtn = new JButton("SAVE (ctrl + s)");
         saveBtn.setBounds(20, 200, 550, 100);
         saveBtn.addActionListener(this);
 
@@ -26,32 +26,40 @@ public class MainFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // System.out.println("close");
         // frame.setDefaultCloseOperation(clos)
-        frame.dispose();
+        // frame.dispose();
+        frame.setVisible(false);
+
+        try {
+            Timer();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        // new MainFrame();
-        long value = 2;
+    public static void Timer() throws InterruptedException {
+        long value = 60;
         boolean x = true;
-        long displayMinutes = 0;
         long startTime = System.currentTimeMillis();
-        System.out.println("start time: ");
         while (x) {
             TimeUnit.SECONDS.sleep(1);
             long timepassed = System.currentTimeMillis() - startTime;
             long secondspassed = timepassed / 1000;
-            if (secondspassed == 60) {
-                secondspassed = 0;
-                startTime = System.currentTimeMillis();
-            }
-            if ((secondspassed % 60) == 0)
-                displayMinutes++;
-            else if (displayMinutes == value) {
+            if (secondspassed == value) {
                 x = false;
-                System.out.println("timer stop");
+                System.out.println("timer stop in: " + secondspassed + " seconds");
+                new MainFrame();
             }
+            // else {
+            // System.out.println("seconds: " + secondspassed);
+            // }
+        }
+    }
 
-            System.out.println(displayMinutes + ":" + secondspassed);
+    public static void main(String[] args) {
+        try {
+            Timer();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
