@@ -1,55 +1,22 @@
 package src;
 
 import java.awt.EventQueue;
+import java.awt.event.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.JDesktopPane;
-import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import net.miginfocom.swing.MigLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.SpringLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextArea;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.CompoundBorder;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.Cursor;
-import javax.swing.DebugGraphics;
-
+@SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtLastData;
+	private JComboBox comboTags;
+	private JTextArea txtDescription;
 
 	/**
 	 * Launch the application.
@@ -84,61 +51,64 @@ public class Popup extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setVerifyInputWhenFocusTarget(false);
-		comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		comboBox.setFont(new Font("Verdana", Font.BOLD, 13));
-		comboBox.setBorder(new LineBorder(new Color(0, 0, 0)));
-		comboBox.setLightWeightPopupEnabled(false);
-		comboBox.setRequestFocusEnabled(false);
-		comboBox.setFocusTraversalKeysEnabled(false);
-		comboBox.setFocusable(false);
-		comboBox.setForeground(new Color(248, 248, 241));
-		comboBox.setBackground(new Color(26, 18, 11));
-		comboBox.setBounds(324, 62, 129, 25);
-		comboBox.setToolTipText("Select any tag");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"working", "studing", "relax"}));
-		contentPane.add(comboBox);
+		comboTags = new JComboBox();
+		comboTags.setVerifyInputWhenFocusTarget(false);
+//		comboTags.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		comboTags.setFont(new Font("Verdana", Font.BOLD, 13));
+		comboTags.setBorder(new LineBorder(new Color(0, 0, 0)));
+		comboTags.setLightWeightPopupEnabled(false);
+		comboTags.setRequestFocusEnabled(false);
+		comboTags.setFocusTraversalKeysEnabled(false);
+		comboTags.setFocusable(false);
+		comboTags.setForeground(new Color(248, 248, 241));
+		comboTags.setBackground(new Color(26, 18, 11));
+		comboTags.setBounds(324, 62, 129, 25);
+		comboTags.setToolTipText("Select any tag");
+		comboTags.setModel(new DefaultComboBoxModel(new String[] {"working", "studing", "relax"}));
+		contentPane.add(comboTags);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setFont(new Font("Verdana", Font.PLAIN, 12));
-		textArea.setForeground(new Color(26, 18, 11));
-		textArea.setBackground(new Color(235, 235, 235));
-		textArea.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
-		textArea.setMargin(new Insets(10, 10, 10, 10));
-		textArea.setBounds(10, 92, 444, 75);
-		contentPane.add(textArea);
+		txtDescription = new JTextArea();
+		txtDescription.setFont(new Font("Verdana", Font.PLAIN, 12));
+		txtDescription.setForeground(new Color(26, 18, 11));
+		txtDescription.setBackground(new Color(235, 235, 235));
+		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
+		txtDescription.setMargin(new Insets(10, 10, 10, 10));
+		txtDescription.setBounds(10, 92, 444, 75);
+		contentPane.add(txtDescription);
 		
-		JButton btnNewButton = new JButton("SAVE (ctrl + s)");
-		btnNewButton.setFont(new Font("Lucida Console", Font.BOLD, 18));
-		btnNewButton.setForeground(new Color(248, 248, 241));
-		btnNewButton.setBackground(new Color(26, 18, 11));
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setBounds(10, 195, 444, 44);
-		contentPane.add(btnNewButton);
-		btnNewButton.addActionListener(this);
+		JButton btnSave = new JButton("SAVE (ctrl + s)");
+		btnSave.setFont(new Font("Lucida Console", Font.BOLD, 18));
+		btnSave.setForeground(new Color(248, 248, 241));
+		btnSave.setBackground(new Color(26, 18, 11));
+		btnSave.setFocusPainted(false);
+		btnSave.setBounds(10, 195, 444, 44);
+		contentPane.add(btnSave);
+		btnSave.addActionListener(this);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Consolas", Font.PLAIN, 12));
-		textField.setDisabledTextColor(new Color(81, 81, 81));
-		textField.setRequestFocusEnabled(false);
-		textField.setFocusable(false);
-		textField.setFocusTraversalKeysEnabled(false);
-		textField.setBorder(new LineBorder(new Color(216, 216, 216)));
-		textField.setAutoscrolls(false);
-		textField.setBackground(new Color(240, 240, 240));
-		textField.setEnabled(false);
-		textField.setBounds(10, 28, 443, 23);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtLastData = new JTextField();
+		txtLastData.setForeground(new Color(0, 0, 0));
+		txtLastData.setHorizontalAlignment(SwingConstants.LEFT);
+		txtLastData.setText("tag: studing - description: afaefaw");
+		txtLastData.setFont(new Font("Verdana", Font.PLAIN, 9));
+		txtLastData.setDisabledTextColor(new Color(155, 155, 155));
+		txtLastData.setRequestFocusEnabled(false);
+		txtLastData.setFocusable(false);
+		txtLastData.setFocusTraversalKeysEnabled(false);
+		txtLastData.setBorder(new LineBorder(new Color(216, 216, 216)));
+		txtLastData.setAutoscrolls(false);
+		txtLastData.setBackground(new Color(240, 240, 240));
+		txtLastData.setEnabled(false);
+		txtLastData.setBounds(10, 28, 443, 23);
+		contentPane.add(txtLastData);
+		txtLastData.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("View report");
-		lblNewLabel.setForeground(new Color(26, 18, 11));
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Lucida Console", Font.PLAIN, 10));
-		lblNewLabel.setBounds(10, 179, 79, 14);
-		contentPane.add(lblNewLabel);
+		JLabel lblViewReport = new JLabel("View report");
+		lblViewReport.setForeground(new Color(26, 18, 11));
+		lblViewReport.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblViewReport.setHorizontalAlignment(SwingConstants.CENTER);
+		lblViewReport.setFont(new Font("Lucida Console", Font.PLAIN, 10));
+		lblViewReport.setBounds(10, 179, 79, 14);
+		contentPane.add(lblViewReport);
 		
 		JLabel lblSettings = new JLabel("Settings");
 		lblSettings.setForeground(new Color(26, 18, 11));
@@ -174,8 +144,30 @@ public class Popup extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("hello");
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		String getTextFiled = txtLastData.getText();
+		String getTextDescription = txtDescription.getText();
+		String getTagString = comboTags.getSelectedItem().toString();
+		WriteData(getTagString, getTextDescription);
+//		System.out.println("last update: " + getTextFiled + "\ntext description: " + getTextDescription + "\ntag text: " + getTagString);
 		dispose();
+	}
+	
+	public void WriteData(String tag, String description){
+		File file = new File("./Data/data.cvs");
+		String date = "14/06/2023";
+//		System.out.println(file.isFile() + "\n" + file.isDirectory() + "\n" + file.isAbsolute());
+		String line = "Date: " + date + "; Tag: " + tag + "; Description: " + description;
+		
+		try {
+//			TODO: filewriter borra todo el contenido del file
+//			FileOutputStream fileOut = new FileOutputStream(file);
+//			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOut);
+			FileWriter fileWriter = new FileWriter(file);
+			fileWriter.write(line);
+			fileWriter.write("\n");
+			fileWriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
