@@ -2,11 +2,9 @@ package src;
 
 import java.awt.EventQueue;
 import java.awt.event.*;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.awt.*;
@@ -157,9 +155,10 @@ public class Popup extends JFrame implements ActionListener {
 	}
 	
 	public void WriteData(String tag, String description){
+		DateTime dateTime = new DateTime();
 		String date = "14/06/2023";
 		String time = "12:30:23";
-		String line = "Date: " + date + ";Time: " + time + ";Tag: " + tag + ";Description: " + description;
+		String line = dateTime.getDate() + ";" + dateTime.getTime() + ";Tag: " + tag + ";Description: " + description;
 		
 		try {
 			File file = new File("./Data/data.csv");
@@ -184,22 +183,19 @@ public class Popup extends JFrame implements ActionListener {
 	
 	private String ReadLastLine() {
 		String line = "";
-		String info = "";
-		String lastLine = "";
 		String splitBy = ";";
+		String lastLine = "";
+		String info = "";
 		
 		try {
 			File file = new File("./Data/data.csv");
 			if(file.exists()) {
 				BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-				
-				while ((line = bufferedReader.readLine()) != null) {
+				while ((line = bufferedReader.readLine()) != null)
 					lastLine = line;
-				}
 				
 				if (!lastLine.isEmpty()) {
 					String[] lineSplited = lastLine.split(splitBy);
-//					System.out.println(lineSplited[2] + " - " + lineSplited[3]);
 					info = lineSplited[2] + " - " + lineSplited[3];
 				} else
 					info = "History clean";
@@ -207,7 +203,7 @@ public class Popup extends JFrame implements ActionListener {
 				bufferedReader.close();
 			}
 			else {
-				return "some error happened";
+				throw new NullPointerException("The file data.csv doesnt exist in the directory Data");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
