@@ -3,6 +3,7 @@ package src;
 import java.awt.EventQueue;
 import java.awt.event.*;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -148,24 +149,21 @@ public class Popup extends JFrame implements ActionListener {
 		String getTextDescription = txtDescription.getText();
 		String getTagString = comboTags.getSelectedItem().toString();
 		WriteData(getTagString, getTextDescription);
-//		System.out.println("last update: " + getTextFiled + "\ntext description: " + getTextDescription + "\ntag text: " + getTagString);
 		dispose();
 	}
 	
 	public void WriteData(String tag, String description){
-		File file = new File("./Data/data.cvs");
+		File file = new File("./Data/data.csv");
 		String date = "14/06/2023";
-//		System.out.println(file.isFile() + "\n" + file.isDirectory() + "\n" + file.isAbsolute());
-		String line = "Date: " + date + "; Tag: " + tag + "; Description: " + description;
+		String time = "12:30:23";
+		String line = "Date: " + date + "; Time: " + time + "; Tag: " + tag + "; Description: " + description;
 		
 		try {
-//			TODO: filewriter borra todo el contenido del file
-//			FileOutputStream fileOut = new FileOutputStream(file);
-//			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOut);
-			FileWriter fileWriter = new FileWriter(file);
-			fileWriter.write(line);
-			fileWriter.write("\n");
-			fileWriter.close();
+			FileWriter fileWriter = new FileWriter(file, true);
+			BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
+			bufferWriter.newLine();
+			bufferWriter.write(line);
+			bufferWriter.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
