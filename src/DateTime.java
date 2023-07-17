@@ -4,24 +4,25 @@ import java.time.format.*;
 import java.time.*;
 
 public class DateTime {
-
+	private static String dateFormatter = "dd/MM/yyyy";
+	private static String timeFormatter = "HH:mm:ss";
+	
 	public static void main(String[] args) {
 		DateTime dateTime = new DateTime();
-		System.out.println(dateTime.getDate());
-		System.out.println(dateTime.getTime());
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dateTime.getDate(now));
+		System.out.println(dateTime.getTime(now));
 	}
 	
-	public String getDate() {
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	public String getDate(LocalDateTime now) {
+		DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(dateFormatter);
 		String outDate = now.format(formatterDate);
 		
 		return "Date: " + outDate;
 	}
 	
-	public String getTime() {
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+	public String getTime(LocalDateTime now) {
+		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(timeFormatter);
 		String outTime = now.format(formatterTime);
 
 		return "Time: " + outTime;
