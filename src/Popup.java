@@ -153,17 +153,22 @@ public class Popup extends JFrame implements ActionListener {
 	}
 	
 	public void WriteData(String tag, String description){
-		File file = new File("./Data/data.csv");
 		String date = "14/06/2023";
 		String time = "12:30:23";
 		String line = "Date: " + date + "; Time: " + time + "; Tag: " + tag + "; Description: " + description;
 		
 		try {
-			FileWriter fileWriter = new FileWriter(file, true);
-			BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
-			bufferWriter.newLine();
-			bufferWriter.write(line);
-			bufferWriter.close();
+			File file = new File("./Data/data.csv");
+			if(file.exists()) {
+				FileWriter fileWriter = new FileWriter(file, true);
+				BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
+				bufferWriter.newLine();
+				bufferWriter.write(line);
+				bufferWriter.close();
+			}
+			else {
+				throw new NullPointerException("The file data.csv doesnt exist in the directory Data");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
