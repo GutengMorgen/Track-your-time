@@ -3,9 +3,11 @@ package src;
 import java.awt.EventQueue;
 import java.awt.event.*;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.awt.*;
 import javax.swing.*;
@@ -27,6 +29,7 @@ public class Popup extends JFrame implements ActionListener {
 			public void run() {
 				try {
 					Popup frame = new Popup();
+					frame.setTextField(frame.txtLastData);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -145,25 +148,25 @@ public class Popup extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		String getTextFiled = txtLastData.getText();
+//		String getTextFiled = txtLastData.getText();
 		String getTextDescription = txtDescription.getText();
 		String getTagString = comboTags.getSelectedItem().toString();
 		WriteData(getTagString, getTextDescription);
+//		System.out.println(ReadLastLine());
 		dispose();
 	}
 	
 	public void WriteData(String tag, String description){
 		String date = "14/06/2023";
 		String time = "12:30:23";
-		String line = "Date: " + date + "; Time: " + time + "; Tag: " + tag + "; Description: " + description;
+		String line = "Date: " + date + ";Time: " + time + ";Tag: " + tag + ";Description: " + description;
 		
 		try {
 			File file = new File("./Data/data.csv");
 			if(file.exists()) {
-				FileWriter fileWriter = new FileWriter(file, true);
-				BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
-				bufferWriter.newLine();
+				BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(file, true));
 				bufferWriter.write(line);
+				bufferWriter.newLine();
 				bufferWriter.close();
 			}
 			else {
@@ -172,5 +175,48 @@ public class Popup extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setTextField(JTextField out) {
+		String info = ReadLastLine();
+		out.setText(info);
+	}
+	
+	private String ReadLastLine() {
+		String line = "";
+		String info = "";
+		String lastLine = "";
+		String splitBy = ";";
+		
+		try {
+			File file = new File("./Data/data.csv");
+			if(file.exists()) {
+				BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+				
+				while ((line = bufferedReader.readLine()) != null) {
+					lastLine = line;
+				}
+				
+				if (!lastLine.isEmpty()) {
+					String[] lineSplited = lastLine.split(splitBy);
+//					System.out.println(lineSplited[2] + " - " + lineSplited[3]);
+					info = lineSplited[2] + " - " + lineSplited[3];
+				} else
+					info = "History clean";
+				
+				bufferedReader.close();
+			}
+			else {
+				return "some error happened";
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return info;
+	}
+	
+	public void getFile() {
+		
 	}
 }
