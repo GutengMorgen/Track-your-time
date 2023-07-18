@@ -2,12 +2,6 @@ package src;
 
 import java.awt.EventQueue;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.time.LocalDateTime;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -15,6 +9,7 @@ import javax.swing.border.*;
 @SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
 	ReadWriteData data = new ReadWriteData();
+	Timer timer = new Timer();
 	private JPanel contentPane;
 	private JTextField txtLastData;
 	private JComboBox<String> comboTags;
@@ -28,7 +23,10 @@ public class Popup extends JFrame implements ActionListener {
 			public void run() {
 				try {
 					Popup frame = new Popup();
-					frame.setVisible(true);
+						
+					frame.timer.setDisplay(1);
+					frame.timer.start(frame);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,6 +39,7 @@ public class Popup extends JFrame implements ActionListener {
 	 */
 	public Popup() {
 //		setUndecorated(true);
+		
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setAlwaysOnTop(true);
@@ -154,6 +153,9 @@ public class Popup extends JFrame implements ActionListener {
 		
 		//close the Pop up frame
 		dispose();
+		
+		//start the timer
+		timer.start(new Popup());
 	}
 	
 	

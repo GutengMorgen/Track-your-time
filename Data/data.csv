@@ -10,3 +10,14 @@ Date: 17/07/2023;Time: 06:47:33;Tag: working;Description: testing data.setTextFi
 Date: 17/07/2023;Time: 06:47:57;Tag: working;Description: data.setTextField is working
 Date: 17/07/2023;Time: 06:49:15;Tag: working;Description: removing some properties of txtLastData
 Date: 17/07/2023;Time: 06:49:37;Tag: working;Description: i dont ger error. great.
+Date: 17/07/2023;Time: 07:18:24;Tag: working;Description: probando la funcionalidad del timer class
+Date: 18/07/2023;Time: 01:16:52;Tag: working;Description: testing la funcionalidad del timer class implementada en el boton save
+Date: 18/07/2023;Time: 01:19:31;Tag: working;Description: el textfield del last update tiene un error al igual que el textarea del descriptor
+el texto no se mueve asia abajo cuando llega al extremo
+y ademas tengo que poner el new Timer(new Popup()); luego del dispose()
+Date: 18/07/2023;Time: 01:25:47;Tag: working;Description: sale un error: Index 2 out of bounds for length 2 en el last update
+Date: 18/07/2023;Time: 01:27:26;Tag: working;Description: ahora si, el popup se cierra y vuelve a aparecer cada 30s, ahora falta aregar el saldao de  linea
+Date: 18/07/2023;Time: 01:36:22;Tag: relax;Description: watching youtube video
+Date: 18/07/2023;Time: 01:39:11;Tag: working;Description: 
+Date: 18/07/2023;Time: 04:03:56;Tag: working;Description: probando unir el popup con el timer
+Date: 18/07/2023;Time: 04:05:09;Tag: working;Description: funciona
