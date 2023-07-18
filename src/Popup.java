@@ -8,6 +8,7 @@ import javax.swing.border.*;
 
 @SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
+	final int WidthFrame = 480, HeightFrame = 290;
 	ReadWriteData data = new ReadWriteData();
 	Timer timer = new Timer();
 	private JPanel contentPane;
@@ -23,9 +24,9 @@ public class Popup extends JFrame implements ActionListener {
 			public void run() {
 				try {
 					Popup frame = new Popup();
-						
-					frame.timer.setDisplay(1);
-					frame.timer.start(frame);
+					frame.setVisible(true);
+//					frame.timer.setDisplay(1);
+//					frame.timer.start(frame);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,12 +39,14 @@ public class Popup extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public Popup() {
-//		setUndecorated(true);
-		
+		setUndecorated(true);
 		setResizable(false);
 		setAlwaysOnTop(true);
-		setAlwaysOnTop(true);
-		setBounds(100, 100, 480, 290);
+		
+		setSize(465, 250);
+		Dimension dimension = getSize();
+		setLocation(getCoordinate(dimension, "x", 0.01), getCoordinate(dimension, "y", 0.35));
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(245, 245, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -158,5 +161,22 @@ public class Popup extends JFrame implements ActionListener {
 		timer.start(new Popup());
 	}
 	
+	public int getCoordinate(Dimension frameDimension, String coord, double percent) {
+		double coordvalue = 0;
+		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		if(coord == "x") {
+			coordvalue = (screenDimension.getWidth() - frameDimension.getWidth()) * percent;
+		}
+		else if (coord == "y") {
+			coordvalue = (screenDimension.getHeight() - frameDimension.getHeight()) * percent;
+//			System.out.println(coordvalue +" - " + frameDimension.getHeight());
+		}
+		else {
+			coordvalue = 0;
+		}
+		
+		return (int)coordvalue;
+	}
 	
 }
