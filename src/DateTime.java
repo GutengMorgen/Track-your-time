@@ -18,14 +18,14 @@ public class DateTime {
 		DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(dateFormatter);
 		String outDate = now.format(formatterDate);
 		
-		return "Date: " + outDate;
+		return outDate;
 	}
 	
 	public String getTime(LocalDateTime now) {
 		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(timeFormatter);
 		String outTime = now.format(formatterTime);
 
-		return "Time: " + outTime;
+		return outTime;
 	}
 
 }

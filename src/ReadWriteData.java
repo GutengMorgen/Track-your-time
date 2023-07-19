@@ -3,25 +3,60 @@ package src;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ReadWriteData {
+	public void writeData(String tag, String description) {
+		DateTime dateTime = new DateTime();
+		LocalDateTime now = LocalDateTime.now();
+		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
+		
+		/*
+		 * Description with \n replace to \\n
+		*/
+		String newDescription = description.replace("\n", "\\n");
+		
+		String line = String.format(format, dateTime.getDate(now), dateTime.getTime(now), tag, newDescription);
+		
+		try {
+			Path filePath = Paths.get("./Data/data.csv");
+			if(!Files.exists(filePath))
+				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
+			
+//			Files.writeString(filePath, line, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+			BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+			writer.newLine();
+			writer.write(line);
+			writer.close();
+			
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 	public void WriteData(String tag, String description){
 		DateTime dateTime = new DateTime();
 		LocalDateTime now = LocalDateTime.now();
+		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
 		
-		StringBuilder builder = new StringBuilder();
-			builder.append(dateTime.getDate(now));
-			builder.append(";");
-			builder.append(dateTime.getTime(now));
-			builder.append(";Tag: ");
-			builder.append(tag);
-			builder.append(";Description: ");
-			builder.append(description);
-		String line = builder.toString();
+		/*
+		 * Description with \n replace to \\n
+		*/
+		String newDescription = description.replace("\n", "\\n");
+		
+		String line = String.format(format, dateTime.getDate(now), dateTime.getTime(now), tag, newDescription);
 		
 		try {
 			File file = new File("./Data/data.csv");
@@ -39,7 +74,7 @@ public class ReadWriteData {
 		}
 	}
 	
-	public void setTextField(JTextField out) {
+	public void setTextField(JTextArea out) {
 		String info = ReadLastLine();
 		out.setText(info);
 	}
