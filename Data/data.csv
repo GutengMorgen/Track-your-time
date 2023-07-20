@@ -1,32 +1,5 @@
-Date: 14/06/2023;Time: 12:30:23;Tag: working;Description: in this project
-Date: 19/07/2023;Time: 06:37:11;Tag: working;Description: gg
-Date: 19/07/2023;Time: 07:34:11;Tag: working;Description: testing the new method to write dataDate: 19/07/2023;Time: 07:34:31;Tag: working;Description: still testing
-
-Date: 19/07/2023;Time: 07:38:24;Tag: working;Description: using bufferwriter with nio java
-Date: 19/07/2023;Time: 10:06:55;Tag: working;Description: conectando popup con mainframe
-Date: 19/07/2023;Time: 10:22:21;Tag: relax;Description: finding
-Date: 19/07/2023;Time: 10:23:13;Tag: working;Description: error el popup aparecio otra vez
-Date: 19/07/2023;Time: 19:12:30;Tag: working;Description: testing
-Date: 19/07/2023;Time: 19:13:41;Tag: working;Description: testing
-Date: 19/07/2023;Time: 19:23:05;Tag: working;Description: testing
-Date: 19/07/2023;Time: 19:24:09;Tag: working;Description: testing
-Date: 19/07/2023;Time: 19:26:49;Tag: working;Description: is working, el el display siempre es igual al del setDisplay en mainframe. pero ahora el description y tag tienen el mismo contenido ya que no se crea un nuevo popup
-Date: 19/07/2023;Time: 19:32:18;Tag: working;Description: eliminar el contenido del description y del tag cuando se presione el boton save
-Date: 19/07/2023;Time: 19:35:03;Tag: working;Description: tambien poner el rango de tiempo al lado del label description.\nejm:\nDescription (12:00 - 12:10)
-Date: 19/07/2023;Time: 19:36:25;Tag: working;Description: tambien poner el rango de tiempo al lado del label description.\nejm:\nDescription (12:00 - 12:10)
-Date: 19/07/2023;Time: 19:39:48;Tag: working;Description: few
-Date: 19/07/2023;Time: 22:28:57;Tag: working;Description: 
-Date: 19/07/2023;Time: 22:31:32;Tag: working;Description: probando
-Date: 19/07/2023;Time: 22:32:22;Tag: working;Description: testing
-Date: 19/07/2023;Time: 22:33:37;Tag: working;Description: still testing\n
-Date: 19/07/2023;Time: 22:34:49;Tag: working;Description: Still testing the time
-Date: 19/07/2023;Time: 22:35:59;Tag: working;Description: i think is working
-Date: 19/07/2023;Time: 22:37:51;Tag: working;Description: is working
-Date: 19/07/2023;Time: 22:39:13;Tag: working;Description: is fucking working
-Date: 19/07/2023;Time: 22:41:37;Tag: working;Description: still working\n
-Date: 19/07/2023;Time: 23:44:12;Tag: working;Description: testing key binding and key stroke
-Date: 19/07/2023;Time: 23:45:39;Tag: working;Description: is working
-Date: 19/07/2023;Time: 23:48:51;Tag: working;Description: testing the description label again
-Date: 19/07/2023;Time: 23:50:07;Tag: working;Description: faewfw
-Date: 20/07/2023;Time: 00:05:37;Tag: working;Description: testing
-Date: 20/07/2023;Time: 00:26:53;Tag: working;Description: sadasd
+Date: 20/07/2023;Time: 04:32:47;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:33:04;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:34:16;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:34:21;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:34:27;Tag: taewtew;Description: testing again removing the empty lines is working

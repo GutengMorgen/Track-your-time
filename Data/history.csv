@@ -1,0 +1,75 @@
+Date: 14/06/2023;Time: 12:30:23;Tag: working;Description: in this project
+Date: 19/07/2023;Time: 06:37:11;Tag: working;Description: gg
+Date: 19/07/2023;Time: 07:34:11;Tag: working;Description: testing the new method to write dataDate: 19/07/2023;Time: 07:34:31;Tag: working;Description: still testing
+Date: 19/07/2023;Time: 07:38:24;Tag: working;Description: using bufferwriter with nio java
+Date: 19/07/2023;Time: 10:06:55;Tag: working;Description: conectando popup con mainframe
+Date: 19/07/2023;Time: 10:22:21;Tag: relax;Description: finding
+Date: 19/07/2023;Time: 10:23:13;Tag: working;Description: error el popup aparecio otra vez
+Date: 19/07/2023;Time: 19:12:30;Tag: working;Description: testing
+Date: 19/07/2023;Time: 19:13:41;Tag: working;Description: testing
+Date: 19/07/2023;Time: 19:23:05;Tag: working;Description: testing
+Date: 19/07/2023;Time: 19:24:09;Tag: working;Description: testing
+Date: 19/07/2023;Time: 19:26:49;Tag: working;Description: is working, el el display siempre es igual al del setDisplay en mainframe. pero ahora el description y tag tienen el mismo contenido ya que no se crea un nuevo popup
+Date: 19/07/2023;Time: 19:32:18;Tag: working;Description: eliminar el contenido del description y del tag cuando se presione el boton save
+Date: 19/07/2023;Time: 19:35:03;Tag: working;Description: tambien poner el rango de tiempo al lado del label description.\nejm:\nDescription (12:00 - 12:10)
+Date: 19/07/2023;Time: 19:36:25;Tag: working;Description: tambien poner el rango de tiempo al lado del label description.\nejm:\nDescription (12:00 - 12:10)
+Date: 19/07/2023;Time: 19:39:48;Tag: working;Description: few
+Date: 19/07/2023;Time: 22:28:57;Tag: working;Description: 
+Date: 19/07/2023;Time: 22:31:32;Tag: working;Description: probando
+Date: 19/07/2023;Time: 22:32:22;Tag: working;Description: testing
+Date: 19/07/2023;Time: 22:33:37;Tag: working;Description: still testing\n
+Date: 19/07/2023;Time: 22:34:49;Tag: working;Description: Still testing the time
+Date: 19/07/2023;Time: 22:35:59;Tag: working;Description: i think is working
+Date: 19/07/2023;Time: 22:37:51;Tag: working;Description: is working
+Date: 19/07/2023;Time: 22:39:13;Tag: working;Description: is fucking working
+Date: 19/07/2023;Time: 22:41:37;Tag: working;Description: still working\n
+Date: 19/07/2023;Time: 23:44:12;Tag: working;Description: testing key binding and key stroke
+Date: 19/07/2023;Time: 23:45:39;Tag: working;Description: is working
+Date: 19/07/2023;Time: 23:48:51;Tag: working;Description: testing the description label again
+Date: 19/07/2023;Time: 23:50:07;Tag: working;Description: faewfw
+Date: 20/07/2023;Time: 00:05:37;Tag: working;Description: testing
+Date: 20/07/2023;Time: 00:26:53;Tag: working;Description: sadasd
+Date: 20/07/2023;Time: 00:42:41;Tag: working;Description: testing paths
+Date: 20/07/2023;Time: 03:16:05;Tag: working;Description: testing line 1
+Date: 20/07/2023;Time: 03:44:23;Tag: working;Description: testing line 2
+Date: 20/07/2023;Time: 03:45:00;Tag: working;Description: testing line 3
+Date: 20/07/2023;Time: 03:45:38;Tag: working;Description: testing line 4\n\n\n
+Date: 20/07/2023;Time: 03:48:57;Tag: working;Description: testing line 5
+Date: 20/07/2023;Time: 03:49:18;Tag: working;Description: testing line 6
+Date: 20/07/2023;Time: 03:49:35;Tag: working;Description: testing line 7
+Date: 20/07/2023;Time: 03:49:51;Tag: working;Description: testing line 8
+Date: 20/07/2023;Time: 03:50:18;Tag: working;Description: testing line 9
+Date: 20/07/2023;Time: 03:50:33;Tag: working;Description: testing line 10
+Date: 20/07/2023;Time: 03:58:50;Tag: working;Description: try {\n                BufferedWriter writer = new BufferedWriter(new FileWriter("./Data/data.csv", false));\n\n                // Write the middle lines with newline after each line\n                for (int i = 1; i < lines.size() - 1; i++) {\n                    writer.write(lines.get(i) + "\n");\n                }\n\n                // Write the last line without a newline\n                writer.write(lines.get(lines.size() - 1));\n\n                writer.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }
+Date: 20/07/2023;Time: 03:59:15;Tag: working;Description: testing line 11
+Date: 20/07/2023;Time: 03:59:34;Tag: working;Description: testing line 12
+Date: 20/07/2023;Time: 04:00:15;Tag: working;Description: testing line 13
+Date: 20/07/2023;Time: 04:11:45;Tag: working;Description: testing line 16
+Date: 20/07/2023;Time: 04:18:08;Tag: helohe;Description: testing
+Date: 20/07/2023;Time: 04:18:16;Tag: helohe;Description: testing
+Date: 20/07/2023;Time: 04:18:35;Tag: helohe;Description: testing
+Date: 20/07/2023;Time: 04:18:42;Tag: helohe;Description: testing
+Date: 20/07/2023;Time: 04:19:40;Tag: helohe;Description: testing
+Date: 20/07/2023;Time: 04:21:07;Tag: taewtew;Description: faefwfaewf
+Date: 20/07/2023;Time: 04:21:12;Tag: taewtew;Description: faefwfaewf
+Date: 20/07/2023;Time: 04:24:03;Tag: taewtew;Description: faefwfaewf
+Date: 20/07/2023;Time: 04:24:21;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:26:47;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:26:52;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:28:58;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:29:03;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:29:08;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:29:31;Tag: taewtew;Description: testing again
+Date: 20/07/2023;Time: 04:29:48;Tag: taewtew;Description: testing again removing the empty lines
+Date: 20/07/2023;Time: 04:30:00;Tag: taewtew;Description: testing again removing the empty lines
+Date: 20/07/2023;Time: 04:30:17;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:30:24;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:30:37;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:32:31;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:32:37;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:32:42;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:32:47;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:33:04;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:34:16;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:34:21;Tag: taewtew;Description: testing again removing the empty lines is working
+Date: 20/07/2023;Time: 04:34:27;Tag: taewtew;Description: testing again removing the empty lines is working
