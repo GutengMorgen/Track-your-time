@@ -20,12 +20,4 @@ public class DateTime {
 
 		return outTime;
 	}
-	
-	public String getTime(LocalDateTime now, String format) {
-		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(format);
-		String outTime = now.format(formatterTime);
-
-		return outTime;
-	}
-
 }

@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-07-20T02:52:41.280Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="9prJTuiuNlsjtPFgJ82V" version="21.1.2" type="device" pages="2">
+<mxfile host="Electron" modified="2023-07-20T05:29:01.960Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="KxJlVSUqnC_5Ool_QOgi" version="21.1.2" type="device" pages="2">
   <diagram id="fGHJM5MCqLucSSKI0ixK" name="Desing">
     <mxGraphModel dx="874" dy="972" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="6000" pageHeight="6000" math="0" shadow="0">
       <root>
@@ -222,11 +222,6 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="zNLUCi5WK5RYkxZkkCba-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#666666;startArrow=oval;startFill=1;endArrow=block;endFill=0;" parent="1" source="zNLUCi5WK5RYkxZkkCba-1" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="466" y="380" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="zNLUCi5WK5RYkxZkkCba-1" value="Description" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#808080;shadow=1;" parent="1" vertex="1">
           <mxGeometry x="127" y="236" width="120" height="60" as="geometry" />
         </mxCell>
@@ -254,10 +249,10 @@
         <mxCell id="5HFmrUTO-LnRgoNXd6n--2" value="poner el temporizador" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=#009900;" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
           <mxGeometry y="30" width="826" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="5HFmrUTO-LnRgoNXd6n--3" value="agregar el atajo de teclado para cerrar la ventana" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=default;" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
+        <mxCell id="5HFmrUTO-LnRgoNXd6n--3" value="agregar el atajo de teclado para cerrar la ventana" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=#009900;" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
           <mxGeometry y="60" width="826" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="5HFmrUTO-LnRgoNXd6n--22" value="setear el tiempo que aparecera el popup desde el mainframe" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=#CC0000;" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
+        <mxCell id="5HFmrUTO-LnRgoNXd6n--22" value="setear el tiempo que aparecera el popup desde el mainframe" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=#009900;" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
           <mxGeometry y="90" width="826" height="30" as="geometry" />
         </mxCell>
         <mxCell id="5HFmrUTO-LnRgoNXd6n--4" value="agregar evento para los label y que redireccionen al mainFrame" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=#9933FF;" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
@@ -310,9 +305,6 @@
         </mxCell>
         <mxCell id="5HFmrUTO-LnRgoNXd6n--14" value="leer la ultima linea del data.csv y organizarlo para ponerlo en el textfield LastUpdate" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;fontColor=#009900;fontStyle=0" vertex="1" parent="5HFmrUTO-LnRgoNXd6n--1">
           <mxGeometry y="600" width="826" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5HFmrUTO-LnRgoNXd6n--23" value="MainFrame" style="whiteSpace=wrap;html=1;rounded=1;shadow=1;strokeColor=#808080;fontFamily=Helvetica;fontSize=11;fontColor=default;fillColor=default;" vertex="1" parent="1">
-          <mxGeometry x="1269" y="1858" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

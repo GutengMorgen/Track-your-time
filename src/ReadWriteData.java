@@ -14,10 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class ReadWriteData {
-	private DateTime dateTime = new DateTime();
 	private String lastDataTime = "";
 	
 	public void writeData(String tag, String description) {
+		DateTime dateTime = new DateTime();
 		LocalDateTime now = LocalDateTime.now();
 		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
 		
@@ -50,6 +50,7 @@ public class ReadWriteData {
 	}
 	
 	public void setLblDescription(JLabel out) {
+		DateTime dateTime = new DateTime();
 		LocalDateTime now = LocalDateTime.now();
 		String format = "Description(%s - %s):";
 		String splited = lastDataTime.split(" ")[1];

@@ -10,6 +10,7 @@ import javax.swing.border.*;
 public class Popup extends JFrame implements ActionListener {
 	final int WidthFrame = 480, HeightFrame = 290;
 	ReadWriteData data = new ReadWriteData();
+	ShortcutManager shortcuts = new ShortcutManager();
 	Timer timer = new Timer();
 	private JPanel contentPane;
 	private JComboBox<String> comboTags;
@@ -168,6 +169,7 @@ public class Popup extends JFrame implements ActionListener {
 		txtDescription.setForeground(new Color(26, 18, 11));
 		txtDescription.setBackground(new Color(235, 235, 235));
 		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
+		shortcuts.add(txtDescription, this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
