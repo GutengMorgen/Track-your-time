@@ -19,7 +19,7 @@ public class Popup extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -33,7 +33,7 @@ public class Popup extends JFrame implements ActionListener {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -53,6 +53,30 @@ public class Popup extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBorder(null);
+		scrollPane_1.setFocusTraversalKeysEnabled(false);
+		scrollPane_1.setFocusable(false);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane_1.setBounds(10, 32, 443, 22);
+		contentPane.add(scrollPane_1);
+		
+		txtLastData = new JTextArea();
+		data.setLastData(txtLastData);
+		txtLastData.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		txtLastData.setAutoscrolls(false);
+		txtLastData.setForeground(new Color(115, 115, 115));
+		txtLastData.setFont(new Font("Verdana", Font.PLAIN, 9));
+		txtLastData.setDisabledTextColor(new Color(115, 115, 115));
+		txtLastData.setRequestFocusEnabled(false);
+		txtLastData.setFocusable(false);
+		txtLastData.setEditable(false);
+		scrollPane_1.setViewportView(txtLastData);
+		txtLastData.setBorder(new CompoundBorder(new LineBorder(new Color(216, 216, 216)), new EmptyBorder(4, 5, 0, 5)));
+		txtLastData.setBackground(new Color(240, 240, 240));
+		txtLastData.setLineWrap(true);
+		txtLastData.setFocusTraversalKeysEnabled(false);
 		
 		comboTags = new JComboBox<String>();
 		comboTags.setVerifyInputWhenFocusTarget(false);
@@ -106,12 +130,13 @@ public class Popup extends JFrame implements ActionListener {
 		lblSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblSettings);
 		
-		JLabel lblDescription = new JLabel("Description:");
+		JLabel lblDescription = new JLabel();
+		data.setLblDescription(lblDescription);
 		lblDescription.setForeground(new Color(26, 18, 11));
 		lblDescription.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblDescription.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescription.setFont(new Font("Lucida Console", Font.PLAIN, 11));
-		lblDescription.setBounds(10, 69, 93, 14);
+		lblDescription.setBounds(10, 69, 261, 14);
 		contentPane.add(lblDescription);
 		
 		JLabel lblTags = new JLabel("Tags:");
@@ -137,62 +162,30 @@ public class Popup extends JFrame implements ActionListener {
 		contentPane.add(scrollPane);
 		
 		txtDescription = new JTextArea();
-		txtDescription.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				
-//			}
-			@Override
-			public void keyPressed(KeyEvent e) {
-				System.out.println(e);
-				if(e.getKeyCode() == 83 && e.getKeyCode() == 17) {
-					System.out.println("save");
-				}
-			}
-		});
 		scrollPane.setViewportView(txtDescription);
 		txtDescription.setLineWrap(true);
 		txtDescription.setFont(new Font("Verdana", Font.PLAIN, 12));
 		txtDescription.setForeground(new Color(26, 18, 11));
 		txtDescription.setBackground(new Color(235, 235, 235));
 		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBorder(null);
-		scrollPane_1.setFocusTraversalKeysEnabled(false);
-		scrollPane_1.setFocusable(false);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane_1.setBounds(10, 32, 443, 22);
-		contentPane.add(scrollPane_1);
-		
-		txtLastData = new JTextArea();
-		txtLastData.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		txtLastData.setAutoscrolls(false);
-		txtLastData.setForeground(new Color(115, 115, 115));
-		txtLastData.setFont(new Font("Verdana", Font.PLAIN, 9));
-		txtLastData.setDisabledTextColor(new Color(115, 115, 115));
-		txtLastData.setRequestFocusEnabled(false);
-		txtLastData.setFocusable(false);
-		txtLastData.setEditable(false);
-		scrollPane_1.setViewportView(txtLastData);
-		txtLastData.setBorder(new CompoundBorder(new LineBorder(new Color(216, 216, 216)), new EmptyBorder(4, 5, 0, 5)));
-		txtLastData.setBackground(new Color(240, 240, 240));
-		txtLastData.setLineWrap(true);
-		txtLastData.setFocusTraversalKeysEnabled(false);
-		data.setTextField(txtLastData);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		SaveClose();
+	}
+	
+	public void SaveClose() {
 		String getTextDescription = txtDescription.getText();
 		String getTagString = comboTags.getSelectedItem().toString();
-//		data.WriteData(getTagString, getTextDescription);
 		data.writeData(getTagString, getTextDescription);
 		
 		//close the Pop up frame
 		dispose();
 		
 		//start the timer
-		timer.start(new Popup());
+		Popup popup = new Popup();
+		popup.timer.setDisplay(new MainFrame().getTime());
+		popup.timer.start(popup);
 	}
 	
 	public int getCoordinate(Dimension frameDimension, String positionString, double percent) {

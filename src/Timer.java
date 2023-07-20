@@ -28,9 +28,10 @@ public class Timer {
 					x = false;
 	                System.out.println("timer stop in: " + seconds + " seconds");
 	                frame.setVisible(true);
-				} else {
-					System.out.println("timer: " + seconds);
-				}
+				} 
+//				else {
+//					System.out.println("timer: " + seconds);
+//				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
