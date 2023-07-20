@@ -1,6 +1,5 @@
 package src;
 
-import java.awt.EventQueue;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -16,25 +15,6 @@ public class Popup extends JFrame implements ActionListener {
 	private JComboBox<String> comboTags;
 	private JTextArea txtDescription;
 	private JTextArea txtLastData;
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Popup frame = new Popup();
-					frame.setVisible(true);
-//					frame.timer.setDisplay(1);
-//					frame.timer.start(frame);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.
@@ -92,7 +72,7 @@ public class Popup extends JFrame implements ActionListener {
 		comboTags.setBounds(324, 62, 129, 25);
 		comboTags.setToolTipText("Select any tag");
 		comboTags.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax"}));
+		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
 		contentPane.add(comboTags);
 		
 		JButton btnSave = new JButton("SAVE (ctrl + s)");
@@ -184,10 +164,27 @@ public class Popup extends JFrame implements ActionListener {
 		//close the Pop up frame
 		dispose();
 		
-		//start the timer
-		Popup popup = new Popup();
-		popup.timer.setDisplay(new MainFrame().getTime());
-		popup.timer.start(popup);
+		// Start the timer in the background
+	    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+	        @Override
+	        protected Void doInBackground() throws Exception {
+	            Popup popup = new Popup();
+	            popup.timer.setDisplay(new MainFrame().getTime());
+	            popup.timer.start(popup);
+	            return null;
+	        }
+	    };
+
+	    // Add a listener to handle completion of the SwingWorker task
+	    worker.addPropertyChangeListener(evt -> {
+	        if (SwingWorker.StateValue.DONE == evt.getNewValue()) {
+	            // Handle the completion or any other tasks after the timer has started
+	        	System.out.println("is completed!");
+	        }
+	    });
+
+	    // Execute the SwingWorker
+	    worker.execute();
 	}
 	
 	public int getCoordinate(Dimension frameDimension, String positionString, double percent) {

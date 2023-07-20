@@ -54,12 +54,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setAlwaysOnTop(true);
 		setBackground(new Color(0, 0, 0));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setResizable(false);
 		setTitle("Tack your time");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 560, 625);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -197,7 +197,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		settings.add(lblCustomTags);
 		
 		JScrollPane scrollPaneTags = new JScrollPane();
-		scrollPaneTags.setBounds(34, 235, 280, 103);
+		scrollPaneTags.setBounds(34, 235, 358, 103);
 		settings.add(scrollPaneTags);
 		
 		JTextArea txtTags = new JTextArea();
@@ -252,6 +252,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		String splited = getItemString.split(" ")[0];
 		int time = Integer.parseInt(splited);
 		
-		return 1;
+		return time;
 	}
 }

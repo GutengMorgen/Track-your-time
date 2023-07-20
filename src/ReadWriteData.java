@@ -2,16 +2,12 @@ package src;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -19,10 +15,6 @@ import javax.swing.JTextArea;
 
 public class ReadWriteData {
 	private String lastDataTime = "";
-	
-	public static void main(String[] args) {
-		new ReadWriteData().writeData("taewtew", "testing again removing the empty lines is working");
-	}
 	
 	public void writeData(String tag, String description) {
 		int limit = 5;
