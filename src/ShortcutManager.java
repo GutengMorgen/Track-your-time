@@ -74,7 +74,6 @@ public class ShortcutManager {
 					String lineFiltered = popup.data.filterLine(line, "Description:");
 					textArea.setText(lineFiltered);
 				}
-				System.out.println(index);
 			}
 		};
 
@@ -94,8 +93,6 @@ public class ShortcutManager {
 					String lineFiltered = popup.data.filterLine(line, "Description:");
 					textArea.setText(lineFiltered);
 				}
-				
-				System.out.println(index);
 			}
 		};
 

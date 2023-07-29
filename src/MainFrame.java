@@ -58,7 +58,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		setBackground(new Color(0, 0, 0));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setResizable(false);
-		setTitle("Tack your time");
+		setTitle("Time Dial");
 		setBounds(100, 100, 560, 625);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
