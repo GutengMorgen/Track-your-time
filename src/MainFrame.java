@@ -29,10 +29,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JTextField txtPreviouskb;
 	private JTextField txtLatestkb;
 	private JTextField txtTemplatekb;
-	private JTextField txtActualTag;
 	private JButton btnStop;
 	private JButton btnStart;
 	private JComboBox<String> comboTime;
+	private JTextArea txtTags;
+	private JComboBox<MyItems> comboTags;
+	MyItems myItems = new MyItems();
+	private JButton btnSetTemplate;
+	private JTextArea txtTemplate;
 
 	/**
 	 * Launch the application.
@@ -199,20 +203,20 @@ public class MainFrame extends JFrame implements ActionListener {
 		scrollPaneTags.setBounds(34, 235, 358, 103);
 		settings.add(scrollPaneTags);
 		
-		JTextArea txtTags = new JTextArea();
+		txtTags = new JTextArea();
 		scrollPaneTags.setViewportView(txtTags);
-		txtTags.setText("[Working]\r\n[Studing]\r\n[Relax]\r\n[Working in own project]\r\n[Offline]\r\n[Wander online]");
+		txtTags.setText("[Working]\n[Studing]\n[Relax]\n[Working in own project]\n[Offline]\n[Wander online]");
 		
 		JScrollPane scrollPaneTemplate = new JScrollPane();
 		scrollPaneTemplate.setBounds(34, 398, 443, 108);
 		settings.add(scrollPaneTemplate);
 		
-		JTextArea txtTemplate = new JTextArea();
+		txtTemplate = new JTextArea();
 		scrollPaneTemplate.setViewportView(txtTemplate);
 		
-		txtActualTag = new JTextField();
-		scrollPaneTemplate.setColumnHeaderView(txtActualTag);
-		txtActualTag.setColumns(10);
+		comboTags = new JComboBox<MyItems>();
+		scrollPaneTemplate.setColumnHeaderView(comboTags);
+		myItems.setItems(comboTags, this);
 		
 		JLabel lblTagsTemplate = new JLabel("Tags Template");
 		lblTagsTemplate.setFont(new Font("Lucida Console", Font.PLAIN, 15));
@@ -224,9 +228,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		rdGetTemplate.setBounds(289, 193, 166, 23);
 		settings.add(rdGetTemplate);
 		
-		JButton btnSetTemplate = new JButton("Set template");
+		btnSetTemplate = new JButton("Set template");
 		btnSetTemplate.setBounds(34, 509, 358, 23);
 		settings.add(btnSetTemplate);
+		btnSetTemplate.addActionListener(this);
 		
 		JLabel lblResult = new JLabel("Done!");
 		lblResult.setLabelFor(btnSetTemplate);
@@ -242,7 +247,13 @@ public class MainFrame extends JFrame implements ActionListener {
 			popup.setVisible(true);
 		}
 		else if(e.getSource() == btnStop) {
-			
+//			getTags();
+			MyItems currentTag = (MyItems) comboTags.getSelectedItem();
+			System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
+		}
+		else if(e.getSource() == btnSetTemplate) {
+			setTemplate();
+//			System.out.println("fwefe");
 		}
 	}
 	
@@ -252,5 +263,20 @@ public class MainFrame extends JFrame implements ActionListener {
 		int time = Integer.parseInt(splited);
 		
 		return time;
+	}
+	
+	public String[] getTags() {
+		String[] txtSplited = txtTags.getText().split("\n");
+//		System.out.println(txtSplited.length);
+		return txtSplited;
+	}
+	
+	public void setTemplate() {
+		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
+		String txt = txtTemplate.getText();
+		
+		currentTag.setTemplate(txt);
+		
+		System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
 	}
 }

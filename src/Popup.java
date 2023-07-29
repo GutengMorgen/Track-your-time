@@ -95,6 +95,7 @@ public class Popup extends JFrame implements ActionListener {
 		comboTags.setToolTipText("Select any tag");
 		comboTags.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
+		comboTags.addItem("efewfw");
 		contentPane.add(comboTags);
 		
 		JButton btnSave = new JButton("SAVE (ctrl + s)");
