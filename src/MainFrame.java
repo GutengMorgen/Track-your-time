@@ -20,6 +20,7 @@ import java.awt.Cursor;
 import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
@@ -31,12 +32,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JTextField txtTemplatekb;
 	private JButton btnStop;
 	private JButton btnStart;
-	private JComboBox<String> comboTime;
 	private JTextArea txtTags;
 	private JComboBox<MyItems> comboTags;
 	MyItems myItems = new MyItems();
 	private JButton btnSetTemplate;
 	private JTextArea txtTemplate;
+	private JComboBox<String> comboTime;
 
 	/**
 	 * Launch the application.
@@ -75,22 +76,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		home.setLayout(null);
 		
 		btnStart = new JButton("Start");
-		btnStart.setBounds(10, 25, 230, 50);
+		btnStart.setBounds(10, 56, 190, 35);
 		home.add(btnStart);
 		btnStart.addActionListener(this);
 		
 		btnStop = new JButton("Stop");
-		btnStop.setBounds(296, 25, 230, 50);
+		btnStop.setBounds(10, 11, 95, 24);
 		home.add(btnStop);
 		btnStop.addActionListener(this);
 		
-		JLabel lblHistory = new JLabel("History:");
-		lblHistory.setFont(new Font("Leelawadee UI", Font.PLAIN, 20));
-		lblHistory.setBounds(10, 98, 96, 29);
-		home.add(lblHistory);
-		
 		JScrollPane scrollPaneHistory = new JScrollPane();
-		scrollPaneHistory.setBounds(10, 138, 516, 409);
+		scrollPaneHistory.setBounds(10, 110, 516, 437);
 		home.add(scrollPaneHistory);
 		
 		JTextArea txtHistorial = new JTextArea();
@@ -102,6 +98,30 @@ public class MainFrame extends JFrame implements ActionListener {
 		txtHistorial.setFocusTraversalKeysEnabled(false);
 		txtHistorial.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		txtHistorial.setEditable(false);
+		
+		JLabel lblHistory = new JLabel("History");
+		lblHistory.setHorizontalAlignment(SwingConstants.CENTER);
+		scrollPaneHistory.setColumnHeaderView(lblHistory);
+		lblHistory.setFont(new Font("Leelawadee UI", Font.PLAIN, 20));
+		
+		JLabel lblStatus = new JLabel("Popup is turn on.\r\nTime to apperd: 14:50:00");
+		lblStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
+		lblStatus.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStatus.setBounds(126, 10, 306, 24);
+		home.add(lblStatus);
+		
+		JLabel lblSetDisplay = new JLabel("every ->");
+		lblSetDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSetDisplay.setFont(new Font("Lucida Console", Font.PLAIN, 15));
+		lblSetDisplay.setBounds(210, 61, 96, 24);
+		home.add(lblSetDisplay);
+		
+		comboTime = new JComboBox<String>();
+		comboTime.setModel(new DefaultComboBoxModel<String>(new String[] {"15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "45 min", "50 min", "55 min", "60 min"}));
+		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 13));
+		comboTime.setBounds(316, 56, 210, 35);
+		home.add(comboTime);
 		
 		JPanel dayReport = new JPanel();
 		tabbedPane.addTab("Day Report", null, dayReport, null);
@@ -119,88 +139,77 @@ public class MainFrame extends JFrame implements ActionListener {
 		settings.setLayout(null);
 		
 		JLabel lblSave = new JLabel("Save and close:");
-		lblSave.setBounds(34, 91, 89, 14);
+		lblSave.setBounds(20, 57, 89, 14);
 		settings.add(lblSave);
-		
-		JLabel lblSetDisplay = new JLabel("Set Display Time:");
-		lblSetDisplay.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblSetDisplay.setBounds(24, 21, 166, 24);
-		settings.add(lblSetDisplay);
-		
-		comboTime = new JComboBox<String>();
-		comboTime.setModel(new DefaultComboBoxModel<String>(new String[] {"15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "45 min", "50 min", "55 min", "60 min"}));
-		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 13));
-		comboTime.setBounds(284, 22, 202, 22);
-		settings.add(comboTime);
 		
 		JLabel lblKeyboards = new JLabel("Keyboard Shortcuts");
 		lblKeyboards.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblKeyboards.setBounds(24, 56, 185, 24);
+		lblKeyboards.setBounds(10, 22, 185, 24);
 		settings.add(lblKeyboards);
 		
 		JLabel lblSkip = new JLabel("Skip and close:");
-		lblSkip.setBounds(295, 91, 89, 14);
+		lblSkip.setBounds(281, 57, 89, 14);
 		settings.add(lblSkip);
 		
 		JLabel lblBrowsing = new JLabel("Browsing the history:");
-		lblBrowsing.setBounds(34, 132, 147, 14);
+		lblBrowsing.setBounds(20, 98, 147, 14);
 		settings.add(lblBrowsing);
 		
 		JLabel lblPrevious = new JLabel("Get 2 previous description:");
-		lblPrevious.setBounds(295, 132, 147, 14);
+		lblPrevious.setBounds(281, 98, 147, 14);
 		settings.add(lblPrevious);
 		
 		JLabel lblLatest = new JLabel("Get latest description:");
-		lblLatest.setBounds(34, 172, 119, 14);
+		lblLatest.setBounds(20, 138, 119, 14);
 		settings.add(lblLatest);
 		
 		JLabel lblTemplate = new JLabel("Get tag template:");
-		lblTemplate.setBounds(295, 172, 97, 14);
+		lblTemplate.setBounds(281, 138, 97, 14);
 		settings.add(lblTemplate);
 		
 		txtSavekb = new JTextField();
 		txtSavekb.setText("ctrl + s");
-		txtSavekb.setBounds(175, 88, 86, 20);
+		txtSavekb.setBounds(161, 54, 86, 20);
 		settings.add(txtSavekb);
 		txtSavekb.setColumns(10);
 		
 		txtSkipkb = new JTextField();
 		txtSkipkb.setText("ctrl + k");
 		txtSkipkb.setColumns(10);
-		txtSkipkb.setBounds(400, 88, 86, 20);
+		txtSkipkb.setBounds(386, 54, 86, 20);
 		settings.add(txtSkipkb);
 		
 		txtBrowsingkb = new JTextField();
 		txtBrowsingkb.setText("ctrl + m");
 		txtBrowsingkb.setColumns(10);
-		txtBrowsingkb.setBounds(175, 129, 86, 20);
+		txtBrowsingkb.setBounds(161, 95, 86, 20);
 		settings.add(txtBrowsingkb);
 		
 		txtPreviouskb = new JTextField();
 		txtPreviouskb.setText("ctrl + arrow up");
 		txtPreviouskb.setColumns(10);
-		txtPreviouskb.setBounds(428, 129, 86, 20);
+		txtPreviouskb.setBounds(414, 95, 86, 20);
 		settings.add(txtPreviouskb);
 		
 		txtLatestkb = new JTextField();
 		txtLatestkb.setText("ctrl + arrow down");
 		txtLatestkb.setColumns(10);
-		txtLatestkb.setBounds(175, 169, 104, 20);
+		txtLatestkb.setBounds(161, 135, 104, 20);
 		settings.add(txtLatestkb);
 		
 		txtTemplatekb = new JTextField();
 		txtTemplatekb.setText("ctrl + t");
 		txtTemplatekb.setColumns(10);
-		txtTemplatekb.setBounds(402, 169, 86, 20);
+		txtTemplatekb.setBounds(388, 135, 86, 20);
 		settings.add(txtTemplatekb);
 		
 		JLabel lblCustomTags = new JLabel("Custom Tags");
 		lblCustomTags.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblCustomTags.setBounds(24, 200, 135, 24);
+		lblCustomTags.setBounds(10, 166, 135, 24);
 		settings.add(lblCustomTags);
 		
 		JScrollPane scrollPaneTags = new JScrollPane();
-		scrollPaneTags.setBounds(34, 235, 358, 103);
+		scrollPaneTags.setBounds(20, 201, 358, 103);
 		settings.add(scrollPaneTags);
 		
 		txtTags = new JTextArea();
@@ -208,7 +217,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		txtTags.setText("[Working]\n[Studing]\n[Relax]\n[Working in own project]\n[Offline]\n[Wander online]");
 		
 		JScrollPane scrollPaneTemplate = new JScrollPane();
-		scrollPaneTemplate.setBounds(34, 398, 443, 108);
+		scrollPaneTemplate.setBounds(20, 364, 443, 108);
 		settings.add(scrollPaneTemplate);
 		
 		txtTemplate = new JTextArea();
@@ -220,23 +229,23 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		JLabel lblTagsTemplate = new JLabel("Tags Template");
 		lblTagsTemplate.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblTagsTemplate.setBounds(24, 363, 135, 24);
+		lblTagsTemplate.setBounds(10, 329, 135, 24);
 		settings.add(lblTagsTemplate);
 		
 		JRadioButton rdGetTemplate = new JRadioButton("Get tag template by default");
 		rdGetTemplate.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		rdGetTemplate.setBounds(289, 193, 166, 23);
+		rdGetTemplate.setBounds(275, 159, 166, 23);
 		settings.add(rdGetTemplate);
 		
 		btnSetTemplate = new JButton("Set template");
-		btnSetTemplate.setBounds(34, 509, 358, 23);
+		btnSetTemplate.setBounds(20, 475, 358, 23);
 		settings.add(btnSetTemplate);
 		btnSetTemplate.addActionListener(this);
 		
 		JLabel lblResult = new JLabel("Done!");
 		lblResult.setLabelFor(btnSetTemplate);
 		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblResult.setBounds(419, 510, 60, 22);
+		lblResult.setBounds(405, 476, 60, 22);
 		settings.add(lblResult);
 	}
 
