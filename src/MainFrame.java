@@ -55,7 +55,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	 */
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setAlwaysOnTop(true);
 		setBackground(new Color(0, 0, 0));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setResizable(false);
