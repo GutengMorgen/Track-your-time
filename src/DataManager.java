@@ -13,7 +13,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-public class ReadWriteData {
+public class DataManager {
 	private String lastDataTime = "";
 
 	public void writeData(String tag, String description) {
@@ -84,7 +84,7 @@ public class ReadWriteData {
 			List<String> lines = Files.readAllLines(filePath);
 
 			if (!lines.isEmpty()) {
-				// to get information of the last line in data.csv
+				// to get information of the previous line in data.csv
 				String lastLine = lines.get(lines.size() - 1);
 				String[] lineSplited = lastLine.split(";");
 				String tag = "";
@@ -108,5 +108,74 @@ public class ReadWriteData {
 		}
 
 		return info;
+	}
+	
+	public Integer getDataIndex() {
+		int index = 0;
+		
+		try {
+			Path filePath = Paths.get("./Data/data.csv");
+			if (!Files.exists(filePath))
+				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
+			
+			List<String> lines = Files.readAllLines(filePath);
+			if(!lines.isEmpty()) {
+				index = lines.size();
+			}
+			else {
+				index = 0;
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return index;
+	}
+	
+	public int getSelectedIndexLine() {
+		return 0;
+	}
+	
+	public void setSelectedIndexLine(int index) {
+		
+	}
+	
+	public String ReadLineByIndex(int index) {
+		String line = "";
+		
+		try {
+			Path filePath = Paths.get("./Data/data.csv");
+			if (!Files.exists(filePath))
+				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
+			
+			List<String> lines = Files.readAllLines(filePath);
+			
+			if(!lines.isEmpty()) {
+				line = lines.get(index);
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return line;
+	}
+	
+	public String filterLine(String line, String filter) {
+		String result = "no se encontro " + filter;
+		int length = filter.length();
+		
+		String[] lineSplited = line.split(";");
+		
+		for (String part : lineSplited) {
+			if(part.contains(filter)) {
+				result = part.substring(length)
+						.trim()
+						.replace("\\n", "\n");
+			}
+		}
+		
+		return result;
 	}
 }

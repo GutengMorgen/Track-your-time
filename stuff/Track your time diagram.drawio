@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-07-20T11:16:54.600Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="yjOPg_GkJMl6ywQ2VrIT" version="21.1.2" type="device" pages="2">
+<mxfile host="Electron" modified="2023-07-29T01:05:51.652Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="8J3B8BgYqBirGpEJysah" version="21.1.2" type="device" pages="2">
   <diagram id="fGHJM5MCqLucSSKI0ixK" name="Desing">
-    <mxGraphModel dx="858" dy="956" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="6000" pageHeight="6000" math="0" shadow="0">
+    <mxGraphModel dx="1345" dy="1280" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="6000" pageHeight="6000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -214,11 +214,41 @@
         <mxCell id="WX6EeEbefu8KRz162WAU-94" value="cuando se modifique la hora a la que aparecera el popup, en minimo sera de 30 min(podria reducirce hasta 20 min) y un maximo de 1.30 min, solo se aceptaran minumos multiplos de 5" style="whiteSpace=wrap;html=1;rounded=1;shadow=0;strokeColor=#808080;fontFamily=Helvetica;fontSize=11;fontColor=default;fillColor=default;arcSize=0;" parent="1" vertex="1">
           <mxGeometry x="1005" y="1485" width="388.5" height="67" as="geometry" />
         </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-15" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;strokeColor=#36393d;fontFamily=Helvetica;fontSize=11;fillColor=#eeeeee;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
+          <mxGeometry x="131.25" y="1575" width="392.75" height="268" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-16" value="v2" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;strokeColor=#001DBC;fontFamily=Helvetica;fontSize=11;fillColor=#0050ef;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="129.25" y="1535" width="397.75" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-17" value="SAVE(ctrl + shift + s)" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;fontFamily=Lucida Console;fontSize=15;arcSize=0;fontStyle=0" vertex="1" parent="1">
+          <mxGeometry x="150.25" y="1782" width="351.75" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-18" value="tema:&amp;nbsp;&lt;br&gt;subtema:&lt;br&gt;descripcion:&lt;br&gt;metodo: apuntes, videos, lectura, etc..." style="rounded=0;whiteSpace=wrap;html=1;shadow=0;strokeColor=#212121;fontFamily=Verdana;fontSize=11;fillColor=#ebeaea;strokeWidth=1;glass=0;fontColor=#333333;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="151.25" y="1685" width="350.75" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-19" value="Description:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontFamily=Lucida Console;fontColor=#000000;fontStyle=4" vertex="1" parent="1">
+          <mxGeometry x="150.25" y="1650" width="109.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-27" value="View report" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Lucida Console;fontColor=#000000;fontStyle=4" vertex="1" parent="1">
+          <mxGeometry x="151.25" y="1760" width="71" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-26" value="Settings" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Lucida Console;fontColor=#000000;fontStyle=4" vertex="1" parent="1">
+          <mxGeometry x="444" y="1761" width="57.25" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-28" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="153.25" y="1584" width="349" height="47" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-24" value="Tag: Studing - Description: Estoy estudiando memory manamenget" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;strokeColor=#757575;fontFamily=Lucida Console;fontSize=8;fillColor=#E6E6E6;strokeWidth=1;glass=0;fontColor=#333333;align=left;verticalAlign=top;" vertex="1" parent="SWigj1dO-32BlHNll4bW-28">
+          <mxGeometry y="22" width="349" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="SWigj1dO-32BlHNll4bW-25" value="Last update:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Lucida Console;fontColor=#575757;fontStyle=4" vertex="1" parent="SWigj1dO-32BlHNll4bW-28">
+          <mxGeometry width="90.75" height="22" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram name="Page-1" id="809RStWlohQ3-12yxadR">
-    <mxGraphModel dx="858" dy="563" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="6000" pageHeight="6000" math="0" shadow="0">
+    <mxGraphModel dx="1748" dy="1144" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="6000" pageHeight="6000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />

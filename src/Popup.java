@@ -4,11 +4,12 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 @SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
 	final int WidthFrame = 480, HeightFrame = 290;
-	ReadWriteData data = new ReadWriteData();
+	DataManager data = new DataManager();
 	ShortcutManager shortcuts = new ShortcutManager();
 	Timer timer = new Timer();
 	private JPanel contentPane;
@@ -17,6 +18,22 @@ public class Popup extends JFrame implements ActionListener {
 	private JTextArea txtLastData;
 
 	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Popup frame = new Popup();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
 	 * Create the frame.
 	 */
 	public Popup() {
@@ -24,7 +41,7 @@ public class Popup extends JFrame implements ActionListener {
 		setResizable(false);
 		setAlwaysOnTop(true);
 		
-		setSize(465, 250);
+		setSize(421, 250);
 		Dimension dimension = getSize();
 		setLocation(getCoordinate(dimension, "x", 0.01), getCoordinate(dimension, "y", 0.35));
 
@@ -40,7 +57,7 @@ public class Popup extends JFrame implements ActionListener {
 		scrollPane_1.setFocusTraversalKeysEnabled(false);
 		scrollPane_1.setFocusable(false);
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane_1.setBounds(10, 32, 443, 22);
+		scrollPane_1.setBounds(10, 32, 400, 22);
 		contentPane.add(scrollPane_1);
 		
 		txtLastData = new JTextArea();
@@ -60,8 +77,13 @@ public class Popup extends JFrame implements ActionListener {
 		txtLastData.setFocusTraversalKeysEnabled(false);
 		
 		comboTags = new JComboBox<String>();
+		comboTags.setUI(new BasicComboBoxUI() {
+		    protected void paintFocus(Graphics g, Rectangle rectangle, Dimension dimension) {
+		        // Override this method to do nothing, effectively removing the focus border.
+		    }
+		});
 		comboTags.setVerifyInputWhenFocusTarget(false);
-		comboTags.setFont(new Font("Verdana", Font.BOLD, 13));
+		comboTags.setFont(new Font("Verdana", Font.BOLD, 11));
 		comboTags.setBorder(new LineBorder(new Color(0, 0, 0)));
 		comboTags.setLightWeightPopupEnabled(false);
 		comboTags.setRequestFocusEnabled(false);
@@ -69,7 +91,7 @@ public class Popup extends JFrame implements ActionListener {
 		comboTags.setFocusable(false);
 		comboTags.setForeground(new Color(248, 248, 241));
 		comboTags.setBackground(new Color(26, 18, 11));
-		comboTags.setBounds(324, 62, 129, 25);
+		comboTags.setBounds(281, 62, 129, 25);
 		comboTags.setToolTipText("Select any tag");
 		comboTags.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
@@ -80,7 +102,7 @@ public class Popup extends JFrame implements ActionListener {
 		btnSave.setForeground(new Color(248, 248, 241));
 		btnSave.setBackground(new Color(26, 18, 11));
 		btnSave.setFocusPainted(false);
-		btnSave.setBounds(10, 195, 444, 44);
+		btnSave.setBounds(10, 195, 400, 44);
 		btnSave.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(btnSave);
 		btnSave.addActionListener(this);
@@ -107,7 +129,7 @@ public class Popup extends JFrame implements ActionListener {
 		lblSettings.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblSettings.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSettings.setFont(new Font("Lucida Console", Font.PLAIN, 10));
-		lblSettings.setBounds(395, 178, 58, 14);
+		lblSettings.setBounds(352, 179, 58, 14);
 		lblSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblSettings);
 		
@@ -117,7 +139,7 @@ public class Popup extends JFrame implements ActionListener {
 		lblDescription.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescription.setFont(new Font("Lucida Console", Font.PLAIN, 11));
-		lblDescription.setBounds(10, 69, 261, 14);
+		lblDescription.setBounds(10, 69, 214, 14);
 		contentPane.add(lblDescription);
 		
 		JLabel lblTags = new JLabel("Tags:");
@@ -125,7 +147,7 @@ public class Popup extends JFrame implements ActionListener {
 		lblTags.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblTags.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTags.setFont(new Font("Lucida Console", Font.PLAIN, 11));
-		lblTags.setBounds(281, 69, 38, 14);
+		lblTags.setBounds(234, 69, 38, 14);
 		contentPane.add(lblTags);
 		
 		JLabel lblLastUpdate = new JLabel("Last Update:");
@@ -139,7 +161,7 @@ public class Popup extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(10, 92, 443, 75);
+		scrollPane.setBounds(10, 92, 400, 75);
 		contentPane.add(scrollPane);
 		
 		txtDescription = new JTextArea();
@@ -149,7 +171,8 @@ public class Popup extends JFrame implements ActionListener {
 		txtDescription.setForeground(new Color(26, 18, 11));
 		txtDescription.setBackground(new Color(235, 235, 235));
 		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
-		shortcuts.add(txtDescription, this);
+		shortcuts.add(txtDescription, comboTags, this);
+		txtDescription.requestFocusInWindow();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
