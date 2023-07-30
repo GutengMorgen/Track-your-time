@@ -1,5 +1,7 @@
 package src;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,9 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -21,7 +27,7 @@ public class DataManager {
 
 	public void writeData(String tag, String description) {
 		int limit = 5;
-		DateTime dateTime = new DateTime();
+		DateTimeHandler dateTime = new DateTimeHandler();
 		LocalDateTime now = LocalDateTime.now();
 		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
 
@@ -63,18 +69,38 @@ public class DataManager {
 		out.setText(info);
 	}
 
-	public void setLblDescription(JLabel out) {
-		DateTime dateTime = new DateTime();
+	public String setLastestDescriptionTime() {
+		String format = "Last Update - %s";
+		String time = "";
+		
+		if(!lastDataTime.isEmpty()) {
+			String splited = lastDataTime.split(" ")[1];
+			time = String.format(format, splited);
+		}
+		else {
+			time = String.format(format, "unknown");
+		}
+		
+		return time;
+	}
+	
+	public void setCurrentTime(JLabel out) {
+		DateTimeHandler dateTime = new DateTimeHandler();
 		LocalDateTime now = LocalDateTime.now();
-		String format = "Description(%s - %s):";
-		String splited = "";
-		String info = "";
-		if (!lastDataTime.isEmpty()) {
-			splited = lastDataTime.split(" ")[1];
-			info = String.format(format, splited, dateTime.getTime(now));
-		} else
-			info = String.format(format, "0", "0");
-		out.setText(info);
+		
+		String format = "Description - %s"; //switch with %t
+		out.setText(String.format(format, dateTime.getTime(now)));
+		
+		javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LocalDateTime currentTime = LocalDateTime.now();
+				out.setText(String.format(format, dateTime.getTime(currentTime)));
+			}
+		});
+		
+		timer.start();
 	}
 
 	private String readLastLine() {

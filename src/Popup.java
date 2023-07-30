@@ -135,13 +135,22 @@ public class Popup extends JFrame implements ActionListener {
 		lblSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblSettings);
 		
+		JLabel lblLastUpdate = new JLabel(data.setLastestDescriptionTime());
+		lblLastUpdate.setForeground(new Color(81, 81, 81));
+		lblLastUpdate.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblLastUpdate.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLastUpdate.setFont(new Font("Lucida Console", Font.PLAIN, 11));
+		lblLastUpdate.setBounds(10, 13, 185, 14);
+		contentPane.add(lblLastUpdate);
+		
+//		JLabel lblDescription = new JLabel(data.setCurrentTime());
 		JLabel lblDescription = new JLabel();
-		data.setLblDescription(lblDescription);
+		data.setCurrentTime(lblDescription);
 		lblDescription.setForeground(new Color(26, 18, 11));
 		lblDescription.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescription.setFont(new Font("Lucida Console", Font.PLAIN, 11));
-		lblDescription.setBounds(10, 69, 214, 14);
+		lblDescription.setBounds(10, 69, 185, 14);
 		contentPane.add(lblDescription);
 		
 		JLabel lblTags = new JLabel("Tags:");
@@ -151,14 +160,6 @@ public class Popup extends JFrame implements ActionListener {
 		lblTags.setFont(new Font("Lucida Console", Font.PLAIN, 11));
 		lblTags.setBounds(234, 69, 38, 14);
 		contentPane.add(lblTags);
-		
-		JLabel lblLastUpdate = new JLabel("Last Update:");
-		lblLastUpdate.setForeground(new Color(81, 81, 81));
-		lblLastUpdate.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblLastUpdate.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLastUpdate.setFont(new Font("Lucida Console", Font.PLAIN, 11));
-		lblLastUpdate.setBounds(10, 13, 93, 14);
-		contentPane.add(lblLastUpdate);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);

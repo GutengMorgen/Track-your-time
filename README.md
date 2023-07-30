@@ -18,7 +18,7 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 
 
 ##Bugs/new Design
-- como se muestra tiempo de cada descripcion
+- como se muestra tiempo de cada descripcion pasada
 - mostrar la hora actual al lado de la descripcion
 - cambiar la forma de guardar el texto de la descripcion ya que no se admite dobles comillas
 - poner el mayusculas todos los tipos(date, time, tag, description) de data.csv

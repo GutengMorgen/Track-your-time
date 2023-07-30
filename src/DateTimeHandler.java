@@ -3,7 +3,7 @@ package src;
 import java.time.format.*;
 import java.time.*;
 
-public class DateTime {
+public class DateTimeHandler {
 	private static String dateFormatter = "dd/MM/yyyy";
 	private static String timeFormatter = "HH:mm:ss";
 	
