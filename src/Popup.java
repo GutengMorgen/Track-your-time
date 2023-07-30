@@ -11,7 +11,7 @@ public class Popup extends JFrame implements ActionListener {
 	final int WidthFrame = 480, HeightFrame = 290;
 	DataManager data = new DataManager();
 	ShortcutManager shortcuts = new ShortcutManager();
-	Timer timer = new Timer();
+	TimerHandler timer = new TimerHandler();
 	private JPanel contentPane;
 	private JComboBox<MyItems> comboTags;
 	private JTextArea txtDescription;

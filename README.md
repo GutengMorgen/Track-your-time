@@ -16,16 +16,17 @@ luego de usar la app por una semana, he descubirto que es jodidamente/estresante
 
 pero en realidad acabo de darme cuenta que es mejor que luego de guardar la descripcion(presionando el boton o con ctrl + s) aparezca una ventana con los tags y luego presionar los `teclados numericos` para guardar y cerrar el popup o seleccionar el tag con las `flechas up and down` y con las `flecha right` guardar y cerrar el popup
 
+-agregar una nueva funcion para que aparezca el popup con un shortcut
 
 ##Bugs/new Design
-- como se muestra tiempo de cada descripcion pasada
-- mostrar la hora actual al lado de la descripcion
-- cambiar la forma de guardar el texto de la descripcion ya que no se admite dobles comillas
-- poner el mayusculas todos los tipos(date, time, tag, description) de data.csv
+- [x] como se muestra tiempo de cada descripcion pasada
+- [] mostrar la hora actual al lado de la descripcion
+- [] cambiar la forma de guardar el texto de la descripcion ya que no se admite dobles comillas
+- [] poner el mayusculas todos los tipos(date, time, tag, description) de data.csv
 	- o talvez deberia eliminarlos y solo obtener los contenidos de cada tipo por el indice del array
-- poner todas las lineas del historial al elemento correspondiente y talvez un boton de refresh
-- actualizar el texto del `lblPopupStatus` segun si el popup inicio o no
-- actualizar el texto del `lblTimeStatus` segun el tiempo que falta para que aparezca el popup
-- dar funcionalidad al boton `Stop`
-- actualizar los items del combotag cuando se presione el boton `btnSetTags`
-- actualizar el texto del `lblResult` cuando se presione el boton `btnSetTags` o `btnSetTemplate`
+- [] poner todas las lineas del historial al elemento correspondiente y talvez un boton de refresh
+- [] actualizar el texto del `lblPopupStatus` segun si el popup inicio o no
+- [] actualizar el texto del `lblTimeStatus` segun el tiempo que falta para que aparezca el popup
+- [] dar funcionalidad al boton `Stop`
+- [] actualizar los items del combotag cuando se presione el boton `btnSetTags`
+- [] actualizar el texto del `lblResult` cuando se presione el boton `btnSetTags` o `btnSetTemplate`

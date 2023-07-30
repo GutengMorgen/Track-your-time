@@ -2,7 +2,7 @@ package src;
 
 import java.util.concurrent.TimeUnit;
 
-public class Timer {
+public class TimerHandler {
 	//value in seconds
 	private int display =  30;
 

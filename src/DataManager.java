@@ -10,16 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 public class DataManager {
 	public static String TAG = "tag",TEMPLATE = "template";
@@ -27,12 +24,11 @@ public class DataManager {
 
 	public void writeData(String tag, String description) {
 		int limit = 5;
-		DateTimeHandler dateTime = new DateTimeHandler();
 		LocalDateTime now = LocalDateTime.now();
 		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
 
 		String newDescription = description.replace("\n", "\\n");
-		String line = String.format(format, dateTime.getDate(now), dateTime.getTime(now), tag, newDescription);
+		String line = String.format(format, DateHandler.getDate(now), DateHandler.getTime(now), tag, newDescription);
 
 		try {
 			Path[] paths = { Paths.get("./Data/data.csv"), Paths.get("./Data/history.csv") };
@@ -85,18 +81,17 @@ public class DataManager {
 	}
 	
 	public void setCurrentTime(JLabel out) {
-		DateTimeHandler dateTime = new DateTimeHandler();
 		LocalDateTime now = LocalDateTime.now();
 		
 		String format = "Description - %s"; //switch with %t
-		out.setText(String.format(format, dateTime.getTime(now)));
+		out.setText(String.format(format, DateHandler.getTime(now)));
 		
-		javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
+		Timer timer = new Timer(1000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LocalDateTime currentTime = LocalDateTime.now();
-				out.setText(String.format(format, dateTime.getTime(currentTime)));
+				out.setText(String.format(format, DateHandler.getTime(currentTime)));
 			}
 		});
 		
