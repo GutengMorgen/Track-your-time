@@ -83,7 +83,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnStart.addActionListener(this);
 		
 		btnStop = new JButton("Stop");
-		btnStop.setBounds(10, 11, 95, 24);
+		btnStop.setBounds(10, 8, 95, 24);
 		home.add(btnStop);
 		btnStop.addActionListener(this);
 		
@@ -106,12 +106,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		scrollPaneHistory.setColumnHeaderView(lblHistory);
 		lblHistory.setFont(new Font("Leelawadee UI", Font.PLAIN, 20));
 		
-		JLabel lblStatus = new JLabel("Popup is turn on.\r\nTime to apperd: 14:50:00");
-		lblStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
-		lblStatus.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatus.setBounds(126, 10, 306, 24);
-		home.add(lblStatus);
+		JLabel lblPopupStatus = new JLabel("Popup is turn on");
+		lblPopupStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
+		lblPopupStatus.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblPopupStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPopupStatus.setBounds(178, 10, 180, 18);
+		home.add(lblPopupStatus);
 		
 		JLabel lblSetDisplay = new JLabel("every ->");
 		lblSetDisplay.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,6 +124,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 13));
 		comboTime.setBounds(316, 56, 210, 35);
 		home.add(comboTime);
+		
+		JLabel lblTimeStatus = new JLabel("\r\nTime to apperd: 14:50:00");
+		lblTimeStatus.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblTimeStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTimeStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
+		lblTimeStatus.setBounds(145, 30, 250, 18);
+		home.add(lblTimeStatus);
 		
 		JPanel dayReport = new JPanel();
 		tabbedPane.addTab("Day Report", null, dayReport, null);
@@ -344,10 +351,4 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	    DataManager.writeTags(lines);
 	}
-
-
-	
-//	public static JComboBox<MyItems> testing() {
-//		return null;
-//	}
 }

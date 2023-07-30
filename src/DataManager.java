@@ -279,9 +279,9 @@ public class DataManager {
 		return lineData;
 	}
 	
-	public static void writeTemplate(List<String> newTemplate) {
+	public static void writeTemplate(List<String> newTemplates) {
 		try {
-			Files.write(getTemplatePath(), newTemplate, StandardCharsets.UTF_8);
+			Files.write(getTemplatePath(), newTemplates, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
