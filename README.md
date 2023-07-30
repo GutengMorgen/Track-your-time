@@ -20,11 +20,11 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 
 ##Bugs/new Design
 - [x] como se muestra tiempo de cada descripcion pasada
-- [] mostrar la hora actual al lado de la descripcion
+- [x] mostrar la hora actual al lado de la descripcion
 - [] cambiar la forma de guardar el texto de la descripcion ya que no se admite dobles comillas
 - [] poner el mayusculas todos los tipos(date, time, tag, description) de data.csv
 	- o talvez deberia eliminarlos y solo obtener los contenidos de cada tipo por el indice del array
-- [] poner todas las lineas del historial al elemento correspondiente y talvez un boton de refresh
+- [] poner todas las lineas del history.csv al `txtHistorial` y talvez un boton de refresh
 - [] actualizar el texto del `lblPopupStatus` segun si el popup inicio o no
 - [] actualizar el texto del `lblTimeStatus` segun el tiempo que falta para que aparezca el popup
 - [] dar funcionalidad al boton `Stop`
