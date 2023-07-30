@@ -286,4 +286,12 @@ public class DataManager {
 			// TODO: handle exception
 		}
 	}
+	
+	public static void writeTags(List<String> newTags) {
+		try {
+			Files.write(getTemplatePath(), newTags, StandardCharsets.UTF_8);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

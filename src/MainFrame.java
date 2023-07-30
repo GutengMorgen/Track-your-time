@@ -39,6 +39,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnSetTemplate;
 	private JTextArea txtTemplate;
 	private JComboBox<String> comboTime;
+	private JButton btnSetTags;
 
 	/**
 	 * Launch the application.
@@ -246,9 +247,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		lblResult.setBounds(405, 512, 60, 22);
 		settings.add(lblResult);
 		
-		JButton btnSetTags = new JButton("Set tags");
+		btnSetTags = new JButton("Set tags");
 		btnSetTags.setBounds(20, 320, 495, 23);
 		settings.add(btnSetTags);
+		btnSetTags.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -269,6 +271,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		else if(e.getSource() == btnSetTemplate) {
 //			setTemplate();
 			setTemplateToFile();
+		}
+		else if(e.getSource() == btnSetTags) {
+			setTagToFile();
 		}
 	}
 
@@ -316,6 +321,31 @@ public class MainFrame extends JFrame implements ActionListener {
 			}
 		}
 	}
+	
+	private void setTagToFile() {
+	    List<String> lines = DataManager.linesTemplate();
+	    String[] tags = getTags();
+
+	    for (String tag : tags) {
+	        boolean tagExists = false;
+
+	        for (String line : lines) {
+	            String[] split = line.split(";");
+	            if (split[0].equals(tag)) {
+	                tagExists = true;
+	                break;
+	            }
+	        }
+
+	        if (!tagExists) {
+	            lines.add(String.join(";", tag, "default template"));
+	        }
+	    }
+
+	    DataManager.writeTags(lines);
+	}
+
+
 	
 //	public static JComboBox<MyItems> testing() {
 //		return null;
