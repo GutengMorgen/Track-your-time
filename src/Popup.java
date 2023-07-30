@@ -13,9 +13,10 @@ public class Popup extends JFrame implements ActionListener {
 	ShortcutManager shortcuts = new ShortcutManager();
 	Timer timer = new Timer();
 	private JPanel contentPane;
-	private JComboBox<String> comboTags;
+	private JComboBox<MyItems> comboTags;
 	private JTextArea txtDescription;
 	private JTextArea txtLastData;
+	MyItems myItems = new MyItems();
 
 	/**
 	 * Launch the application.
@@ -76,7 +77,7 @@ public class Popup extends JFrame implements ActionListener {
 		txtLastData.setLineWrap(true);
 		txtLastData.setFocusTraversalKeysEnabled(false);
 		
-		comboTags = new JComboBox<String>();
+		comboTags = new JComboBox<MyItems>();
 		comboTags.setUI(new BasicComboBoxUI() {
 		    protected void paintFocus(Graphics g, Rectangle rectangle, Dimension dimension) {
 		        // Override this method to do nothing, effectively removing the focus border.
@@ -94,8 +95,8 @@ public class Popup extends JFrame implements ActionListener {
 		comboTags.setBounds(281, 62, 129, 25);
 		comboTags.setToolTipText("Select any tag");
 		comboTags.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
-		comboTags.addItem("efewfw");
+//		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
+		myItems.setItems(comboTags);
 		contentPane.add(comboTags);
 		
 		JButton btnSave = new JButton("SAVE (ctrl + s)");

@@ -65,12 +65,12 @@ public class MyItems {
 		return "";
 	}
 	
-	public void setItems(JComboBox<MyItems> comboBox, MainFrame mainFrame) {
-		List<String> tags = DataManager.linesTemplate(DataManager.TAG);
+	public void setItems(JComboBox<MyItems> comboBox) {
+		List<String> tags = DataManager.linesTemplate();
 		
 		for (String tag : tags) {
-			System.out.println(tag);
-			comboBox.addItem(new MyItems(tag, "default template"));
+			String[] dataType = tag.split(";");
+			comboBox.addItem(new MyItems(dataType[0], dataType[1]));
 		}
 		
 //		MyItems myItems = (MyItems) comboBox.getSelectedItem();

@@ -13,7 +13,7 @@ import javax.swing.KeyStroke;
 public class ShortcutManager {
 	int index = 0;
 
-    public void add(JTextArea textArea, JComboBox<String> comboBox, Popup popup) {
+    public void add(JTextArea textArea, JComboBox<MyItems> comboBox, Popup popup) {
 
     	/*
     	 * Keyboard to Save
@@ -121,9 +121,9 @@ public class ShortcutManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO: hacer que el combobox del popup sea igual al del mainframe
-//				MyItems myItems = (MyItems) comboBox.getSelectedItem();
-//				
-//				textArea.setText(myItems.getTemplate());
+				MyItems myItems = (MyItems) comboBox.getSelectedItem();
+				
+				textArea.setText(myItems.getTemplate().replace("\\n", "\n"));
 			}
 		};
 

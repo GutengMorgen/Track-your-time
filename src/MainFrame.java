@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
+
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
 import javax.swing.JRadioButton;
@@ -219,14 +221,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		scrollPaneTemplate.setViewportView(txtTemplate);
 		
 		comboTags = new JComboBox<MyItems>();
-		comboTags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MyItems myItems = (MyItems) comboTags.getSelectedItem();
-				txtTemplate.setText(myItems.getTemplate());
-			}
-		});
+		comboTags.addActionListener(this);
+		myItems.setItems(comboTags);
 		scrollPaneTemplate.setColumnHeaderView(comboTags);
-		myItems.setItems(comboTags, this);
 		
 		JLabel lblTagsTemplate = new JLabel("Tags Template");
 		lblTagsTemplate.setFont(new Font("Lucida Console", Font.PLAIN, 15));
@@ -265,13 +262,16 @@ public class MainFrame extends JFrame implements ActionListener {
 			MyItems currentTag = (MyItems) comboTags.getSelectedItem();
 			System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
 		}
+		else if(e.getSource() == comboTags) {
+			MyItems myItems = (MyItems) comboTags.getSelectedItem();
+			txtTemplate.setText(myItems.getTemplate().replace("\\n", "\n"));
+		}
 		else if(e.getSource() == btnSetTemplate) {
-			setTemplate();
-			//TODO: obtener los item de combotags y texto del txtTemplate, luego recorrer el tipo Tag de Templates.csv y compararlo con el item seleccionado del comboTags, luego obtener el tipo template del respectivo tipo Tag y reemplazarlo por en texto del txtTemplate 
-//			System.out.println("fwefe");
+//			setTemplate();
+			setTemplateToFile();
 		}
 	}
-	
+
 	public int getTime() {
 		String getItemString = comboTime.getSelectedItem().toString();
 		String splited = getItemString.split(" ")[0];
@@ -288,10 +288,36 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public void setTemplate() {
 		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
-		String txt = txtTemplate.getText();
+		String txt = txtTemplate.getText().replace("\n", "\\n");
 		
 		currentTag.setTemplate(txt);
 		
 		System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
 	}
+
+	
+	private void setTemplateToFile() {
+		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
+		String template = txtTemplate.getText().replace("\n", "\\n");
+
+		//TODO: to not create the reset button, although i think i have to
+		currentTag.setTemplate(template);
+		
+		List<String> lines = DataManager.linesTemplate();
+		
+		for (int i = 0; i < lines.size(); i++) {
+			String line = lines.get(i);
+			String[] split = line.split(";");
+			
+			if(split[0].equals(currentTag.getName())) {
+				lines.remove(i);
+				lines.add(i, String.join(";", split[0], template));
+				DataManager.writeTemplate(lines);
+			}
+		}
+	}
+	
+//	public static JComboBox<MyItems> testing() {
+//		return null;
+//	}
 }

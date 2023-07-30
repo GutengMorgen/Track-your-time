@@ -44,6 +44,7 @@ public class DataManager {
 				writer.close();
 			}
 
+			//borra el contenido de data.csv si la cantidad de lineas supera al limite y escribe nuevas lineas sin la ultima
 			Path dataCsvPath = Paths.get("./Data/data.csv");
 			List<String> lines = Files.readAllLines(dataCsvPath);
 			lines.removeIf(String::isEmpty);
@@ -228,6 +229,10 @@ public class DataManager {
 		return tagBuilder.toString().trim();
 	}
 	
+	/*
+	 * return a list of data type(TAG or TEMPLATE) from the line of Templates.csv
+	 * maybe this method will be delete
+	 */
 	public static List<String> linesTemplate(String dataType){
 		
 		//0 = tags; 1 = templates
@@ -251,5 +256,34 @@ public class DataManager {
 		}
 		
 		return lineData;
+	}
+	
+	/*
+	 * return a list of the pure line of Templates.csv
+	 */
+	public static List<String> linesTemplate(){
+		List<String> lineData = new ArrayList<String>();
+		try {
+			List<String> lines = Files.readAllLines(getTemplatePath());
+			
+			for (String line : lines) {
+				lineData.add(line);
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return lineData;
+	}
+	
+	public static void writeTemplate(List<String> newTemplate) {
+		try {
+			Files.write(getTemplatePath(), newTemplate, StandardCharsets.UTF_8);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
