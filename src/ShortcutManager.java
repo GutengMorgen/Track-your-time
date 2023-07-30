@@ -15,6 +15,9 @@ public class ShortcutManager {
 
     public void add(JTextArea textArea, JComboBox<String> comboBox, Popup popup) {
 
+    	/*
+    	 * Keyboard to Save
+    	 */
         Action saveAction = new AbstractAction("Save") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -22,11 +25,13 @@ public class ShortcutManager {
             }
         };
 
-        // Add the action to the txtDescription's input map with the Ctrl + S key stroke
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), "saveAction");
         textArea.getActionMap().put("saveAction", saveAction);
         
         
+        /*
+    	 * Keyboard to get the down index of the comboBox
+    	 */
         Action downIndexAction = new AbstractAction("downIndex") {
 			
 			@Override
@@ -45,7 +50,9 @@ public class ShortcutManager {
         textArea.getActionMap().put("downIndexAction", downIndexAction);
         
         
-        
+        /*
+    	 * Keyboard to get the up index of the comboBox
+    	 */
         Action upIndexAction = new AbstractAction("upIndex") {
 			
 			@Override
@@ -64,6 +71,9 @@ public class ShortcutManager {
         textArea.getActionMap().put("upIndexAction", upIndexAction);
         
         
+        /*
+    	 * Keyboard to get the previous line of the data.csv
+    	 */
         Action preLineAction = new AbstractAction("previousLine") {
 			
 			@Override
@@ -81,6 +91,9 @@ public class ShortcutManager {
         textArea.getActionMap().put("preLineAction", preLineAction);
         
         
+        /*
+    	 * Keyboard to get the last line of the data.csv
+    	 */
         Action lastLineAction = new AbstractAction("latestLine") {
 			
 			@Override
@@ -98,5 +111,24 @@ public class ShortcutManager {
 
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, KeyEvent.CTRL_DOWN_MASK), "lastLineAction");
         textArea.getActionMap().put("lastLineAction", lastLineAction);
+        
+        
+        /*
+    	 * Keyboard to get template of the current tag of the comboBox
+    	 */
+        Action getTemplateAction = new AbstractAction("getTemplate") {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO: hacer que el combobox del popup sea igual al del mainframe
+//				MyItems myItems = (MyItems) comboBox.getSelectedItem();
+//				
+//				textArea.setText(myItems.getTemplate());
+			}
+		};
+
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK), "getTemplateAction");
+        textArea.getActionMap().put("getTemplateAction", getTemplateAction);
+        
     }
 }

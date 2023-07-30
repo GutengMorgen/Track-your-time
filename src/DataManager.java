@@ -2,18 +2,21 @@ package src;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class DataManager {
+	public static String TAG = "tag",TEMPLATE = "template";
 	private String lastDataTime = "";
 
 	public void writeData(String tag, String description) {
@@ -177,5 +180,76 @@ public class DataManager {
 		}
 		
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(readTemplates(TEMPLATE));
+	}
+	
+	private static Path getTemplatePath() throws FileNotFoundException {
+		Path filePath = null;
+		
+		filePath = Paths.get("Data/Templates.csv");
+		if (!Files.exists(filePath))
+			throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
+		
+		return filePath;
+	}
+	
+	public static String readTemplates(String dataType) {
+		StringBuilder tagBuilder = new StringBuilder();
+
+		//0 = tags; 1 = templates
+		String lineData = "";
+		try {
+			List<String> lines = Files.readAllLines(getTemplatePath());
+			
+			for (String line : lines) {
+				if (dataType.equals(TAG)) {
+					lineData = line.split(";")[0];
+					
+				} else if(dataType.equals(TEMPLATE)) {
+					lineData = line.split(";")[1];
+				}
+				
+				//join all individual line in a string builder
+				tagBuilder.append(lineData).append("\n");
+			}
+			
+		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+			tagBuilder.append("Templates.csv not found");
+		} catch (IOException e) {
+//			e.printStackTrace();
+			tagBuilder.append("Error occurs reading from the Templates.csv or a malformed orunmappable byte sequence is read");
+		}
+		
+		//trim() to delete the last "\n" of the tagBuilder
+		return tagBuilder.toString().trim();
+	}
+	
+	public static List<String> linesTemplate(String dataType){
+		
+		//0 = tags; 1 = templates
+		List<String> lineData = new ArrayList<String>();
+		try {
+			List<String> lines = Files.readAllLines(getTemplatePath());
+			
+			for (String line : lines) {
+				if (dataType.equals(TAG)) {
+					lineData.add(line.split(";")[0]);
+					
+				} else if(dataType.equals(TEMPLATE)) {
+					lineData.add(line.split(";")[1]);
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return lineData;
 	}
 }

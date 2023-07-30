@@ -26,7 +26,6 @@ import javax.swing.SwingConstants;
 public class MainFrame extends JFrame implements ActionListener {
 	private JTextField txtSavekb;
 	private JTextField txtSkipkb;
-	private JTextField txtBrowsingkb;
 	private JTextField txtPreviouskb;
 	private JTextField txtLatestkb;
 	private JTextField txtTemplatekb;
@@ -139,6 +138,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		settings.setLayout(null);
 		
 		JLabel lblSave = new JLabel("Save and close:");
+		lblSave.setFont(new Font("Arial", Font.PLAIN, 11));
 		lblSave.setBounds(20, 57, 89, 14);
 		settings.add(lblSave);
 		
@@ -148,28 +148,28 @@ public class MainFrame extends JFrame implements ActionListener {
 		settings.add(lblKeyboards);
 		
 		JLabel lblSkip = new JLabel("Skip and close:");
+		lblSkip.setFont(new Font("Arial", Font.PLAIN, 11));
 		lblSkip.setBounds(281, 57, 89, 14);
 		settings.add(lblSkip);
 		
-		JLabel lblBrowsing = new JLabel("Browsing the history:");
-		lblBrowsing.setBounds(20, 98, 147, 14);
-		settings.add(lblBrowsing);
-		
-		JLabel lblPrevious = new JLabel("Get 2 previous description:");
-		lblPrevious.setBounds(281, 98, 147, 14);
+		JLabel lblPrevious = new JLabel("Get previous data:");
+		lblPrevious.setFont(new Font("Arial", Font.PLAIN, 11));
+		lblPrevious.setBounds(20, 98, 109, 14);
 		settings.add(lblPrevious);
 		
-		JLabel lblLatest = new JLabel("Get latest description:");
-		lblLatest.setBounds(20, 138, 119, 14);
+		JLabel lblLatest = new JLabel("Get latest data:");
+		lblLatest.setFont(new Font("Arial", Font.PLAIN, 11));
+		lblLatest.setBounds(281, 98, 97, 14);
 		settings.add(lblLatest);
 		
 		JLabel lblTemplate = new JLabel("Get tag template:");
-		lblTemplate.setBounds(281, 138, 97, 14);
+		lblTemplate.setFont(new Font("Arial", Font.PLAIN, 11));
+		lblTemplate.setBounds(20, 138, 97, 14);
 		settings.add(lblTemplate);
 		
 		txtSavekb = new JTextField();
 		txtSavekb.setText("ctrl + s");
-		txtSavekb.setBounds(161, 54, 86, 20);
+		txtSavekb.setBounds(125, 54, 86, 20);
 		settings.add(txtSavekb);
 		txtSavekb.setColumns(10);
 		
@@ -179,74 +179,79 @@ public class MainFrame extends JFrame implements ActionListener {
 		txtSkipkb.setBounds(386, 54, 86, 20);
 		settings.add(txtSkipkb);
 		
-		txtBrowsingkb = new JTextField();
-		txtBrowsingkb.setText("ctrl + m");
-		txtBrowsingkb.setColumns(10);
-		txtBrowsingkb.setBounds(161, 95, 86, 20);
-		settings.add(txtBrowsingkb);
-		
 		txtPreviouskb = new JTextField();
 		txtPreviouskb.setText("ctrl + arrow up");
 		txtPreviouskb.setColumns(10);
-		txtPreviouskb.setBounds(414, 95, 86, 20);
+		txtPreviouskb.setBounds(125, 95, 86, 20);
 		settings.add(txtPreviouskb);
 		
 		txtLatestkb = new JTextField();
 		txtLatestkb.setText("ctrl + arrow down");
 		txtLatestkb.setColumns(10);
-		txtLatestkb.setBounds(161, 135, 104, 20);
+		txtLatestkb.setBounds(388, 95, 104, 20);
 		settings.add(txtLatestkb);
 		
 		txtTemplatekb = new JTextField();
 		txtTemplatekb.setText("ctrl + t");
 		txtTemplatekb.setColumns(10);
-		txtTemplatekb.setBounds(388, 135, 86, 20);
+		txtTemplatekb.setBounds(127, 135, 86, 20);
 		settings.add(txtTemplatekb);
 		
 		JLabel lblCustomTags = new JLabel("Custom Tags");
 		lblCustomTags.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblCustomTags.setBounds(10, 166, 135, 24);
+		lblCustomTags.setBounds(10, 182, 135, 24);
 		settings.add(lblCustomTags);
 		
 		JScrollPane scrollPaneTags = new JScrollPane();
-		scrollPaneTags.setBounds(20, 201, 358, 103);
+		scrollPaneTags.setBounds(20, 217, 495, 100);
 		settings.add(scrollPaneTags);
 		
 		txtTags = new JTextArea();
 		scrollPaneTags.setViewportView(txtTags);
-		txtTags.setText("[Working]\n[Studing]\n[Relax]\n[Working in own project]\n[Offline]\n[Wander online]");
+//		txtTags.setText("Studying\r\nRelax\r\nOffline\r\nWander online\r\nWorking in own project\r\nWorking");
+		txtTags.setText(DataManager.readTemplates(DataManager.TAG));
 		
 		JScrollPane scrollPaneTemplate = new JScrollPane();
-		scrollPaneTemplate.setBounds(20, 364, 443, 108);
+		scrollPaneTemplate.setBounds(20, 400, 495, 108);
 		settings.add(scrollPaneTemplate);
 		
 		txtTemplate = new JTextArea();
 		scrollPaneTemplate.setViewportView(txtTemplate);
 		
 		comboTags = new JComboBox<MyItems>();
+		comboTags.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MyItems myItems = (MyItems) comboTags.getSelectedItem();
+				txtTemplate.setText(myItems.getTemplate());
+			}
+		});
 		scrollPaneTemplate.setColumnHeaderView(comboTags);
 		myItems.setItems(comboTags, this);
 		
 		JLabel lblTagsTemplate = new JLabel("Tags Template");
 		lblTagsTemplate.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblTagsTemplate.setBounds(10, 329, 135, 24);
+		lblTagsTemplate.setBounds(10, 365, 135, 24);
 		settings.add(lblTagsTemplate);
 		
 		JRadioButton rdGetTemplate = new JRadioButton("Get tag template by default");
-		rdGetTemplate.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		rdGetTemplate.setBounds(275, 159, 166, 23);
+		rdGetTemplate.setFont(new Font("Arial", Font.PLAIN, 11));
+		rdGetTemplate.setBounds(281, 134, 166, 23);
 		settings.add(rdGetTemplate);
 		
 		btnSetTemplate = new JButton("Set template");
-		btnSetTemplate.setBounds(20, 475, 358, 23);
+		btnSetTemplate.setBounds(20, 511, 358, 23);
 		settings.add(btnSetTemplate);
 		btnSetTemplate.addActionListener(this);
 		
 		JLabel lblResult = new JLabel("Done!");
 		lblResult.setLabelFor(btnSetTemplate);
 		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblResult.setBounds(405, 476, 60, 22);
+		lblResult.setBounds(405, 512, 60, 22);
 		settings.add(lblResult);
+		
+		JButton btnSetTags = new JButton("Set tags");
+		btnSetTags.setBounds(20, 320, 495, 23);
+		settings.add(btnSetTags);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -262,6 +267,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnSetTemplate) {
 			setTemplate();
+			//TODO: obtener los item de combotags y texto del txtTemplate, luego recorrer el tipo Tag de Templates.csv y compararlo con el item seleccionado del comboTags, luego obtener el tipo template del respectivo tipo Tag y reemplazarlo por en texto del txtTemplate 
 //			System.out.println("fwefe");
 		}
 	}

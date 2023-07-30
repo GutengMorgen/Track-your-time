@@ -1,6 +1,7 @@
 package src;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComboBox;
@@ -65,9 +66,10 @@ public class MyItems {
 	}
 	
 	public void setItems(JComboBox<MyItems> comboBox, MainFrame mainFrame) {
-		String[] tags = mainFrame.getTags();
+		List<String> tags = DataManager.linesTemplate(DataManager.TAG);
 		
 		for (String tag : tags) {
+			System.out.println(tag);
 			comboBox.addItem(new MyItems(tag, "default template"));
 		}
 		
