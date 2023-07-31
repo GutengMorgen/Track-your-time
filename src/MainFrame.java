@@ -23,6 +23,10 @@ import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
@@ -40,6 +44,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JTextArea txtTemplate;
 	private JComboBox<String> comboTime;
 	private JButton btnSetTags;
+	private JButton btnRefresh;
+	private JTextArea txtHistorial;
+	private JLabel lblPopupStatus;
+	public JLabel lblTimeStatus;
 
 	/**
 	 * Launch the application.
@@ -61,6 +69,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("stuff/icon.jpg"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(new Color(0, 0, 0));
 		getContentPane().setBackground(new Color(255, 255, 255));
@@ -91,27 +100,60 @@ public class MainFrame extends JFrame implements ActionListener {
 		scrollPaneHistory.setBounds(10, 110, 516, 437);
 		home.add(scrollPaneHistory);
 		
-		JTextArea txtHistorial = new JTextArea();
+		txtHistorial = new JTextArea("The history data will be print here.");
 		txtHistorial.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtHistorial.setAutoscrolls(false);
-		txtHistorial.setText("import java.util.regex.Pattern;\r\nimport java.util.regex.Matcher;\r\n\r\npublic class StringFormatMatcher {\r\n    public static void main(String[] args) {\r\n        String input = \"Date: 2023-07-19;Time: 10:30 AM;Tag: Meeting;Description: Discuss project updates\";\r\n        String format = \"Date: %s;Time: %s;Tag: %s;Description: %s\";\r\n\r\n        // Escape special characters in the format string\r\n        String escapedFormat = format.replaceAll(\"%\", \"%%\");\r\n\r\n        // Create a regular expression from the escaped format string\r\n        String regex = escapedFormat.replaceFirst(\"\\\\\\\\s\", \"\\\\\\\\S+\");\r\n\r\n        // Compile the regular expression pattern\r\n        Pattern pattern = Pattern.compile(regex);\r\n\r\n        // Match the input against the pattern\r\n        Matcher matcher = pattern.matcher(input);\r\n\r\n        // Check if the input matches the format\r\n        boolean matchesFormat = matcher.matches();\r\n\r\n        // Print the result\r\n        if (matchesFormat) {\r\n            System.out.println(\"Input matches the expected format.\");\r\n        } else {\r\n            System.out.println(\"Input does not match the expected format.\");\r\n        }\r\n    }\r\n}\r\n");
 		scrollPaneHistory.setViewportView(txtHistorial);
 		txtHistorial.setVerifyInputWhenFocusTarget(false);
 		txtHistorial.setFocusTraversalKeysEnabled(false);
 		txtHistorial.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		txtHistorial.setEditable(false);
 		
-		JLabel lblHistory = new JLabel("History");
-		lblHistory.setHorizontalAlignment(SwingConstants.CENTER);
-		scrollPaneHistory.setColumnHeaderView(lblHistory);
-		lblHistory.setFont(new Font("Leelawadee UI", Font.PLAIN, 20));
+		JPanel panel = new JPanel();
+		scrollPaneHistory.setColumnHeaderView(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[] {516};
+		gbl_panel.rowHeights = new int[] {40, 0};
+		gbl_panel.columnWeights = new double[]{0.0};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
 		
-		JLabel lblPopupStatus = new JLabel("Popup is turn on");
+		JPanel panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 0;
+		panel.add(panel_1, gbc_panel_1);
+		panel_1.setLayout(null);
+		
+		btnRefresh = new JButton("Refresh");
+		btnRefresh.setMargin(new Insets(2, 7, 2, 7));
+		btnRefresh.setFont(new Font("Arial", Font.PLAIN, 10));
+		btnRefresh.setBounds(432, 9, 64, 21);
+		btnRefresh.addActionListener(this);
+		panel_1.add(btnRefresh);
+		
+		JLabel lblHistory = new JLabel("History");
+		lblHistory.setBounds(10, 7, 481, 25);
+		panel_1.add(lblHistory);
+		lblHistory.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHistory.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblHistory.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		
+		lblPopupStatus = new JLabel("Popup is turn off");
 		lblPopupStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
 		lblPopupStatus.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblPopupStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPopupStatus.setBounds(178, 10, 180, 18);
 		home.add(lblPopupStatus);
+		
+
+		lblTimeStatus = new JLabel();
+		lblTimeStatus.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblTimeStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTimeStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
+		lblTimeStatus.setBounds(145, 30, 250, 18);
+		home.add(lblTimeStatus);
 		
 		JLabel lblSetDisplay = new JLabel("every ->");
 		lblSetDisplay.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,13 +166,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 13));
 		comboTime.setBounds(316, 56, 210, 35);
 		home.add(comboTime);
-		
-		JLabel lblTimeStatus = new JLabel("\r\nTime to apperd: 14:50:00");
-		lblTimeStatus.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblTimeStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTimeStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
-		lblTimeStatus.setBounds(145, 30, 250, 18);
-		home.add(lblTimeStatus);
 		
 		JPanel dayReport = new JPanel();
 		tabbedPane.addTab("Day Report", null, dayReport, null);
@@ -265,11 +300,16 @@ public class MainFrame extends JFrame implements ActionListener {
 			
 			Popup popup = new Popup();
 			popup.setVisible(true);
+			
+			lblPopupStatus.setText("Popup is turn on");
+//			lblTimeStatus.setText("Time to apperd: 00:00");
 		}
 		else if(e.getSource() == btnStop) {
 //			getTags();
-			MyItems currentTag = (MyItems) comboTags.getSelectedItem();
-			System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
+//			MyItems currentTag = (MyItems) comboTags.getSelectedItem();
+//			System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
+			
+			lblPopupStatus.setText("Popup is turn off");
 		}
 		else if(e.getSource() == comboTags) {
 			MyItems myItems = (MyItems) comboTags.getSelectedItem();
@@ -281,6 +321,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnSetTags) {
 			setTagToFile();
+		}
+		else if(e.getSource() == btnRefresh) {
+			txtHistorial.setText(DataManager.readHistory());
 		}
 	}
 

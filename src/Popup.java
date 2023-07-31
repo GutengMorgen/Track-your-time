@@ -195,7 +195,7 @@ public class Popup extends JFrame implements ActionListener {
 	        @Override
 	        protected Void doInBackground() throws Exception {
 	            Popup popup = new Popup();
-	            popup.timer.setDisplay(new MainFrame().getTime());
+	            popup.timer.setPeriod(new MainFrame().getTime());
 	            popup.timer.start(popup);
 	            return null;
 	        }
