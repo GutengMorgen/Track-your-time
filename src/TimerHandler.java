@@ -11,6 +11,8 @@ public class TimerHandler {
 	//value in seconds
 	private int period = 0;
 	private Timer timer;
+	private JLabel out;
+	private String format = "Time to appear: %02d: %02d";
 
 	public int getPeriod() {
 		return period;
@@ -19,6 +21,14 @@ public class TimerHandler {
 	public void setPeriod(int periodMins) {
 //		TODO: this.period = periodMins * 60;
 		this.period = periodMins;
+	}
+	
+	public void setLabel(JLabel out) {
+		this.out = out;
+	}
+	
+	private JLabel label() {
+		return out;
 	}
 
 	public void getSeconds(JLabel out) {
@@ -72,36 +82,38 @@ public class TimerHandler {
 	/*
 	 * on Testing
 	 */
-	public void getTimerString(JLabel out) {
-		if(timer != null) {
-			Timer newtimer = new Timer(1000, new ActionListener() {
+	private Timer timer() {
+		if(timer == null) {
+			timer = new Timer(1000, new ActionListener() {
 				int seconds = getPeriod();
 				int minutes = seconds / 60;
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(minutes == 0 && seconds == 0)
-						((Timer) e.getSource()).stop();
+					if(minutes == 0 && seconds == 0) {
+						timer.stop();
+						timer = null;
+						Popup popup = new Popup();
+						popup.setVisible(true);
+					}
 					
 					else {
 	                    if (seconds == 0) {
 	                        minutes--;
 	                        seconds = 59;
 	                    }
-	                    else {
+	                    else
 	                        seconds--;
-	                    }
 	                }
 					
-					out.setText(String.format("Time to appeard: %02d: %02d", minutes, seconds));
+					out.setText(String.format(format, minutes, seconds));
 				}
 			});
-			
-			newtimer.start();
 		}
+		return timer;
 	}
 	
-	private Timer timer() {
+	/*private Timer timer() {
 		if(timer == null) {
 			timer = new Timer(1000, new ActionListener() {
 				int seconds = getPeriod();
@@ -110,10 +122,9 @@ public class TimerHandler {
 				public void actionPerformed(ActionEvent e) {
 					if(seconds == 0) {
 						timer.stop();
-						Popup popup = new Popup();
-//						popup.setBoolean(c);
-						popup.setVisible(true);
 						timer = null;
+						Popup popup = new Popup();
+						popup.setVisible(true);
 					}
 					else
 						seconds--;
@@ -125,7 +136,7 @@ public class TimerHandler {
 			});
 		}
 		return timer;
-	}
+	}*/
 	
 	public void startCountDown() {
 		if(getPeriod() == 0) {
@@ -143,6 +154,7 @@ public class TimerHandler {
 
 			timer().stop();
 			timer = null; // to reset the timer
+			out.setText(String.format(format, 0,0));
 		}
 	}
 }

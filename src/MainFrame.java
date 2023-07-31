@@ -29,7 +29,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements ActionListener, Observer {
+public class MainFrame extends JFrame implements ActionListener {
 	private JTextField txtSavekb;
 	private JTextField txtSkipkb;
 	private JTextField txtPreviouskb;
@@ -297,39 +297,21 @@ public class MainFrame extends JFrame implements ActionListener, Observer {
 		btnSetTags.addActionListener(this);
 		
 		
+		StatusSingleton.getInstance().setStatus(this);
+		timerHandler.setLabel(lblTimeStatus);
 	}
 
 	public void share(Boolean usePeriod) {
-
 		if(usePeriod)
-			timerHandler.setPeriod(getItemTime());
+			timerHandler.setPeriod(getComboxPeriod());
 		
 		timerHandler.startCountDown();
-		//no se actualiza porque el popup crea otra instancia del mainFrame
 //		timerHandler.getTimerString(lblTimeStatus);
-	}
-	
-	//para el popup
-	public void setStatus(Boolean usePeriod) {
-		
-	}
-	
-	//para el mainframe
-	public Boolean getStatus() {
-		return false;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnStart) {
 			
-//			Popup popup = new Popup();
-//			popup.setVisible(true);
-			
-//			timerHandler.setPeriod(10);
-			
-//			share(StatusSingleton.getInstance().getStatus());
-			
-			StatusSingleton.getInstance().setStatus(this);
 			share(false);
 			
 			lblPopupStatus.setText("Popup is turn on");
@@ -338,6 +320,7 @@ public class MainFrame extends JFrame implements ActionListener, Observer {
 		else if(e.getSource() == btnStop) {
 			
 			timerHandler.stop();
+			timerHandler.setPeriod(0);
 			
 			lblPopupStatus.setText("Popup is turn off");
 //			lblTimeStatus.setText("");
@@ -358,7 +341,7 @@ public class MainFrame extends JFrame implements ActionListener, Observer {
 		}
 	}
 
-	public int getItemTime() {
+	public int getComboxPeriod() {
 		String getItemString = comboTime.getSelectedItem().toString();
 		String splited = getItemString.split(" ")[0];
 		int time = Integer.parseInt(splited);
@@ -424,10 +407,5 @@ public class MainFrame extends JFrame implements ActionListener, Observer {
 	    }
 
 	    DataManager.writeTags(lines);
-	}
-	
-	@Override
-	public void update(Boolean newStatus) {
-		share(newStatus);
 	}
 }

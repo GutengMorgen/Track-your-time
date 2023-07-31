@@ -8,6 +8,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 
 @SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
+	MainFrame mainFrame;
 	final int WidthFrame = 480, HeightFrame = 290;
 	DataManager data = new DataManager();
 	ShortcutManager shortcuts = new ShortcutManager();
@@ -181,63 +182,25 @@ public class Popup extends JFrame implements ActionListener {
 		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
 		shortcuts.add(txtDescription, comboTags, this);
 		txtDescription.requestFocusInWindow();
+		
+
+		mainFrame = StatusSingleton.getInstance().getStatus();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-//		SaveClose();
-		SaveCall();
+		SaveClose();
 	}
 	
-	private void SaveCall() {
-
+	public void SaveClose() {
 //		String getTextDescription = txtDescription.getText();
 //		String getTagString = comboTags.getSelectedItem().toString();
 //		data.writeData(getTagString, getTextDescription);
 		
-		dispose();
-//		main
-//		MainFrame.timerHandler.setPeriod(HeightFrame);
-//		new MainFrame().share(true);
-		
-		MainFrame mainFrame = StatusSingleton.getInstance().getStatus();
-		mainFrame.share(true);
-		
-//		Subject subject = new Subject();
-//		MainFrame mainFrame = new MainFrame();
-//		
-//		subject.addObserver(mainFrame);
-//		subject.setBoolean(true);
-	}
-	
-	public void SaveClose() {
-		String getTextDescription = txtDescription.getText();
-		String getTagString = comboTags.getSelectedItem().toString();
-		data.writeData(getTagString, getTextDescription);
-		
 		//close the Pop up frame
 		dispose();
 		
-		// Start the timer in the background
-	    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-	        @Override
-	        protected Void doInBackground() throws Exception {
-	            Popup popup = new Popup();
-	            popup.timer.setPeriod(new MainFrame().getItemTime());
-	            popup.timer.start(popup);
-	            return null;
-	        }
-	    };
-
-	    // Add a listener to handle completion of the SwingWorker task
-	    worker.addPropertyChangeListener(evt -> {
-	        if (SwingWorker.StateValue.DONE == evt.getNewValue()) {
-	            // Handle the completion or any other tasks after the timer has started
-	        	System.out.println("is completed!");
-	        }
-	    });
-
-	    // Execute the SwingWorker
-	    worker.execute();
+		//execute the share method of the current MainFrame
+		mainFrame.share(true);
 	}
 	
 	public int getCoordinate(Dimension frameDimension, String positionString, double percent) {
