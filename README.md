@@ -38,7 +38,7 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 - [ ] cambiar el modo de cerrar del mainFrame por el de poner en icono de notificacion
 - [ ] poner una alerta(o algo parecido) cuando se intenta navegar por el data y existe texto en el `txtDescription`
 - [-] refactorizar el timer o como se llama al popup 
-	- hacer que el timer sea un coundown y que sea manejado por el mainframe
+	- hacer que el timer sea un countdown y que sea manejado por el mainframe
 	- cuando se ejecute el `SaveClose()` method que mande una "señal" al mainframe para que este obtenga el item seleccionado del `comboTime` y que empieze el countdown timer
 	- y cuando el countdown timer este en cero se ejecute el popup.
 		- hacer que el countdown timer tenga un parametro(talvez default 0) que si este es 0 se ejecute inmediatamente el popup

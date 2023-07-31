@@ -17,6 +17,7 @@ public class Popup extends JFrame implements ActionListener {
 	private JTextArea txtDescription;
 	private JTextArea txtLastData;
 	MyItems myItems = new MyItems();
+	Boolean confirmation = null;
 
 	/**
 	 * Launch the application.
@@ -32,6 +33,10 @@ public class Popup extends JFrame implements ActionListener {
 				}
 			}
 		});
+	}
+	
+	public Popup(Boolean c) {
+		this.confirmation = c;
 	}
 	
 	/**
@@ -179,7 +184,29 @@ public class Popup extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		SaveClose();
+//		SaveClose();
+		SaveCall();
+	}
+	
+	private void SaveCall() {
+
+//		String getTextDescription = txtDescription.getText();
+//		String getTagString = comboTags.getSelectedItem().toString();
+//		data.writeData(getTagString, getTextDescription);
+		
+		dispose();
+//		main
+//		MainFrame.timerHandler.setPeriod(HeightFrame);
+//		new MainFrame().share(true);
+		
+		MainFrame mainFrame = StatusSingleton.getInstance().getStatus();
+		mainFrame.share(true);
+		
+//		Subject subject = new Subject();
+//		MainFrame mainFrame = new MainFrame();
+//		
+//		subject.addObserver(mainFrame);
+//		subject.setBoolean(true);
 	}
 	
 	public void SaveClose() {
@@ -195,7 +222,7 @@ public class Popup extends JFrame implements ActionListener {
 	        @Override
 	        protected Void doInBackground() throws Exception {
 	            Popup popup = new Popup();
-	            popup.timer.setPeriod(new MainFrame().getTime());
+	            popup.timer.setPeriod(new MainFrame().getItemTime());
 	            popup.timer.start(popup);
 	            return null;
 	        }
@@ -234,5 +261,9 @@ public class Popup extends JFrame implements ActionListener {
 	public void openMainFrame() {
 		MainFrame mainFrame = new MainFrame();
 		mainFrame.setVisible(true);
+	}
+
+	public void setBoolean(Boolean c) {
+		this.confirmation = c;
 	}
 }

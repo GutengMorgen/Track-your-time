@@ -29,7 +29,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements ActionListener, Observer {
 	private JTextField txtSavekb;
 	private JTextField txtSkipkb;
 	private JTextField txtPreviouskb;
@@ -47,7 +47,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnRefresh;
 	private JTextArea txtHistorial;
 	private JLabel lblPopupStatus;
-	public JLabel lblTimeStatus;
+	private JLabel lblTimeStatus;
+	TimerHandler timerHandler = new TimerHandler();
+	Boolean confirmation = false;
 
 	/**
 	 * Launch the application.
@@ -293,23 +295,52 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnSetTags.setBounds(20, 320, 495, 23);
 		settings.add(btnSetTags);
 		btnSetTags.addActionListener(this);
+		
+		
 	}
 
+	public void share(Boolean usePeriod) {
+
+		if(usePeriod)
+			timerHandler.setPeriod(getItemTime());
+		
+		timerHandler.startCountDown();
+		//no se actualiza porque el popup crea otra instancia del mainFrame
+//		timerHandler.getTimerString(lblTimeStatus);
+	}
+	
+	//para el popup
+	public void setStatus(Boolean usePeriod) {
+		
+	}
+	
+	//para el mainframe
+	public Boolean getStatus() {
+		return false;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnStart) {
 			
-			Popup popup = new Popup();
-			popup.setVisible(true);
+//			Popup popup = new Popup();
+//			popup.setVisible(true);
+			
+//			timerHandler.setPeriod(10);
+			
+//			share(StatusSingleton.getInstance().getStatus());
+			
+			StatusSingleton.getInstance().setStatus(this);
+			share(false);
 			
 			lblPopupStatus.setText("Popup is turn on");
-//			lblTimeStatus.setText("Time to apperd: 00:00");
+//			timerHandler.getTimerString(lblTimeStatus);
 		}
 		else if(e.getSource() == btnStop) {
-//			getTags();
-//			MyItems currentTag = (MyItems) comboTags.getSelectedItem();
-//			System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
+			
+			timerHandler.stop();
 			
 			lblPopupStatus.setText("Popup is turn off");
+//			lblTimeStatus.setText("");
 		}
 		else if(e.getSource() == comboTags) {
 			MyItems myItems = (MyItems) comboTags.getSelectedItem();
@@ -327,7 +358,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 
-	public int getTime() {
+	public int getItemTime() {
 		String getItemString = comboTime.getSelectedItem().toString();
 		String splited = getItemString.split(" ")[0];
 		int time = Integer.parseInt(splited);
@@ -393,5 +424,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	    }
 
 	    DataManager.writeTags(lines);
+	}
+	
+	@Override
+	public void update(Boolean newStatus) {
+		share(newStatus);
 	}
 }
