@@ -13,6 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -208,12 +209,12 @@ public class DataManager {
 		System.out.println(readTemplates(TEMPLATE));
 	}
 	
-	private static Path getTemplatePath() throws FileNotFoundException {
+	private static Path getDataPath(String file) throws FileNotFoundException {
 		Path filePath = null;
 		
-		filePath = Paths.get("Data/Templates.csv");
+		filePath = Paths.get("Data/" + file);
 		if (!Files.exists(filePath))
-			throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
+			throw new FileNotFoundException("The file " + file + " does not exist in the Data directory.");
 		
 		return filePath;
 	}
@@ -224,7 +225,7 @@ public class DataManager {
 		//0 = tags; 1 = templates
 		String lineData = "";
 		try {
-			List<String> lines = Files.readAllLines(getTemplatePath());
+			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
 			
 			for (String line : lines) {
 				if (dataType.equals(TAG)) {
@@ -240,7 +241,7 @@ public class DataManager {
 			
 		} catch (FileNotFoundException e) {
 //			e.printStackTrace();
-			tagBuilder.append("Templates.csv not found");
+			tagBuilder.append(e.getMessage());
 		} catch (IOException e) {
 //			e.printStackTrace();
 			tagBuilder.append("Error occurs reading from the Templates.csv or a malformed orunmappable byte sequence is read");
@@ -259,7 +260,7 @@ public class DataManager {
 		//0 = tags; 1 = templates
 		List<String> lineData = new ArrayList<String>();
 		try {
-			List<String> lines = Files.readAllLines(getTemplatePath());
+			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
 			
 			for (String line : lines) {
 				if (dataType.equals(TAG)) {
@@ -285,7 +286,7 @@ public class DataManager {
 	public static List<String> linesTemplate(){
 		List<String> lineData = new ArrayList<String>();
 		try {
-			List<String> lines = Files.readAllLines(getTemplatePath());
+			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
 			
 			for (String line : lines) {
 				lineData.add(line);
@@ -302,7 +303,7 @@ public class DataManager {
 	
 	public static void writeTemplate(List<String> newTemplates) {
 		try {
-			Files.write(getTemplatePath(), newTemplates, StandardCharsets.UTF_8);
+			Files.write(getDataPath("Templates.csv"), newTemplates, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -310,9 +311,33 @@ public class DataManager {
 	
 	public static void writeTags(List<String> newTags) {
 		try {
-			Files.write(getTemplatePath(), newTags, StandardCharsets.UTF_8);
+			Files.write(getDataPath("Templates.csv"), newTags, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	
+	/*
+	 * creo que seria mejor comparar el texto del txtHistorial con las lineas y falta alguna recien modificarlo
+	 */
+	public static String readHistory() {
+		StringBuilder txtBuilder = new StringBuilder();
+		
+		try {
+			Files.lines(getDataPath("history.csv"))
+				 .forEach(e -> txtBuilder.append(e).append("\n"));
+			
+		} catch (FileNotFoundException e) {
+			txtBuilder.append(e.getMessage());
+		} catch (IOException e) {
+			txtBuilder.append(e.getMessage());
+		}
+		
+		return txtBuilder.toString().trim();
+	}
+	
+	
+	public static String getTimerString() {
+		return "";
 	}
 }
