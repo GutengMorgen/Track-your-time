@@ -391,7 +391,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnReleased.setText("Released " + item);
 	}
 
-	// TODO Auto-generated method stub
+	// TODO Make a new Class to put all this methods
 	private void releasedOperations() {
 		String item = comboOperations.getSelectedItem().toString();
 		
@@ -412,6 +412,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			int index = comboTags.getSelectedIndex();
 			TaggedManager.deleteLine(index);
 			
+			//TODO: make a method to update all comboBox with the new items
+			comboTags.removeAllItems();
 			myItems.setItems(comboTags);
 		}
 	}

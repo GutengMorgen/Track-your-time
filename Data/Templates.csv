@@ -2,10 +2,7 @@ Studying;Theme: \nSubTheme: \nResource: \nDescription:
 Relax;Resource: \nDescription: 
 Offline;Activity: \nDescription: 
 Wander online;Interest: \nDescription: 
-Working in own project;Project name or number: \nTask: \nSubtask: \nDescription: 
+Working in own project;Project name or number: \nTask: \nSubtask: \nStatus: \nDescription: 
 Working;Company: \nTask: \nSubtask: \nDescription: 
-testing;default template
-rge;default template
-ideo;default template
-idey;default template
-ideyr;default template
+testing;testing: 
+testingCUD;Create: \nUpdate: \nDelete: 
