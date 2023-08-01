@@ -398,23 +398,28 @@ public class MainFrame extends JFrame implements ActionListener {
 		if(item == CREATE) {
 			String tag = textFieldTag.getText();
 			String template = txtTemplate.getText().replace("\n", "\\n");
-			if(!tag.isEmpty() && !template.isEmpty())
+			if(!tag.isEmpty() && !template.isEmpty()) {
 				TaggedManager.createLine(tag, template);
+				TimerHandler.temporalText(1500, lblResult, "Tags stored in the file");
+			}
 			
 		}else if (item == UPDATE) {
 			int index = comboTags.getSelectedIndex();
 			String tag = textFieldTag.getText();
 			String template = txtTemplate.getText().replace("\n", "\\n");
-			if(!tag.isEmpty() && !template.isEmpty())
+			if(!tag.isEmpty() && !template.isEmpty()) {
 				TaggedManager.updateLine(tag, template, index);
+				TimerHandler.temporalText(1500, lblResult, "Updated Tag");
+			}
 			
 		}else if (item == DELETE) {
 			int index = comboTags.getSelectedIndex();
 			TaggedManager.deleteLine(index);
-			
 			//TODO: make a method to update all comboBox with the new items
 			comboTags.removeAllItems();
 			myItems.setItems(comboTags);
+			
+			TimerHandler.temporalText(1500, lblResult, "Tag removed from the file");
 		}
 	}
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaggedManager {
-	public static String TEMPLATE = "Templates.csv";
+	public static String TemplateFile = "Templates.csv";
 	
 	/**
 	 * TODO: fix the empty line on Templates.csv
@@ -22,23 +22,23 @@ public class TaggedManager {
 		
 		//maybe first read the file and then add the newLine into a new list and then write the list
 //		writeIntoFile(TEMPLATE, "\n" + newLine, StandardOpenOption.APPEND);
-		List<String> lines = readLines(TEMPLATE);
+		List<String> lines = readLines(TemplateFile);
 		lines.add(newLine);
-		writeToFile(TEMPLATE, lines);
+		writeToFile(TemplateFile, lines);
 	}
 	
 	public static void updateLine(String tag, String template, int index) {
 		String newLine = String.join(";", tag, template);
 		
-		List<String> lines = readLines(TEMPLATE);
+		List<String> lines = readLines(TemplateFile);
 		lines.set(index, newLine);
-		writeToFile(TEMPLATE, lines);
+		writeToFile(TemplateFile, lines);
 	}
 	
 	public static void deleteLine(int index) {
-		List<String> lines = readLines(TEMPLATE);
+		List<String> lines = readLines(TemplateFile);
 		lines.remove(index);
-		writeToFile(TEMPLATE, lines);
+		writeToFile(TemplateFile, lines);
 	}
 	
 	/**
@@ -58,7 +58,13 @@ public class TaggedManager {
 		}
 	}
 	
-	private static void writeIntoFile(String file, String line, StandardOpenOption Option) {
+	/**
+	 * @deprecated
+	 * @param file
+	 * @param line
+	 * @param Option
+	 */
+	static void writeIntoFile(String file, String line, StandardOpenOption Option) {
 		try {
 			Files.writeString(DataManager.getDataPath(file), line, Option);
 		} catch (FileNotFoundException e) {
@@ -89,7 +95,7 @@ public class TaggedManager {
 		return lines;
 	}
 	
-	public static List<String> readLines(String file, String... filter){
+	public static List<String> readLines(String file, Filters filter){
 		
 		//0 = tags; 1 = templates
 		List<String> lineData = new ArrayList<String>();
@@ -97,10 +103,10 @@ public class TaggedManager {
 			List<String> lines = Files.readAllLines(DataManager.getDataPath(file));
 			
 			for (String line : lines) {
-				if (filter.equals("")) {
+				if (filter == Filters.TAG) {
 					lineData.add(line.split(";")[0]);
 					
-				} else if(filter.equals(TEMPLATE)) {
+				} else if(filter == Filters.TEMPLATE) {
 					lineData.add(line.split(";")[1]);
 				}
 			}

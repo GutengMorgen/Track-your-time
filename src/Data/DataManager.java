@@ -19,7 +19,6 @@ import src.DateHandler;
 import src.MyItems;
 
 public class DataManager {
-	public static String TAG = "tag",TEMPLATE = "template";
 	private static String lastDate = "";
 
 	/**
@@ -212,7 +211,7 @@ public class DataManager {
 	 * @param dataType can be DataManager.TAG or DataManager.TEMPLATE
 	 * @return a String with all lines read from Templates.csv
 	 */
-	public static String readTemplates(String dataType) {
+	public static String readTemplates(Filters filter) {
 		StringBuilder tagBuilder = new StringBuilder();
 
 		//0 = tags; 1 = templates
@@ -221,10 +220,10 @@ public class DataManager {
 			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
 			
 			for (String line : lines) {
-				if (dataType.equals(TAG)) {
+				if (filter == Filters.TAG) {
 					lineData = line.split(";")[0];
 					
-				} else if(dataType.equals(TEMPLATE)) {
+				} else if(filter == Filters.TEMPLATE) {
 					lineData = line.split(";")[1];
 				}
 				
@@ -247,7 +246,7 @@ public class DataManager {
 	 * @param filter can be DataManager.TAG or DataManager.TEMPLATE
 	 * @deprecated maybe this method will be delete
 	 */
-	public static List<String> linesTemplate(String filter){
+	public static List<String> linesTemplate(Filters filter){
 		
 		//0 = tags; 1 = templates
 		List<String> lineData = new ArrayList<String>();
@@ -255,10 +254,10 @@ public class DataManager {
 			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
 			
 			for (String line : lines) {
-				if (filter.equals(TAG)) {
+				if (filter == Filters.TAG) {
 					lineData.add(line.split(";")[0]);
 					
-				} else if(filter.equals(TEMPLATE)) {
+				} else if(filter == Filters.TEMPLATE) {
 					lineData.add(line.split(";")[1]);
 				}
 			}
