@@ -42,7 +42,6 @@ public class TimerHandler {
 						timer = null;
 						runPopup();
 					}
-					
 					else {
 	                    if (seconds == 0) {
 	                        minutes--;
@@ -100,5 +99,16 @@ public class TimerHandler {
 				out.setText(String.format(format, DateHandler.getTime(currentTime)));
 			}
 		}).start();
+	}
+
+	private static Timer temporal = null;
+	public static void temporalText(int milliseconds, JLabel label, String txt) {
+		label.setText(txt);
+		
+		if(temporal == null || !temporal.isRunning()) {
+			temporal = new Timer(milliseconds, e -> label.setText(""));
+			temporal.setRepeats(false);
+			temporal.start();
+		}
 	}
 }

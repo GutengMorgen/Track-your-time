@@ -5,18 +5,18 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import src.DataManager;
+
 import src.MyItems;
 import src.ShortcutManager;
 import src.Singleton;
 import src.TimerHandler;
+import src.Data.DataManager;
 
 @SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
 	MainFrame mainFrame;
 	MyItems myItems = new MyItems();
 	TimerHandler timer = new TimerHandler();
-	private DataManager data = new DataManager();
 	ShortcutManager shortcuts = new ShortcutManager();
 	private JPanel contentPane;
 	private JComboBox<MyItems> comboTags;
@@ -207,9 +207,9 @@ public class Popup extends JFrame implements ActionListener {
 	 * on Testing
 	 */
 	public void SaveClose() {
-		String getTextDescription = txtDescription.getText();
-		String getTagString = comboTags.getSelectedItem().toString();
-		DataManager.writeData(getTagString, getTextDescription);
+//		String getTextDescription = txtDescription.getText();
+//		String getTagString = comboTags.getSelectedItem().toString();
+//		DataManager.writeData(getTagString, getTextDescription);
 		
 		//close the Pop up frame
 		//TODO: try using HIDE_ON_CLOSE

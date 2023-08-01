@@ -3,6 +3,8 @@ package src;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import src.Data.DataManager;
+
 public class MyItems {
 	private String tag;
 	private String template;

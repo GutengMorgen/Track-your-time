@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import src.Data.DataManager;
 import src.Frames.Popup;
 
 @SuppressWarnings("serial")

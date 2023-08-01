@@ -18,7 +18,7 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 
 ## new Design
 - [ ] agregar una nueva funcion para que aparezca el popup con un shortcut
-- [ ] agregar una opcion para poner alertas cuando aparezca el popup en x tiempo
+- [ ] agregar una opcion para poner mensajes/alertas programado cuando aparezca el popup en x tiempo
 - [ ] agregar una opcion para poner (un texto o un tag) lo que se supone que vaz a hacer cuando aparezca el siguiente popup
 - [ ] agregar un pomotoro timer en el mainframe
 
@@ -32,8 +32,9 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 - [x] actualizar el texto del `lblPopupStatus` segun si el popup inicio o no
 - [x] actualizar el texto del `lblTimeStatus` segun el tiempo que falta para que aparezca el popup
 - [x] dar funcionalidad al boton `Stop`
-- [ ] actualizar los items del combotag cuando se presione el boton `btnSetTags`
-- [ ] actualizar el texto del `lblResult` cuando se presione el boton `btnSetTags` o `btnSetTemplate`
+- [x] actualizar los items del combotag cuando se presione el boton `btnSetTags`
+- [x] actualizar el texto del `lblResult` cuando se presione el boton `btnSetTags` o `btnSetTemplate`
+- [ ] hacer que en el `txtTags` se puedan crear/eliminar tags 
 - [ ] hacer los shortcuts editables
 - [ ] hacer que el mainframe aparezca cuando se windows inicie
 - [ ] cambiar el modo de cerrar del mainFrame por el de poner en icono de notificacion
@@ -44,13 +45,26 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 	- y cuando el countdown timer este en cero se ejecute el popup.
 		- hacer que el countdown timer tenga un parametro(talvez default 0) que si este es 0 se ejecute inmediatamente el popup
 - [x] en MainFrame/home crear dos botones: 1. para ejecutar el popup inmediatamente y 2. para ejecutar el popup segun el tiempo establecido en el `comboTime`
+- [ ] poner los ActionListener de los botones en una nueva clase
 
-- [ ] refactorizar DataManager
+- [-] refactorizar DataManager
 - [x] refactorizar DateHandler
-- [ ] refactorizar MainFrame
+- [x] refactorizar MainFrame
 - [x] refactorizar MyItems
-- [-] refactorizar Popup
+- [x] refactorizar Popup
 - [ ] refactorizar ShortcutManager
 - [x] refactorizar Singleton
 - [x] refactorizar TimerHandler
+
+
+nueva gui para tags
+- un boton para crear tags
+ 	- contendra un textfield para poner el nombre del tag, luego lo guardara el el file y actualizara el comoTags
+- un boton para actualizar tags
+ 	- contendra el comboTags y un textField, se seleccionara el item del comboTags y luego se actualizara con el texto del textField
+ 	- incluir un textArea que cuando se seleccione un item se actualizara el textArea con el template del item
+ 	- cuando se presione el boton se actualizara el tag con el texto del textField y se actualizara el template con el texto del textArea(iterar las lineas para actualizarlo)
+- un boton para eliminar tags
+	- contendra el comboTags y cuando se seleccione un item entonces se eliminara ese item del file Template.csv
+- un boton para obtener tags 
 

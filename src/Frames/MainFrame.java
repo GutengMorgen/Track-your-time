@@ -24,10 +24,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-import src.DataManager;
 import src.MyItems;
 import src.Singleton;
 import src.TimerHandler;
+import src.Data.DataManager;
+import src.Data.TaggedManager;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -45,9 +46,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JTextField txtTemplatekb;
 	private JButton btnStop;
 	private JButton btnStart;
-	private JTextArea txtTags;
 	private JComboBox<MyItems> comboTags;
-	private JButton btnSetTemplate;
 	private JTextArea txtTemplate;
 	private JComboBox<String> comboTime;
 	private JButton btnSetTags;
@@ -58,6 +57,11 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnStartPeriod;
 	private JPanel settings;
 	public JTabbedPane tabbedPane;
+	private JLabel lblResult;
+	private JTextField textFieldTag;
+	private JButton btnReleased;
+	private JComboBox<String> comboOperations;
+	private static String CREATE = "Create", UPDATE = "Update", DELETE = "Delete";
 
 	/**
 	 * Launch the application.
@@ -260,55 +264,66 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		JLabel lblCustomTags = new JLabel("Custom Tags");
 		lblCustomTags.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblCustomTags.setBounds(10, 182, 135, 24);
+		lblCustomTags.setBounds(10, 191, 109, 24);
 		settings.add(lblCustomTags);
 		
-		JScrollPane scrollPaneTags = new JScrollPane();
-		scrollPaneTags.setBounds(20, 217, 495, 100);
-		settings.add(scrollPaneTags);
-		
-		txtTags = new JTextArea();
-		scrollPaneTags.setViewportView(txtTags);
-		txtTags.setText(DataManager.readTemplates(DataManager.TAG));
-		
 		JScrollPane scrollPaneTemplate = new JScrollPane();
-		scrollPaneTemplate.setBounds(20, 400, 495, 108);
+		scrollPaneTemplate.setBounds(20, 345, 492, 103);
 		settings.add(scrollPaneTemplate);
 		
 		txtTemplate = new JTextArea();
 		scrollPaneTemplate.setViewportView(txtTemplate);
 		
-		comboTags = new JComboBox<MyItems>();
-		comboTags.addActionListener(this);
-		myItems.setItems(comboTags);
-		scrollPaneTemplate.setColumnHeaderView(comboTags);
-		
-		JLabel lblTagsTemplate = new JLabel("Tags Template");
-		lblTagsTemplate.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblTagsTemplate.setBounds(10, 365, 135, 24);
-		settings.add(lblTagsTemplate);
-		
-		JRadioButton rdGetTemplate = new JRadioButton("Get tag template by default");
-		rdGetTemplate.setFont(new Font("Arial", Font.PLAIN, 11));
-		rdGetTemplate.setBounds(281, 134, 166, 23);
-		settings.add(rdGetTemplate);
-		
-		btnSetTemplate = new JButton("Set template");
-		btnSetTemplate.setBounds(20, 511, 358, 23);
-		settings.add(btnSetTemplate);
-		btnSetTemplate.addActionListener(this);
-		
-		JLabel lblResult = new JLabel("Done!");
-		lblResult.setLabelFor(btnSetTemplate);
-		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblResult.setBounds(405, 512, 60, 22);
+		lblResult = new JLabel();
+		lblResult.setText("34234");
+		lblResult.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblResult.setBounds(169, 494, 185, 22);
 		settings.add(lblResult);
 		
 		btnSetTags = new JButton("Set tags");
-		btnSetTags.setBounds(20, 320, 495, 23);
+		btnSetTags.setBounds(387, 524, 125, 23);
 		settings.add(btnSetTags);
+		
+		comboOperations = new JComboBox<String>();
+		comboOperations.setModel(new DefaultComboBoxModel<String>(new String[] {CREATE, UPDATE, DELETE}));
+		comboOperations.setBounds(205, 226, 80, 31);
+		comboOperations.setSelectedIndex(0);
+		settings.add(comboOperations);
+		comboOperations.addActionListener(this);
+		
+		btnReleased = new JButton("Released");
+		btnReleased.setBounds(20, 459, 492, 24);
+		settings.add(btnReleased);
+		btnReleased.addActionListener(this);
+		
+		JLabel lblSelectOperation = new JLabel("Select Operation:");
+		lblSelectOperation.setFont(new Font("Lucida Console", Font.PLAIN, 15));
+		lblSelectOperation.setBounds(20, 226, 159, 31);
+		settings.add(lblSelectOperation);
+		
+		JLabel lblCustomTag = new JLabel("New Tag Name");
+		lblCustomTag.setBounds(20, 268, 97, 14);
+		settings.add(lblCustomTag);
+		
+		JLabel lblCustomTemplate = new JLabel("New Template");
+		lblCustomTemplate.setBounds(20, 320, 89, 14);
+		settings.add(lblCustomTemplate);
+		
+		textFieldTag = new JTextField();
+		textFieldTag.setBounds(20, 289, 149, 20);
+		settings.add(textFieldTag);
+		textFieldTag.setColumns(10);
+		
+		comboTags = new JComboBox<MyItems>();
+		comboTags.setBounds(293, 287, 219, 24);
+		settings.add(comboTags);
+		comboTags.addActionListener(this);
+		myItems.setItems(comboTags);
+		
+		
 		btnSetTags.addActionListener(this);
-
 		Singleton.getInstance().setFrame(this);
 	}
 	
@@ -327,79 +342,95 @@ public class MainFrame extends JFrame implements ActionListener {
 			lblPopupStatus.setText("Popup is turn off");
 		}
 		else if(e.getSource() == comboTags) {
-			MyItems myItems = (MyItems) comboTags.getSelectedItem();
-			txtTemplate.setText(myItems.getTemplate().replace("\\n", "\n"));
-		}
-		else if(e.getSource() == btnSetTemplate) {
-			saveTemplateToFile();
+			String item = comboOperations.getSelectedItem().toString();
+			if (item == UPDATE) {
+				MyItems myItems = (MyItems) comboTags.getSelectedItem();
+				
+				textFieldTag.setText(myItems.toString());
+				txtTemplate.setText(myItems.getTemplate().replace("\\n", "\n"));
+			}
 		}
 		else if(e.getSource() == btnSetTags) {
-			saveTagsToFile();
+			DataManager.saveTags(getArrayTags());
+			comboTags.removeAllItems();
+			myItems.setItems(comboTags);
+			TimerHandler.temporalText(1500, lblResult, "Tags stored in the file");
 		}
 		else if(e.getSource() == btnRefresh) {
 			txtHistorial.setText(DataManager.readHistory());
 		}
+		else if(e.getSource() == comboOperations) {
+			releasedComboOperations();
+		}
+		else if(e.getSource() == btnReleased) {
+			releasedOperations();
+		}
+//		DataManager.saveTemplate(comboTags, txtTemplate);
+//		TimerHandler.temporalText(1500, lblResult, "Template stored in the file");
 	}
-	
+
+	private void releasedComboOperations() {
+		String item = comboOperations.getSelectedItem().toString();
+		
+		if (item == CREATE) {
+			textFieldTag.setEnabled(true);
+			txtTemplate.setEnabled(true);
+			comboTags.setEnabled(false);
+		}
+		else if (item == UPDATE) {
+			textFieldTag.setEnabled(true);
+			txtTemplate.setEnabled(true);
+			comboTags.setEnabled(true);
+		}
+		else if (item == DELETE) {
+			textFieldTag.setEnabled(false);
+			txtTemplate.setEnabled(false);
+			comboTags.setEnabled(true);
+		}
+		
+		btnReleased.setText("Released " + item);
+	}
+
+	// TODO Auto-generated method stub
+	private void releasedOperations() {
+		String item = comboOperations.getSelectedItem().toString();
+		
+		if(item == CREATE) {
+			String tag = textFieldTag.getText();
+			String template = txtTemplate.getText().replace("\n", "\\n");
+			if(!tag.isEmpty() && !template.isEmpty())
+				TaggedManager.createLine(tag, template);
+			
+		}else if (item == UPDATE) {
+			int index = comboTags.getSelectedIndex();
+			String tag = textFieldTag.getText();
+			String template = txtTemplate.getText().replace("\n", "\\n");
+			if(!tag.isEmpty() && !template.isEmpty())
+				TaggedManager.updateLine(tag, template, index);
+			
+		}else if (item == DELETE) {
+			int index = comboTags.getSelectedIndex();
+			TaggedManager.deleteLine(index);
+			
+			myItems.setItems(comboTags);
+		}
+	}
+
 	public void share(Boolean usePeriod) {
 		if(usePeriod)
 			timerHandler.setPeriod(getComboxPeriod());
-		
 		timerHandler.start();
 	}
 
 	private int getComboxPeriod() {
-		String getItemString = comboTime.getSelectedItem().toString();
-		String splited = getItemString.split(" ")[0]; //return the number
-		
+		String itemString = comboTime.getSelectedItem().toString();
+		String splited = itemString.split(" ")[0]; //return the number of the item
 		return Integer.parseInt(splited);
 	}
 	
 	public String[] getArrayTags() {
-		String[] txtSplited = txtTags.getText().split("\n");
+//		String[] txtSplited = txtTags.getText().split("\n");
+		String[] txtSplited = "fwef".split("\n");
 		return txtSplited;
-	}
-
-	private void saveTemplateToFile() {
-		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
-		String template = txtTemplate.getText().replace("\n", "\\n");
-
-		//TODO: to not create the reset button, although i think i have to
-		currentTag.setTemplate(template);
-		
-		List<String> lines = DataManager.linesTemplate();
-		
-		for (int i = 0; i < lines.size(); i++) {
-			String line = lines.get(i);
-			String[] split = line.split(";");
-			
-			if(split[0].equals(currentTag.toString())) {
-				lines.remove(i);
-				lines.add(i, String.join(";", split[0], template));
-				DataManager.writeTemplate(lines);
-			}
-		}
-	}
-	
-	private void saveTagsToFile() {
-	    List<String> lines = DataManager.linesTemplate();
-	    String[] tags = getArrayTags();
-
-	    for (String tag : tags) {
-	        boolean tagExists = false;
-
-	        for (String line : lines) {
-	            String[] split = line.split(";");
-	            if (split[0].equals(tag)) {
-	                tagExists = true;
-	                break;
-	            }
-	        }
-
-	        if (!tagExists)
-	            lines.add(String.join(";", tag, "default template"));
-	    }
-
-	    DataManager.writeTags(lines);
 	}
 }

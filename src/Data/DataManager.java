@@ -1,4 +1,4 @@
-package src;
+package src.Data;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -11,6 +11,12 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+
+import src.DateHandler;
+import src.MyItems;
 
 public class DataManager {
 	public static String TAG = "tag",TEMPLATE = "template";
@@ -162,26 +168,16 @@ public class DataManager {
 	}
 	
 	public static Integer getSize() {
-		int index = 0;
+		int size = 0;
 		
 		try {
-			Path filePath = Paths.get("./Data/data.csv");
-			if (!Files.exists(filePath))
-				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
-			
-			List<String> lines = Files.readAllLines(filePath);
-			if(!lines.isEmpty()) {
-				index = lines.size();
-			}
-			else {
-				index = 0;
-			}
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			List<String> lines = Files.readAllLines(getDataPath("data.csv"));
+			size = lines.size();
+		} catch (Exception e) {
+			size = 0;
 		}
 		
-		return index;
+		return size;
 	}
 	
 	public static String filterLine(String line, String filter) {
@@ -201,7 +197,7 @@ public class DataManager {
 		return result;
 	}
 	
-	private static Path getDataPath(String file) throws FileNotFoundException {
+	public static Path getDataPath(String file) throws FileNotFoundException {
 		Path filePath = null;
 		
 		filePath = Paths.get("Data/" + file);
@@ -330,5 +326,57 @@ public class DataManager {
 		}
 		
 		return txtBuilder.toString().trim();
+	}
+	
+	/**
+	 * save tags in Template.csv
+	 * @param tagArray
+	 */
+	public static void saveTags(String[] tagArray) {
+	    List<String> lines = DataManager.linesTemplate();
+	    String[] tags = tagArray;
+
+	    for (String tag : tags) {
+	        boolean tagExists = false;
+
+	        for (String line : lines) {
+	            String[] split = line.split(";");
+	            if (split[0].equals(tag)) {
+	                tagExists = true;
+	                break;
+	            }
+	        }
+
+	        if (!tagExists)
+	            lines.add(String.join(";", tag, "default template"));
+	    }
+
+	    DataManager.writeTags(lines);
+	}
+	
+	/**
+	 * save template of the current tag in Template.csv
+	 * @param comboTags
+	 * @param txtTemplate
+	 */
+	public static void saveTemplate(JComboBox<MyItems> comboTags, JTextArea txtTemplate) {
+		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
+		String template = txtTemplate.getText().replace("\n", "\\n");
+
+		//TODO: to not create the reset button, although i think i have to
+		currentTag.setTemplate(template);
+		
+		List<String> lines = DataManager.linesTemplate();
+		
+		for (int i = 0; i < lines.size(); i++) {
+			String line = lines.get(i);
+			String[] split = line.split(";");
+			
+			if(split[0].equals(currentTag.toString())) {
+				lines.remove(i);
+				lines.add(i, String.join(";", split[0], template));
+				DataManager.writeTemplate(lines);
+			}
+		}
 	}
 }
