@@ -19,26 +19,38 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 ## new Design
 - [ ] agregar una nueva funcion para que aparezca el popup con un shortcut
 - [ ] agregar una opcion para poner alertas cuando aparezca el popup en x tiempo
-- [ ] agregar una opcion para poner (un texto o un tag) lo que se supone que vaz a hacer cuando aparezca el siguiente popup 
+- [ ] agregar una opcion para poner (un texto o un tag) lo que se supone que vaz a hacer cuando aparezca el siguiente popup
+- [ ] agregar un pomotoro timer en el mainframe
 
 ## Bugs/new Features
 - [x] como se muestra tiempo de cada descripcion pasada
 - [x] mostrar la hora actual al lado de la descripcion
 - [ ] cambiar la forma de guardar el texto de la descripcion ya que no se admite dobles comillas
-- [ ] poner el mayusculas todos los tipos(date, time, tag, description) de data.csv
+- [ ] poner en mayusculas todos los tipos(date, time, tag, description) de data.csv
 	- o talvez deberia eliminarlos y solo obtener los contenidos de cada tipo por el indice del array
 - [x] poner todas las lineas del history.csv al `txtHistorial` y talvez un boton de refresh
 - [x] actualizar el texto del `lblPopupStatus` segun si el popup inicio o no
-- [-] actualizar el texto del `lblTimeStatus` segun el tiempo que falta para que aparezca el popup
-- [ ] dar funcionalidad al boton `Stop`
+- [x] actualizar el texto del `lblTimeStatus` segun el tiempo que falta para que aparezca el popup
+- [x] dar funcionalidad al boton `Stop`
 - [ ] actualizar los items del combotag cuando se presione el boton `btnSetTags`
 - [ ] actualizar el texto del `lblResult` cuando se presione el boton `btnSetTags` o `btnSetTemplate`
 - [ ] hacer los shortcuts editables
 - [ ] hacer que el mainframe aparezca cuando se windows inicie
 - [ ] cambiar el modo de cerrar del mainFrame por el de poner en icono de notificacion
 - [ ] poner una alerta(o algo parecido) cuando se intenta navegar por el data y existe texto en el `txtDescription`
-- [-] refactorizar el timer o como se llama al popup 
+- [x] refactorizar el timer o como se llama al popup 
 	- hacer que el timer sea un countdown y que sea manejado por el mainframe
 	- cuando se ejecute el `SaveClose()` method que mande una "señal" al mainframe para que este obtenga el item seleccionado del `comboTime` y que empieze el countdown timer
 	- y cuando el countdown timer este en cero se ejecute el popup.
 		- hacer que el countdown timer tenga un parametro(talvez default 0) que si este es 0 se ejecute inmediatamente el popup
+- [x] en MainFrame/home crear dos botones: 1. para ejecutar el popup inmediatamente y 2. para ejecutar el popup segun el tiempo establecido en el `comboTime`
+
+- [ ] refactorizar DataManager
+- [x] refactorizar DateHandler
+- [ ] refactorizar MainFrame
+- [x] refactorizar MyItems
+- [-] refactorizar Popup
+- [ ] refactorizar ShortcutManager
+- [x] refactorizar Singleton
+- [x] refactorizar TimerHandler
+

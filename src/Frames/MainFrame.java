@@ -1,4 +1,4 @@
-package src;
+package src.Frames;
 
 import java.awt.EventQueue;
 
@@ -23,6 +23,12 @@ import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import src.DataManager;
+import src.MyItems;
+import src.Singleton;
+import src.TimerHandler;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -30,6 +36,8 @@ import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
+	MyItems myItems = new MyItems();
+	TimerHandler timerHandler = new TimerHandler();
 	private JTextField txtSavekb;
 	private JTextField txtSkipkb;
 	private JTextField txtPreviouskb;
@@ -39,7 +47,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnStart;
 	private JTextArea txtTags;
 	private JComboBox<MyItems> comboTags;
-	MyItems myItems = new MyItems();
 	private JButton btnSetTemplate;
 	private JTextArea txtTemplate;
 	private JComboBox<String> comboTime;
@@ -48,8 +55,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JTextArea txtHistorial;
 	private JLabel lblPopupStatus;
 	private JLabel lblTimeStatus;
-	TimerHandler timerHandler = new TimerHandler();
-	Boolean confirmation = false;
+	private JButton btnStartPeriod;
+	private JPanel settings;
+	public JTabbedPane tabbedPane;
 
 	/**
 	 * Launch the application.
@@ -79,7 +87,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		setTitle("Time Dial");
 		setBounds(100, 100, 560, 625);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(new Color(255, 255, 255));
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
@@ -87,14 +95,20 @@ public class MainFrame extends JFrame implements ActionListener {
 		tabbedPane.addTab("Home", null, home, null);
 		tabbedPane.setEnabledAt(0, true);
 		home.setLayout(null);
+
+		btnStartPeriod = new JButton("Start");
+		btnStartPeriod.setBounds(110, 56, 90, 35);
+		home.add(btnStartPeriod);
+		btnStartPeriod.addActionListener(this);
 		
-		btnStart = new JButton("Start");
-		btnStart.setBounds(10, 56, 190, 35);
+		btnStart = new JButton("Start now");
+		btnStart.setMargin(new Insets(2, 7, 2, 7));
+		btnStart.setBounds(10, 56, 90, 35);
 		home.add(btnStart);
 		btnStart.addActionListener(this);
 		
 		btnStop = new JButton("Stop");
-		btnStop.setBounds(10, 8, 95, 24);
+		btnStop.setBounds(10, 8, 90, 35);
 		home.add(btnStop);
 		btnStop.addActionListener(this);
 		
@@ -146,27 +160,27 @@ public class MainFrame extends JFrame implements ActionListener {
 		lblPopupStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
 		lblPopupStatus.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblPopupStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPopupStatus.setBounds(178, 10, 180, 18);
+		lblPopupStatus.setBounds(194, 10, 150, 18);
 		home.add(lblPopupStatus);
 		
-
 		lblTimeStatus = new JLabel();
 		lblTimeStatus.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblTimeStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTimeStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
-		lblTimeStatus.setBounds(145, 30, 250, 18);
+		lblTimeStatus.setBounds(182, 30, 175, 18);
 		home.add(lblTimeStatus);
+		timerHandler.setLabel(lblTimeStatus);
 		
 		JLabel lblSetDisplay = new JLabel("every ->");
 		lblSetDisplay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSetDisplay.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblSetDisplay.setBounds(210, 61, 96, 24);
+		lblSetDisplay.setBounds(224, 61, 90, 24);
 		home.add(lblSetDisplay);
 		
 		comboTime = new JComboBox<String>();
 		comboTime.setModel(new DefaultComboBoxModel<String>(new String[] {"15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "45 min", "50 min", "55 min", "60 min"}));
 		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 13));
-		comboTime.setBounds(316, 56, 210, 35);
+		comboTime.setBounds(336, 56, 190, 35);
 		home.add(comboTime);
 		
 		JPanel dayReport = new JPanel();
@@ -179,7 +193,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		JPanel monthReport = new JPanel();
 		tabbedPane.addTab("Month Report", null, monthReport, null);
 		
-		JPanel settings = new JPanel();
+		settings = new JPanel();
 		tabbedPane.addTab("Settings", null, settings, null);
 		tabbedPane.setEnabledAt(4, true);
 		settings.setLayout(null);
@@ -255,7 +269,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		txtTags = new JTextArea();
 		scrollPaneTags.setViewportView(txtTags);
-//		txtTags.setText("Studying\r\nRelax\r\nOffline\r\nWander online\r\nWorking in own project\r\nWorking");
 		txtTags.setText(DataManager.readTemplates(DataManager.TAG));
 		
 		JScrollPane scrollPaneTemplate = new JScrollPane();
@@ -295,77 +308,59 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnSetTags.setBounds(20, 320, 495, 23);
 		settings.add(btnSetTags);
 		btnSetTags.addActionListener(this);
-		
-		
-		StatusSingleton.getInstance().setStatus(this);
-		timerHandler.setLabel(lblTimeStatus);
-	}
 
-	public void share(Boolean usePeriod) {
-		if(usePeriod)
-			timerHandler.setPeriod(getComboxPeriod());
-		
-		timerHandler.startCountDown();
-//		timerHandler.getTimerString(lblTimeStatus);
+		Singleton.getInstance().setFrame(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnStart) {
-			
 			share(false);
-			
 			lblPopupStatus.setText("Popup is turn on");
-//			timerHandler.getTimerString(lblTimeStatus);
+		}
+		else if(e.getSource() == btnStartPeriod) {
+			share(true);
+			lblPopupStatus.setText("Popup is turn on");
 		}
 		else if(e.getSource() == btnStop) {
-			
 			timerHandler.stop();
 			timerHandler.setPeriod(0);
-			
 			lblPopupStatus.setText("Popup is turn off");
-//			lblTimeStatus.setText("");
 		}
 		else if(e.getSource() == comboTags) {
 			MyItems myItems = (MyItems) comboTags.getSelectedItem();
 			txtTemplate.setText(myItems.getTemplate().replace("\\n", "\n"));
 		}
 		else if(e.getSource() == btnSetTemplate) {
-//			setTemplate();
-			setTemplateToFile();
+			saveTemplateToFile();
 		}
 		else if(e.getSource() == btnSetTags) {
-			setTagToFile();
+			saveTagsToFile();
 		}
 		else if(e.getSource() == btnRefresh) {
 			txtHistorial.setText(DataManager.readHistory());
 		}
 	}
-
-	public int getComboxPeriod() {
-		String getItemString = comboTime.getSelectedItem().toString();
-		String splited = getItemString.split(" ")[0];
-		int time = Integer.parseInt(splited);
+	
+	public void share(Boolean usePeriod) {
+		if(usePeriod)
+			timerHandler.setPeriod(getComboxPeriod());
 		
-		return time;
+		timerHandler.start();
+	}
+
+	private int getComboxPeriod() {
+		String getItemString = comboTime.getSelectedItem().toString();
+		String splited = getItemString.split(" ")[0]; //return the number
+		
+		return Integer.parseInt(splited);
 	}
 	
-	public String[] getTags() {
+	public String[] getArrayTags() {
 		String[] txtSplited = txtTags.getText().split("\n");
-//		System.out.println(txtSplited.length);
 		return txtSplited;
 	}
-	
-	public void setTemplate() {
-		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
-		String txt = txtTemplate.getText().replace("\n", "\\n");
-		
-		currentTag.setTemplate(txt);
-		
-		System.out.println(currentTag.getName() + " - " + currentTag.getTemplate());
-	}
 
-	
-	private void setTemplateToFile() {
+	private void saveTemplateToFile() {
 		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
 		String template = txtTemplate.getText().replace("\n", "\\n");
 
@@ -378,7 +373,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			String line = lines.get(i);
 			String[] split = line.split(";");
 			
-			if(split[0].equals(currentTag.getName())) {
+			if(split[0].equals(currentTag.toString())) {
 				lines.remove(i);
 				lines.add(i, String.join(";", split[0], template));
 				DataManager.writeTemplate(lines);
@@ -386,9 +381,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 	
-	private void setTagToFile() {
+	private void saveTagsToFile() {
 	    List<String> lines = DataManager.linesTemplate();
-	    String[] tags = getTags();
+	    String[] tags = getArrayTags();
 
 	    for (String tag : tags) {
 	        boolean tagExists = false;
@@ -401,9 +396,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	            }
 	        }
 
-	        if (!tagExists) {
+	        if (!tagExists)
 	            lines.add(String.join(";", tag, "default template"));
-	        }
 	    }
 
 	    DataManager.writeTags(lines);

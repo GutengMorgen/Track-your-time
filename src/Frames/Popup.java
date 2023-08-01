@@ -1,24 +1,30 @@
-package src;
+package src.Frames;
 
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import src.DataManager;
+import src.MyItems;
+import src.ShortcutManager;
+import src.Singleton;
+import src.TimerHandler;
 
 @SuppressWarnings("serial")
 public class Popup extends JFrame implements ActionListener {
 	MainFrame mainFrame;
-	final int WidthFrame = 480, HeightFrame = 290;
-	DataManager data = new DataManager();
-	ShortcutManager shortcuts = new ShortcutManager();
+	MyItems myItems = new MyItems();
 	TimerHandler timer = new TimerHandler();
+	public DataManager data = new DataManager();
+	ShortcutManager shortcuts = new ShortcutManager();
 	private JPanel contentPane;
 	private JComboBox<MyItems> comboTags;
 	private JTextArea txtDescription;
 	private JTextArea txtLastData;
-	MyItems myItems = new MyItems();
-	Boolean confirmation = null;
+	private JButton btnViewReport;
+	private JButton btnSettings;
+	private JButton btnSave;
 
 	/**
 	 * Launch the application.
@@ -34,10 +40,6 @@ public class Popup extends JFrame implements ActionListener {
 				}
 			}
 		});
-	}
-	
-	public Popup(Boolean c) {
-		this.confirmation = c;
 	}
 	
 	/**
@@ -85,7 +87,8 @@ public class Popup extends JFrame implements ActionListener {
 		
 		comboTags = new JComboBox<MyItems>();
 		comboTags.setUI(new BasicComboBoxUI() {
-		    protected void paintFocus(Graphics g, Rectangle rectangle, Dimension dimension) {
+		    @SuppressWarnings("unused")
+			protected void paintFocus(Graphics g, Rectangle rectangle, Dimension dimension) {
 		        // Override this method to do nothing, effectively removing the focus border.
 		    }
 		});
@@ -105,7 +108,7 @@ public class Popup extends JFrame implements ActionListener {
 		myItems.setItems(comboTags);
 		contentPane.add(comboTags);
 		
-		JButton btnSave = new JButton("SAVE (ctrl + s)");
+		btnSave = new JButton("SAVE (ctrl + s)");
 		btnSave.setFont(new Font("Lucida Console", Font.BOLD, 17));
 		btnSave.setForeground(new Color(248, 248, 241));
 		btnSave.setBackground(new Color(26, 18, 11));
@@ -115,31 +118,34 @@ public class Popup extends JFrame implements ActionListener {
 		contentPane.add(btnSave);
 		btnSave.addActionListener(this);
 		
-		MouseAdapter mouseAdapter = new MouseAdapter() {
-		    public void mouseReleased(MouseEvent e) {
-		        openMainFrame();
-		    }
-		};
+		btnViewReport = new JButton("View report");
+		btnViewReport.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnViewReport.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnViewReport.setForeground(new Color(26, 18, 11));
+		btnViewReport.setFocusable(false);
+		btnViewReport.setFocusTraversalKeysEnabled(false);
+		btnViewReport.setFocusPainted(false);
+		btnViewReport.setContentAreaFilled(false);
+		btnViewReport.setBorder(null);
+		btnViewReport.setMargin(new Insets(0, 0, 0, 0));
+		btnViewReport.setFont(new Font("Lucida Console", Font.PLAIN, 10));
+		btnViewReport.setBounds(10, 179, 79, 14);
+		contentPane.add(btnViewReport);
+		btnViewReport.addActionListener(this);
 		
-		JLabel lblViewReport = new JLabel("View report");
-		lblViewReport.addMouseListener(mouseAdapter);
-		lblViewReport.setForeground(new Color(26, 18, 11));
-		lblViewReport.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblViewReport.setHorizontalAlignment(SwingConstants.CENTER);
-		lblViewReport.setFont(new Font("Lucida Console", Font.PLAIN, 10));
-		lblViewReport.setBounds(10, 179, 79, 14);
-		lblViewReport.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		contentPane.add(lblViewReport);
-		
-		JLabel lblSettings = new JLabel("Settings");
-		lblSettings.addMouseListener(mouseAdapter);
-		lblSettings.setForeground(new Color(26, 18, 11));
-		lblSettings.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblSettings.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSettings.setFont(new Font("Lucida Console", Font.PLAIN, 10));
-		lblSettings.setBounds(352, 179, 58, 14);
-		lblSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		contentPane.add(lblSettings);
+		btnSettings = new JButton("Settings");
+		btnSettings.setMargin(new Insets(0, 0, 0, 0));
+		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSettings.setForeground(new Color(26, 18, 11));
+		btnSettings.setFont(new Font("Lucida Console", Font.PLAIN, 10));
+		btnSettings.setFocusable(false);
+		btnSettings.setFocusTraversalKeysEnabled(false);
+		btnSettings.setFocusPainted(false);
+		btnSettings.setContentAreaFilled(false);
+		btnSettings.setBorder(null);
+		btnSettings.setBounds(352, 179, 58, 14);
+		contentPane.add(btnSettings);
+		btnSettings.addActionListener(this);
 		
 		JLabel lblLastUpdate = new JLabel(data.setLastestDescriptionTime());
 		lblLastUpdate.setForeground(new Color(81, 81, 81));
@@ -184,19 +190,29 @@ public class Popup extends JFrame implements ActionListener {
 		txtDescription.requestFocusInWindow();
 		
 
-		mainFrame = StatusSingleton.getInstance().getStatus();
+		mainFrame = Singleton.getInstance().getFrame();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		SaveClose();
+		if (e.getSource() == btnSave) {
+			SaveClose();
+		} else if(e.getSource() == btnViewReport) {
+			openTab(1);
+		} else if(e.getSource() == btnSettings) {
+			openTab(4);
+		}
 	}
 	
+	/**
+	 * on Testing
+	 */
 	public void SaveClose() {
 //		String getTextDescription = txtDescription.getText();
 //		String getTagString = comboTags.getSelectedItem().toString();
 //		data.writeData(getTagString, getTextDescription);
 		
 		//close the Pop up frame
+		//TODO: try using HIDE_ON_CLOSE
 		dispose();
 		
 		//execute the share method of the current MainFrame
@@ -213,20 +229,17 @@ public class Popup extends JFrame implements ActionListener {
 		else if (positionString == "y") {
 			setCoord = (screenDimension.getHeight() - frameDimension.getHeight()) * percent;
 		}
-		else {
-			setCoord = 0;
-		}
 		
 		return (int)setCoord;
 	}
 	
 	
-	public void openMainFrame() {
-		MainFrame mainFrame = new MainFrame();
-		mainFrame.setVisible(true);
-	}
-
-	public void setBoolean(Boolean c) {
-		this.confirmation = c;
+	public void openTab(int tagIndex) {
+		if(mainFrame == null) return;
+		
+		if(mainFrame.getState() != JFrame.NORMAL)
+			mainFrame.setState(JFrame.NORMAL);
+		
+		mainFrame.tabbedPane.setSelectedIndex(tagIndex);
 	}
 }

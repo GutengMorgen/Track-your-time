@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import src.Frames.Popup;
+
 @SuppressWarnings("serial")
 public class ShortcutManager {
 	int index = 0;
@@ -71,17 +73,17 @@ public class ShortcutManager {
         textArea.getActionMap().put("upIndexAction", upIndexAction);
         
         
-        /*
-    	 * Keyboard to get the previous line of the data.csv
-    	 */
+        /**
+         * Keyboard to get the previous line of the data.csv
+         */
         Action preLineAction = new AbstractAction("previousLine") {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(index > 0) {
 					index--;
-					String line = popup.data.ReadLineByIndex(index);
-					String lineFiltered = popup.data.filterLine(line, "Description:");
+					String line = DataManager.ReadLineByIndex(index);
+					String lineFiltered = DataManager.filterLine(line, "Description:");
 					textArea.setText(lineFiltered);
 				}
 			}
@@ -98,12 +100,12 @@ public class ShortcutManager {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int dataSize = popup.data.getDataIndex();
+				int dataSize = DataManager.getSize();
 				
 				if(index < dataSize - 1) {
 					index++;
-					String line = popup.data.ReadLineByIndex(index);
-					String lineFiltered = popup.data.filterLine(line, "Description:");
+					String line = DataManager.ReadLineByIndex(index);
+					String lineFiltered = DataManager.filterLine(line, "Description:");
 					textArea.setText(lineFiltered);
 				}
 			}

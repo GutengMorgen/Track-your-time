@@ -1,27 +1,11 @@
 package src;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.JComboBox;
 
 public class MyItems {
-	private String name;
+	private String tag;
 	private String template;
-	
-	public static void main(String[] args) {
-		MyItems myItems = new MyItems();
-		myItems.reaMap2();
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getTemplate() {
 		return template;
@@ -35,51 +19,28 @@ public class MyItems {
 		
 	}
 	
-	public MyItems(String name, String template) {
-		this.name = name;
+	private MyItems(String tag, String template) {
+		this.tag = tag;
 		this.template = template;
 	}
-
-	public Map<String, MyItems> reaMap(){
-		Map<String, MyItems> map = new HashMap<>();
-		MainFrame mainFrame = new MainFrame();
-		String[] tags = mainFrame.getTags();
-		
-		for (String tag : tags) {
-			System.out.println(tag);
-		}
-		
-		return map;
-	}
 	
-	public String reaMap2(){
-		Map<String, MyItems> map = new HashMap<>();
-		MainFrame mainFrame = new MainFrame();
-		String[] tags = mainFrame.getTags();
-		
-		for (String tag : tags) {
-			map.put(tag, new MyItems(tag, "default template"));
-//			System.out.println(tag);
-		}
-		
-		return "";
-	}
-	
+	/**
+	 * set every line of the file Templates.csv as MyItems like Items of comboBox
+	 */
 	public void setItems(JComboBox<MyItems> comboBox) {
-		List<String> tags = DataManager.linesTemplate();
+		List<String> lines = DataManager.linesTemplate();
 		
-		for (String tag : tags) {
-			String[] dataType = tag.split(";");
+		for (String line : lines) {
+			String[] dataType = line.split(";");
 			comboBox.addItem(new MyItems(dataType[0], dataType[1]));
 		}
-		
-//		MyItems myItems = (MyItems) comboBox.getSelectedItem();
-//		System.out.println(myItems.name + " " + myItems.template);
-//		System.out.println(comboBox.getSelectedItem());
 	}
 	
+	/**
+	 * return the tag of MyItems
+	 */
 	@Override
 	public String toString() {
-		return name;
+		return tag;
 	}
 }

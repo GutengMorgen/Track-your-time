@@ -9,15 +9,11 @@ public class DateHandler {
 	
 	public static String getDate(LocalDateTime now) {
 		DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(dateFormatter);
-		String outDate = now.format(formatterDate);
-		
-		return outDate;
+		return now.format(formatterDate);
 	}
 	
 	public static String getTime(LocalDateTime now) {
 		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(timeFormatter);
-		String outTime = now.format(formatterTime);
-
-		return outTime;
+		return now.format(formatterTime);
 	}
 }

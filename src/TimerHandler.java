@@ -2,10 +2,11 @@ package src;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
+
+import src.Frames.Popup;
 
 public class TimerHandler {
 	//value in seconds
@@ -27,61 +28,6 @@ public class TimerHandler {
 		this.out = out;
 	}
 	
-	private JLabel label() {
-		return out;
-	}
-
-	public void getSeconds(JLabel out) {
-		Timer timer = new Timer(1000, new ActionListener() {
-			
-			int seconds = getPeriod();
-			int minutes = seconds / 60;
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(minutes == 0 && seconds == 0)
-					((Timer) e.getSource()).stop();
-				
-				else {
-                    if (seconds == 0) {
-                        minutes--;
-                        seconds = 59;
-                    }
-                    else {
-                        seconds--;
-                    }
-                }
-				
-				out.setText(String.format("%02d: %02d", minutes, seconds));
-			}
-		});
-		
-		timer.start();
-	}
-	
-	public void start(Popup frame) {
-		boolean x = true;
-		long startTime = System.currentTimeMillis();
-		
-		try {
-			while (x) {
-				TimeUnit.SECONDS.sleep(1);
-				long timepassed = System.currentTimeMillis() - startTime;
-				long seconds = timepassed / 1000;
-				if(seconds == getPeriod()) {
-					x = false;
-//	                System.out.println("timer stop in: " + seconds + " seconds");
-	                frame.setVisible(true);
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	/*
-	 * on Testing
-	 */
 	private Timer timer() {
 		if(timer == null) {
 			timer = new Timer(1000, new ActionListener() {
@@ -93,8 +39,7 @@ public class TimerHandler {
 					if(minutes == 0 && seconds == 0) {
 						timer.stop();
 						timer = null;
-						Popup popup = new Popup();
-						popup.setVisible(true);
+						runPopup();
 					}
 					
 					else {
@@ -113,35 +58,9 @@ public class TimerHandler {
 		return timer;
 	}
 	
-	/*private Timer timer() {
-		if(timer == null) {
-			timer = new Timer(1000, new ActionListener() {
-				int seconds = getPeriod();
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(seconds == 0) {
-						timer.stop();
-						timer = null;
-						Popup popup = new Popup();
-						popup.setVisible(true);
-					}
-					else
-						seconds--;
-					
-					
-					//TODO: delete the below line
-					System.out.println(seconds);
-				}
-			});
-		}
-		return timer;
-	}*/
-	
-	public void startCountDown() {
+	public void start() {
 		if(getPeriod() == 0) {
-			Popup popup = new Popup();
-			popup.setVisible(true);
+			runPopup();
 			return;
 		}
 		
@@ -156,5 +75,9 @@ public class TimerHandler {
 			timer = null; // to reset the timer
 			out.setText(String.format(format, 0,0));
 		}
+	}
+	
+	private void runPopup() {
+		new Popup().setVisible(true);
 	}
 }

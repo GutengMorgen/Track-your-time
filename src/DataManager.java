@@ -136,7 +136,7 @@ public class DataManager {
 		return info;
 	}
 	
-	public Integer getDataIndex() {
+	public static Integer getSize() {
 		int index = 0;
 		
 		try {
@@ -167,7 +167,7 @@ public class DataManager {
 		
 	}
 	
-	public String ReadLineByIndex(int index) {
+	public static String ReadLineByIndex(int index) {
 		String line = "";
 		
 		try {
@@ -188,7 +188,7 @@ public class DataManager {
 		return line;
 	}
 	
-	public String filterLine(String line, String filter) {
+	public static String filterLine(String line, String filter) {
 		String result = "no se encontro " + filter;
 		int length = filter.length();
 		
@@ -219,6 +219,11 @@ public class DataManager {
 		return filePath;
 	}
 	
+	/**
+	 * read all lines with a filter in Templates.csv
+	 * @param dataType can be DataManager.TAG or DataManager.TEMPLATE
+	 * @return a String with all lines read from Templates.csv
+	 */
 	public static String readTemplates(String dataType) {
 		StringBuilder tagBuilder = new StringBuilder();
 
@@ -240,10 +245,8 @@ public class DataManager {
 			}
 			
 		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
 			tagBuilder.append(e.getMessage());
 		} catch (IOException e) {
-//			e.printStackTrace();
 			tagBuilder.append("Error occurs reading from the Templates.csv or a malformed orunmappable byte sequence is read");
 		}
 		
@@ -251,11 +254,12 @@ public class DataManager {
 		return tagBuilder.toString().trim();
 	}
 	
-	/*
-	 * return a list of data type(TAG or TEMPLATE) from the line of Templates.csv
-	 * maybe this method will be delete
+	/**
+	 * return a list of lines with a filter or data type from Templates.csv
+	 * @param filter can be DataManager.TAG or DataManager.TEMPLATE
+	 * @deprecated maybe this method will be delete
 	 */
-	public static List<String> linesTemplate(String dataType){
+	public static List<String> linesTemplate(String filter){
 		
 		//0 = tags; 1 = templates
 		List<String> lineData = new ArrayList<String>();
@@ -263,10 +267,10 @@ public class DataManager {
 			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
 			
 			for (String line : lines) {
-				if (dataType.equals(TAG)) {
+				if (filter.equals(TAG)) {
 					lineData.add(line.split(";")[0]);
 					
-				} else if(dataType.equals(TEMPLATE)) {
+				} else if(filter.equals(TEMPLATE)) {
 					lineData.add(line.split(";")[1]);
 				}
 			}
@@ -280,8 +284,8 @@ public class DataManager {
 		return lineData;
 	}
 	
-	/*
-	 * return a list of the pure line of Templates.csv
+	/**
+	 * return a list of lines without filters from Templates.csv
 	 */
 	public static List<String> linesTemplate(){
 		List<String> lineData = new ArrayList<String>();
@@ -317,7 +321,7 @@ public class DataManager {
 		}
 	}
 	
-	/*
+	/**
 	 * creo que seria mejor comparar el texto del txtHistorial con las lineas y falta alguna recien modificarlo
 	 */
 	public static String readHistory() {
@@ -334,10 +338,5 @@ public class DataManager {
 		}
 		
 		return txtBuilder.toString().trim();
-	}
-	
-	
-	public static String getTimerString() {
-		return "";
 	}
 }
