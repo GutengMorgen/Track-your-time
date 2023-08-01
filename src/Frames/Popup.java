@@ -16,7 +16,7 @@ public class Popup extends JFrame implements ActionListener {
 	MainFrame mainFrame;
 	MyItems myItems = new MyItems();
 	TimerHandler timer = new TimerHandler();
-	public DataManager data = new DataManager();
+	private DataManager data = new DataManager();
 	ShortcutManager shortcuts = new ShortcutManager();
 	private JPanel contentPane;
 	private JComboBox<MyItems> comboTags;
@@ -69,8 +69,8 @@ public class Popup extends JFrame implements ActionListener {
 		scrollPane_1.setBounds(10, 32, 400, 22);
 		contentPane.add(scrollPane_1);
 		
-		txtLastData = new JTextArea();
-		data.setLastData(txtLastData);
+		txtLastData = new JTextArea(DataManager.readLineByIndex(null, true));
+//		data.setLastData(txtLastData);
 		txtLastData.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		txtLastData.setAutoscrolls(false);
 		txtLastData.setForeground(new Color(115, 115, 115));
@@ -147,7 +147,7 @@ public class Popup extends JFrame implements ActionListener {
 		contentPane.add(btnSettings);
 		btnSettings.addActionListener(this);
 		
-		JLabel lblLastUpdate = new JLabel(data.setLastestDescriptionTime());
+		JLabel lblLastUpdate = new JLabel(DataManager.readLastDate());
 		lblLastUpdate.setForeground(new Color(81, 81, 81));
 		lblLastUpdate.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblLastUpdate.setHorizontalAlignment(SwingConstants.LEFT);
@@ -207,9 +207,9 @@ public class Popup extends JFrame implements ActionListener {
 	 * on Testing
 	 */
 	public void SaveClose() {
-//		String getTextDescription = txtDescription.getText();
-//		String getTagString = comboTags.getSelectedItem().toString();
-//		data.writeData(getTagString, getTextDescription);
+		String getTextDescription = txtDescription.getText();
+		String getTagString = comboTags.getSelectedItem().toString();
+		DataManager.writeData(getTagString, getTextDescription);
 		
 		//close the Pop up frame
 		//TODO: try using HIDE_ON_CLOSE

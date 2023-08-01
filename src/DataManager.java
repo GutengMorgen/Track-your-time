@@ -1,7 +1,5 @@
 package src;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,22 +11,17 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
-
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.Timer;
 
 public class DataManager {
 	public static String TAG = "tag",TEMPLATE = "template";
-	private String lastDataTime = "";
+	private static String lastDate = "";
 
 	/**
 	 * 
 	 * @param tag
 	 * @param description
 	 */
-	public void writeData(String tag, String description) {
+	public static void writeData(String tag, String description) {
 		int limit = 5;
 		LocalDateTime now = LocalDateTime.now();
 		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
@@ -67,24 +60,15 @@ public class DataManager {
 	}
 
 	/**
-	 * join with readLastLine
-	 * @param out
-	 */
-	public void setLastData(JTextArea out) {
-		String info = readLastLine();
-		out.setText(info);
-	}
-
-	/**
 	 * put this method in TimerHandler
 	 * @return
 	 */
-	public String setLastestDescriptionTime() {
+	public static String readLastDate() {
 		String format = "Last Update - %s";
 		String time = "";
 		
-		if(!lastDataTime.isEmpty()) {
-			String splited = lastDataTime.split(" ")[1];
+		if(!lastDate.isEmpty()) {
+			String splited = lastDate.split(" ")[1];
 			time = String.format(format, splited);
 		}
 		else {
@@ -94,45 +78,87 @@ public class DataManager {
 		return time;
 	}
 
+	
 	/**
-	 * this method is only use on setLastData
-	 * @return
+	 * on Testing, i think is better to make a method to read lines by index
 	 */
-	private String readLastLine() {
-		String info = "";
-
+	public static String readLineByIndex(Integer index, Boolean useFilter) {
+		String line = "";
+		
 		try {
-			Path filePath = Paths.get("./Data/data.csv");
-			if (!Files.exists(filePath))
-				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
-
-			List<String> lines = Files.readAllLines(filePath);
-
-			if (!lines.isEmpty()) {
-				// to get information of the previous line in data.csv
-				String lastLine = lines.get(lines.size() - 1);
-				String[] lineSplited = lastLine.split(";");
+			List<String> lines = Files.readAllLines(getDataPath("data.csv"));
+			
+			if(index != null) 
+				line = lines.get(index);
+			else 
+				line = lines.get(lines.size() - 1);
+			
+			if(useFilter) {
+				String[] lineSplited = line.split(";");
 				String tag = "";
 				String description = "";
 
-				for (String part : lineSplited) {
-					if (part.contains("Tag:"))
-						tag = part;
-					else if (part.contains("Description:"))
-						description = part;
-					else if (part.contains("Time:"))
-						lastDataTime = part;
+				for (String type : lineSplited) {
+					if (type.contains("Tag:"))
+						tag = type;
+					else if (type.contains("Description:"))
+						description = type;
+					else if (type.contains("Time:"))
+						lastDate = type;
 				}
-
-				info = tag + " - " + description;
-			} else
-				info = "History clean";
-
-		} catch (Exception e) {
-			System.out.println("An error occurred while reading the file: " + e.getMessage());
+				
+				line = String.join(" - ", tag, description);
+			}
+		} catch (FileNotFoundException e) {
+			line = e.getMessage();
+		} catch (IOException e) {
+			line = e.getMessage();
 		}
+		
+		return line;
+	}
+	
 
-		return info;
+	/**
+	 * @deprecated don't get the date of the last line, witch is important
+	 * @param index
+	 * @param filters
+	 * @return
+	 */
+	public static String readLineByIndex(Integer index, String... filters) {
+		StringBuilder builder = new StringBuilder();
+		String line = "";
+		
+		try {
+			List<String> lines = Files.readAllLines(getDataPath("data.csv"));
+			
+			if(index != null) 
+				line = lines.get(index);
+			else 
+				line = lines.get(lines.size() - 1);
+			
+			if(filters.length != 0) {
+				String[] lineSplited = line.split(";");
+				List<String> parts = new ArrayList<>();
+
+				for (String part : lineSplited) {
+					for (String filter : filters) {
+						if(part.contains(filter)) {
+							parts.add(part);
+						}
+					}
+				}
+				
+				builder.append(String.join(" - ", parts));
+			}
+			
+		} catch (FileNotFoundException e) {
+			builder.append(e.getMessage());
+		} catch (IOException e) {
+			builder.append(e.getMessage());
+		}
+		
+		return builder.toString();
 	}
 	
 	public static Integer getSize() {
@@ -156,27 +182,6 @@ public class DataManager {
 		}
 		
 		return index;
-	}
-	
-	public static String ReadLineByIndex(int index) {
-		String line = "";
-		
-		try {
-			Path filePath = Paths.get("./Data/data.csv");
-			if (!Files.exists(filePath))
-				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
-			
-			List<String> lines = Files.readAllLines(filePath);
-			
-			if(!lines.isEmpty()) {
-				line = lines.get(index);
-			}
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		
-		return line;
 	}
 	
 	public static String filterLine(String line, String filter) {
@@ -234,7 +239,7 @@ public class DataManager {
 		} catch (FileNotFoundException e) {
 			tagBuilder.append(e.getMessage());
 		} catch (IOException e) {
-			tagBuilder.append("Error occurs reading from the Templates.csv or a malformed orunmappable byte sequence is read");
+			tagBuilder.append(e.getMessage());
 		}
 		
 		//trim() to delete the last "\n" of the tagBuilder
