@@ -157,7 +157,7 @@ public class Popup extends JFrame implements ActionListener {
 		
 //		JLabel lblDescription = new JLabel(data.setCurrentTime());
 		JLabel lblDescription = new JLabel();
-		data.setCurrentTime(lblDescription);
+		TimerHandler.setClock(lblDescription);
 		lblDescription.setForeground(new Color(26, 18, 11));
 		lblDescription.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);

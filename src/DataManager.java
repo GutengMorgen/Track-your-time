@@ -23,6 +23,11 @@ public class DataManager {
 	public static String TAG = "tag",TEMPLATE = "template";
 	private String lastDataTime = "";
 
+	/**
+	 * 
+	 * @param tag
+	 * @param description
+	 */
 	public void writeData(String tag, String description) {
 		int limit = 5;
 		LocalDateTime now = LocalDateTime.now();
@@ -61,11 +66,19 @@ public class DataManager {
 		}
 	}
 
+	/**
+	 * join with readLastLine
+	 * @param out
+	 */
 	public void setLastData(JTextArea out) {
 		String info = readLastLine();
 		out.setText(info);
 	}
 
+	/**
+	 * put this method in TimerHandler
+	 * @return
+	 */
 	public String setLastestDescriptionTime() {
 		String format = "Last Update - %s";
 		String time = "";
@@ -80,25 +93,11 @@ public class DataManager {
 		
 		return time;
 	}
-	
-	public void setCurrentTime(JLabel out) {
-		LocalDateTime now = LocalDateTime.now();
-		
-		String format = "Description - %s"; //switch with %t
-		out.setText(String.format(format, DateHandler.getTime(now)));
-		
-		Timer timer = new Timer(1000, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LocalDateTime currentTime = LocalDateTime.now();
-				out.setText(String.format(format, DateHandler.getTime(currentTime)));
-			}
-		});
-		
-		timer.start();
-	}
 
+	/**
+	 * this method is only use on setLastData
+	 * @return
+	 */
 	private String readLastLine() {
 		String info = "";
 
@@ -159,14 +158,6 @@ public class DataManager {
 		return index;
 	}
 	
-	public int getSelectedIndexLine() {
-		return 0;
-	}
-	
-	public void setSelectedIndexLine(int index) {
-		
-	}
-	
 	public static String ReadLineByIndex(int index) {
 		String line = "";
 		
@@ -203,10 +194,6 @@ public class DataManager {
 		}
 		
 		return result;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(readTemplates(TEMPLATE));
 	}
 	
 	private static Path getDataPath(String file) throws FileNotFoundException {

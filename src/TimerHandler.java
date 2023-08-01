@@ -2,6 +2,7 @@ package src;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -79,5 +80,25 @@ public class TimerHandler {
 	
 	private void runPopup() {
 		new Popup().setVisible(true);
+	}
+	
+	/**
+	 * Sets a clock in a JLabel to display the current time using DateHandler to set the format
+	 * @param out The JLabel where the clock will be displayed.
+	 */
+	public static void setClock(JLabel out) {
+		LocalDateTime now = LocalDateTime.now();
+		
+		String format = "Description - %s"; //switch with %t
+		out.setText(String.format(format, DateHandler.getTime(now)));
+		
+		new Timer(1000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LocalDateTime currentTime = LocalDateTime.now();
+				out.setText(String.format(format, DateHandler.getTime(currentTime)));
+			}
+		}).start();
 	}
 }
