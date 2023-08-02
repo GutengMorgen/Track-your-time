@@ -1,9 +1,7 @@
 package src.Data;
 
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,53 +12,9 @@ import java.util.List;
 import src.DateHandler;
 
 public class DataManager {
-	public static String DataFile = "data.csv";
+	public static String DynamicFile = "data.csv";
 	public static String HistoryFile = "history.csv";
 	private static String lastDate = "";
-
-	/**
-	 * 
-	 * @param tag
-	 * @param description
-	 */
-	public static void writeData(String tag, String description) {
-		int limit = 5;
-		LocalDateTime now = LocalDateTime.now();
-		String format = "Date: %s;Time: %s;Tag: %s;Description: %s";
-
-		String newDescription = description.replace("\n", "\\n");
-		String line = String.format(format, DateHandler.getDate(now), DateHandler.getTime(now), tag, newDescription);
-
-		try {
-			Path[] paths = { Paths.get("./Data/data.csv"), Paths.get("./Data/history.csv") };
-
-			if (!Files.exists(paths[0]))
-				throw new FileNotFoundException("The file data.csv doesnt exist in the directory Data");
-			else if (!Files.exists(paths[1]))
-				throw new FileNotFoundException("The file history.csv doesnt exist in the directory Data");
-
-			for (Path path : paths) {
-				BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8,
-						StandardOpenOption.APPEND);
-				writer.newLine();
-				writer.write(line);
-				writer.close();
-			}
-
-			//borra el contenido de data.csv si la cantidad de lineas supera al limite y escribe nuevas lineas sin la ultima
-			Path dataCsvPath = Paths.get("./Data/data.csv");
-			List<String> lines = Files.readAllLines(dataCsvPath);
-			lines.removeIf(String::isEmpty);
-
-			if (lines.size() > limit) {
-				List<String> updatedLines = lines.subList(lines.size() - limit, lines.size());
-				Files.write(dataCsvPath, updatedLines, StandardCharsets.UTF_8);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
 	
 	public static String lineFormat(String tag, String description) {
 		LocalDateTime now = LocalDateTime.now();
@@ -73,7 +27,7 @@ public class DataManager {
 	}
 	
 	public static void appendToFile(String file, String line) {
-		TaggedManager.writeToFile(file, "\n" + line, StandardOpenOption.APPEND);
+		TaggedManager.appendToFile(file, "\n" + line, StandardOpenOption.APPEND);
 	}
 	
 	public static void writeDynamic(String file, String line, int limit) {
@@ -83,12 +37,6 @@ public class DataManager {
 		if (lines.size() > limit) 
 			lines = lines.subList(lines.size() - limit, lines.size());
 		
-		TaggedManager.writeToFile(file, lines);
-	}
-	
-	public static void createLine(String file, String line) {
-		List<String> lines = TaggedManager.readLines(file);
-		lines.add(line);
 		TaggedManager.writeToFile(file, lines);
 	}
 	
@@ -123,7 +71,7 @@ public class DataManager {
 		String line = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(getDataPath("data.csv"));
+			List<String> lines = Files.readAllLines(getDataFile("data.csv"));
 			
 			if(index != null) 
 				line = lines.get(index);
@@ -136,11 +84,11 @@ public class DataManager {
 				String description = "";
 
 				for (String type : lineSplited) {
-					if (type.contains("Tag:"))
+					if (type.contains("TAG:"))
 						tag = type;
-					else if (type.contains("Description:"))
+					else if (type.contains("DESCRIPTION:"))
 						description = type;
-					else if (type.contains("Time:"))
+					else if (type.contains("TIME:"))
 						lastDate = type;
 				}
 				
@@ -167,7 +115,7 @@ public class DataManager {
 		String line = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(getDataPath("data.csv"));
+			List<String> lines = Files.readAllLines(getDataFile("data.csv"));
 			
 			if(index != null) 
 				line = lines.get(index);
@@ -199,53 +147,44 @@ public class DataManager {
 	}
 	
 	public static Integer getSize() {
-		int size = 0;
-		
-		try {
-			List<String> lines = Files.readAllLines(getDataPath("data.csv"));
-			size = lines.size();
-		} catch (Exception e) {
-			size = 0;
-		}
+		int size = TaggedManager.readLines(DynamicFile).size();
 		
 		return size;
 	}
 	
-	public static String filterLine(String line, String filter) {
-		String result = "no se encontro " + filter;
+	public static String splitFilter(String line, String filter) {
+		String text = filter + " not found";
 		int length = filter.length();
 		
-		String[] lineSplited = line.split(";");
-		
-		for (String part : lineSplited) {
-			if(part.contains(filter)) {
-				result = part.substring(length)
-						.trim()
-						.replace("\\n", "\n");
-			}
+		String[] splitFilter = line.split(";");
+		for (String part : splitFilter) {
+			if(part.contains(filter))
+				text = part.substring(length).trim().replace("\\n", "\n");
 		}
 		
-		return result;
+		return text;
 	}
 	
-	public static Path getDataPath(String file) throws FileNotFoundException {
+	public static Path getDataFile(String file) throws FileNotFoundException {
 		Path filePath = null;
 		
 		filePath = Paths.get("Data/" + file);
 		if (!Files.exists(filePath))
-			throw new FileNotFoundException("The file " + file + " does not exist in the Data directory.");
+			throw new FileNotFoundException("The file " + file + " does not exist in the Data/ directory.");
 		
 		return filePath;
 	}
 	
 	/**
-	 * creo que seria mejor comparar el texto del txtHistorial con las lineas y falta alguna recien modificarlo
+	 * i think is better to compare the txtHistory lines with the file lines and
+	 * if their are different read the History file.
+	 * @return a string with the lines of history.csv
 	 */
 	public static String readHistory() {
 		StringBuilder txtBuilder = new StringBuilder();
 		
 		try {
-			Files.lines(getDataPath("history.csv"))
+			Files.lines(getDataFile(HistoryFile))
 				 .forEach(e -> txtBuilder.append(e).append("\n"));
 			
 		} catch (FileNotFoundException e) {

@@ -209,11 +209,10 @@ public class Popup extends JFrame implements ActionListener {
 	public void SaveClose() {
 		String getTextDescription = txtDescription.getText();
 		String getTagString = comboTags.getSelectedItem().toString();
-//		DataManager.writeData(getTagString, getTextDescription);
 		
 		String newLine = DataManager.lineFormat(getTagString, getTextDescription);
 		DataManager.appendToFile(DataManager.HistoryFile, newLine);
-		DataManager.writeDynamic(DataManager.DataFile, newLine, 5);
+		DataManager.writeDynamic(DataManager.DynamicFile, newLine, 5);
 		
 		//close the Pop up frame
 		//TODO: try using HIDE_ON_CLOSE

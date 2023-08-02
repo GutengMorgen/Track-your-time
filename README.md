@@ -26,7 +26,7 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 - [x] como se muestra tiempo de cada descripcion pasada
 - [x] mostrar la hora actual al lado de la descripcion
 - [ ] cambiar la forma de guardar el texto de la descripcion ya que no se admite dobles comillas
-- [ ] poner en mayusculas todos los tipos(date, time, tag, description) de data.csv
+- [x] poner en mayusculas todos los tipos(date, time, tag, description) de data.csv
 	- o talvez deberia eliminarlos y solo obtener los contenidos de cada tipo por el indice del array
 - [x] poner todas las lineas del history.csv al `txtHistorial` y talvez un boton de refresh
 - [x] actualizar el texto del `lblPopupStatus` segun si el popup inicio o no

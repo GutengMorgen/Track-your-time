@@ -84,7 +84,7 @@ public class ShortcutManager {
 				if(index > 0) {
 					index--;
 					String line = DataManager.readLineByIndex(index, false);
-					String lineFiltered = DataManager.filterLine(line, "Description:");
+					String lineFiltered = DataManager.splitFilter(line, "DESCRIPTION:");
 					textArea.setText(lineFiltered);
 				}
 			}
@@ -106,7 +106,7 @@ public class ShortcutManager {
 				if(index < dataSize - 1) {
 					index++;
 					String line = DataManager.readLineByIndex(index, false);
-					String lineFiltered = DataManager.filterLine(line, "Description:");
+					String lineFiltered = DataManager.splitFilter(line, "DESCRIPTION:");
 					textArea.setText(lineFiltered);
 				}
 			}

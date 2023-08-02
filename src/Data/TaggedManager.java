@@ -12,13 +12,9 @@ public class TaggedManager {
 	
 	/**
 	 * TODO: fix the empty line on Templates.csv
-	 * crear un metodo para comprobar si la ultima/primera linea de los .csv estan en blanco
-	 * para agregarlo si lo estan
-	 * @param tag
-	 * @param template
+	 * @param line
 	 */
 	public static void createLine(String line) {
-		//maybe first read the file and then add the newLine into a new list and then write the list
 //		writeIntoFile(TEMPLATE, "\n" + newLine, StandardOpenOption.APPEND);
 		List<String> lines = readLines(TemplateFile);
 		lines.add(line);
@@ -44,7 +40,7 @@ public class TaggedManager {
 	 */
 	public static void writeToFile(String file, List<String> lines) {
 		try {
-			Files.write(DataManager.getDataPath(file), lines);
+			Files.write(DataManager.getDataFile(file), lines);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,9 +56,9 @@ public class TaggedManager {
 	 * @param line
 	 * @param Option
 	 */
-	public static void writeToFile(String file, String line, StandardOpenOption Option) {
+	public static void appendToFile(String file, String line, StandardOpenOption Option) {
 		try {
-			Files.writeString(DataManager.getDataPath(file), line, Option);
+			Files.writeString(DataManager.getDataFile(file), line, Option);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,7 +77,7 @@ public class TaggedManager {
 		List<String> lines = new ArrayList<String>();
 		
 		try {
-			lines = Files.readAllLines(DataManager.getDataPath(file));
+			lines = Files.readAllLines(DataManager.getDataFile(file));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -96,7 +92,7 @@ public class TaggedManager {
 		//0 = tags; 1 = templates
 		List<String> lineData = new ArrayList<String>();
 		try {
-			List<String> lines = Files.readAllLines(DataManager.getDataPath(file));
+			List<String> lines = Files.readAllLines(DataManager.getDataFile(file));
 			
 			for (String line : lines) {
 				if (filter == Filters.TAG) {

@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -19,7 +18,6 @@ import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
-import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -335,9 +333,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == comboTags) {
 			String item = comboOperations.getSelectedItem().toString();
-			if (item == UPDATE) {
+			
+			if (item == UPDATE || item == DELETE) {
 				MyItems myItems = (MyItems) comboTags.getSelectedItem();
-				
 				textFieldTag.setText(myItems.toString());
 				txtTemplate.setText(myItems.getTemplate().replace("\\n", "\n"));
 			}
@@ -351,8 +349,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		else if(e.getSource() == btnReleased) {
 			releasedOperations();
 		}
-//		DataManager.saveTemplate(comboTags, txtTemplate);
-//		TimerHandler.temporalText(1500, lblResult, "Template stored in the file");
 	}
 
 	private void releasedComboOperations() {
@@ -384,9 +380,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		if(item == CREATE) {
 			String tag = textFieldTag.getText();
 			String template = txtTemplate.getText().replace("\n", "\\n");
+			
 			if(!tag.isEmpty() && !template.isEmpty()) {
 				String newLine = String.join(";", tag, template);
 				TaggedManager.createLine(newLine);
+				updateComboTags();
 				TimerHandler.temporalText(1500, lblResult, "Tags stored in the file");
 			}
 			
@@ -394,21 +392,25 @@ public class MainFrame extends JFrame implements ActionListener {
 			int index = comboTags.getSelectedIndex();
 			String tag = textFieldTag.getText();
 			String template = txtTemplate.getText().replace("\n", "\\n");
+			
 			if(!tag.isEmpty() && !template.isEmpty()) {
 				String newLine = String.join(";", tag, template);
 				TaggedManager.updateLine(index, newLine);
+				updateComboTags();
 				TimerHandler.temporalText(1500, lblResult, "Updated Tag");
 			}
 			
 		}else if (item == DELETE) {
 			int index = comboTags.getSelectedIndex();
 			TaggedManager.deleteLine(index);
-			//TODO: make a method to update all comboBox with the new items
-			comboTags.removeAllItems();
-			myItems.addItems(comboTags);
-			
+			updateComboTags();
 			TimerHandler.temporalText(1500, lblResult, "Tag removed from the file");
 		}
+	}
+	
+	private void updateComboTags() {
+		comboTags.removeAllItems();
+		myItems.addItems(comboTags);
 	}
 
 	public void share(Boolean usePeriod) {
