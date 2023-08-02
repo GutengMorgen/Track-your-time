@@ -50,6 +50,7 @@ public class Popup extends JFrame implements ActionListener {
 		setResizable(false);
 		setAlwaysOnTop(true);
 		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("stuff/icon.jpg"));
 		setSize(421, 250);
 		setLocation(getCoord("x", 0.01), getCoord("y", 0.35));
 
@@ -102,7 +103,7 @@ public class Popup extends JFrame implements ActionListener {
 		comboTags.setBounds(281, 62, 129, 25);
 		comboTags.setToolTipText("Select any tag");
 		comboTags.setCursor(new Cursor(Cursor.HAND_CURSOR));
-//		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
+//		TODO: comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
 		myItems.addItems(comboTags);
 		contentPane.add(comboTags);
 		
@@ -153,7 +154,6 @@ public class Popup extends JFrame implements ActionListener {
 		lblLastUpdate.setBounds(10, 13, 185, 14);
 		contentPane.add(lblLastUpdate);
 		
-//		JLabel lblDescription = new JLabel(data.setCurrentTime());
 		JLabel lblDescription = new JLabel();
 		TimerHandler.setClock(lblDescription);
 		lblDescription.setForeground(new Color(26, 18, 11));
@@ -185,8 +185,8 @@ public class Popup extends JFrame implements ActionListener {
 		txtDescription.setBackground(new Color(235, 235, 235));
 		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
 		shortcuts.add(txtDescription, comboTags, this);
-		txtDescription.requestFocusInWindow();
-
+		txtDescription.requestFocusInWindow(); //TODO: change this
+		
 		mainFrame = Singleton.getInstance().getFrame();
 	}
 	
