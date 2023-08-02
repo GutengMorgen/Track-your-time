@@ -1,30 +1,30 @@
 # Track your time/Time Dial
-Una simple app de escritorio que aparecera cada cierto tiempo para que tu pongas una breve descripcion de la cosa que hiciste en un tiempo preestablecido, tambien incluira tags como studing, working, relax, offline, etc...
+Una simple app de escritorio que aparecerá cada cierto tiempo para que puedas poner una breve descripción de lo que hiciste en un tiempo preestablecido. También incluirá etiquetas como studying, working, relax, offline, etc.
 
 ## Nota importante
-Esta aplicacion aun esta en desarrollo ya que:
-- aun falta implementar los graficos que son **muy importantes**
-- aun falta implementar muchas cosas que creo que serian utiles
-- falta limpiar/refactorizar el codigo con buenas practicas
-- falta cambiar la forma en la que se guardan las descripciones ya que guardarlos en un archivo .csv sea bueno a largo plazo, *pienso cambiar lo usando SQLite*
+Esta aplicación aún está en desarrollo ya que:
+- Aún falta implementar los gráficos, que son **muy importantes**.
+- Aún faltan muchas cosas por implementar que creo que serían útiles.
+- Falta limpiar/refactorizar el código con buenas prácticas.
+- Falta cambiar la forma en la que se guardan las descripciones, ya que guardarlas en un archivo .csv puede no ser lo mejor a largo plazo. *Pienso cambiarlo usando SQLite.*
 
-Pero aun asi la cosa mas importante que es que el Timer funcione y guardarlas descripciones funcionan, asi la app se puede usar.
+Pero aun así, la cosa más importante es que el Timer funcione y que guardar las descripciones funcione, así que la app se puede usar.
 
 ## Usar la app
-Para usar la aplicacion tienes que:
-1. clonar este repositorio en tu pc
-2. abrir el archivo **Time Dial.jar**
-3. pulsar el boton **Now** para iniciar instantaneamente el **Popup** o pulsar el boton Start para iniciar el **Popup** cuando el timer llege a cero.
-4. cuando el timer llege a cero aparecera una ventana, ese es el **Popup**, ahi puedes poner una descripcion y seleccionar un tag
-5. luego puedes cerrala haciendo click en el boton **save** o con el comando `ctrl + s`
-6. espera a que el timer llege a cero otra vez para que aparezca el **Popup**
+Para usar la aplicación, sigue estos pasos:
+1. Clona este repositorio en tu PC.
+2. Abre el archivo **Time Dial.jar**.
+3. Pulsa el botón **Now** para iniciar instantáneamente el **Popup**, o pulsa el botón Start para iniciar el **Popup** cuando el timer llegue a cero.
+4. Cuando el timer llegue a cero, aparecerá una ventana, que es el **Popup**, ahí puedes poner una descripción y seleccionar una etiqueta.
+5. Luego, puedes cerrarlo haciendo clic en el botón **Save** o con el comando `ctrl + s`.
+6. Espera a que el timer llegue a cero nuevamente para que aparezca el **Popup**.
 
 ## About the Descriptions
-Las descripciones se guardaran en dos archivos .csv:
-- data: En este archivo solo se guardaran las 5 ultimas descripciones por 2 motivos:
-  1. para acceder a esas ultimas descripciones y
-  2. para que sea mas rapido leer los datos.
-- history: En este archivo se guardaran todas las descripciones que se utilizaran para hacer los graficos y estadisticas.
+Las descripciones se guardarán en dos archivos .csv:
+- data: En este archivo solo se guardarán las últimas 5 descripciones por 2 motivos:
+  1. Para acceder a esas últimas descripciones y
+  2. Para que sea más rápido leer los datos.
+- history: En este archivo se guardarán todas las descripciones que se utilizarán para hacer los gráficos y estadísticas.
 
 ## About the Tags
 Los tags son tags para clasificar las descripciones, no hay nada mas que agregar
@@ -38,7 +38,7 @@ Los tags son tags para clasificar las descripciones, no hay nada mas que agregar
   - `ctrl + down` para ir a la descripcion previa
 
 # Contribuciones
-siii porfavor, solo mira las cosas que faltan. ademas me estoy replantenado crear un nuevo repositorio, para hacer mas formal este projecto y ademas para poner orgamizar todo de una mejor manera utilizando mavel o gradle
+¡Sí, por favor! Solo mira las cosas que faltan/quiero implementar. Además, estoy considerando crear un nuevo repositorio para hacer este proyecto más formal y organizar todo de una mejor manera utilizando Maven o Gradle.
 
 ## new Design
 - [ ] agregar una nueva funcion para que aparezca el popup con un shortcut
