@@ -1,6 +1,24 @@
 # Track your time/Time Dial
 Una simple app de escritorio que aparecera cada cierto tiempo para que tu pongas una breve descripcion de la cosa que hiciste en un tiempo preestablecido, tambien incluira tags como studing, working, relax, offline, etc...
 
+## Nota importante
+Esta aplicacion aun esta en desarrollo ya que:
+- aun falta implementar los graficos que son **muy importantes**
+- aun falta implementar muchas cosas que creo que serian utiles
+- falta limpiar/refactorizar el codigo con buenas practicas
+- falta cambiar la forma en la que se guardan las descripciones ya que guardarlos en un archivo .csv sea bueno a largo plazo, *pienso cambiar lo usando SQLite*
+
+Pero aun asi la cosa mas importante que es que el Timer funcione y guardarlas descripciones funcionan, asi la app se puede usar.
+
+## Usar la app
+Para usar la aplicacion tienes que:
+1. clonar este repositorio en tu pc
+2. abrir el archivo **Time Dial.jar**
+3. pulsar el boton **Now** para iniciar instantaneamente el **Popup** o pulsar el boton Start para iniciar el **Popup** cuando el timer llege a cero.
+4. cuando el timer llege a cero aparecera una ventana, ese es el **Popup**, ahi puedes poner una descripcion y seleccionar un tag
+5. luego puedes cerrala haciendo click en el boton **save** o con el comando `ctrl + s`
+6. espera a que el timer llege a cero otra vez para que aparezca el **Popup**
+
 ## About the Descriptions
 Las descripciones se guardaran en dos archivos .csv:
 - data: En este archivo solo se guardaran las 5 ultimas descripciones por 2 motivos:
