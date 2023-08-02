@@ -37,6 +37,9 @@ Los tags son tags para clasificar las descripciones, no hay nada mas que agregar
   - `ctrl + up` para ir a la siguiente descripcion
   - `ctrl + down` para ir a la descripcion previa
 
+# Contribuciones
+siii porfavor, solo mira las cosas que faltan. ademas me estoy replantenado crear un nuevo repositorio, para hacer mas formal este projecto y ademas para poner orgamizar todo de una mejor manera utilizando mavel o gradle
+
 ## new Design
 - [ ] agregar una nueva funcion para que aparezca el popup con un shortcut
 - [ ] agregar una opcion para poner mensajes/alertas programado cuando aparezca el popup en x tiempo
