@@ -51,8 +51,7 @@ public class Popup extends JFrame implements ActionListener {
 		setAlwaysOnTop(true);
 		
 		setSize(421, 250);
-		Dimension dimension = getSize();
-		setLocation(getCoordinate(dimension, "x", 0.01), getCoordinate(dimension, "y", 0.35));
+		setLocation(getCoord("x", 0.01), getCoord("y", 0.35));
 
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(245, 245, 245));
@@ -70,7 +69,6 @@ public class Popup extends JFrame implements ActionListener {
 		contentPane.add(scrollPane_1);
 		
 		txtLastData = new JTextArea(DataManager.readLineByIndex(null, true));
-//		data.setLastData(txtLastData);
 		txtLastData.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		txtLastData.setAutoscrolls(false);
 		txtLastData.setForeground(new Color(115, 115, 115));
@@ -188,7 +186,6 @@ public class Popup extends JFrame implements ActionListener {
 		txtDescription.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(10, 10, 10, 10)));
 		shortcuts.add(txtDescription, comboTags, this);
 		txtDescription.requestFocusInWindow();
-		
 
 		mainFrame = Singleton.getInstance().getFrame();
 	}
@@ -203,9 +200,6 @@ public class Popup extends JFrame implements ActionListener {
 		}
 	}
 	
-	/**
-	 * on Testing
-	 */
 	public void SaveClose() {
 		String getTextDescription = txtDescription.getText();
 		String getTagString = comboTags.getSelectedItem().toString();
@@ -222,22 +216,19 @@ public class Popup extends JFrame implements ActionListener {
 		mainFrame.share(true);
 	}
 	
-	public int getCoordinate(Dimension frameDimension, String positionString, double percent) {
-		double setCoord = 0;
+	private int getCoord(String pos, double percent) {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+		double setCoord = 0;
 		
-		if(positionString == "x") {
-			setCoord = (screenDimension.getWidth() - frameDimension.getWidth()) * percent;
-		}
-		else if (positionString == "y") {
-			setCoord = (screenDimension.getHeight() - frameDimension.getHeight()) * percent;
-		}
+		if(pos == "x")
+			setCoord = (screenDimension.getWidth() - getSize().getWidth()) * percent;
+		else if (pos == "y")
+			setCoord = (screenDimension.getHeight() - getSize().getHeight()) * percent;
 		
 		return (int)setCoord;
 	}
 	
-	
-	public void openTab(int tagIndex) {
+	private void openTab(int tagIndex) {
 		if(mainFrame == null) return;
 		
 		if(mainFrame.getState() != JFrame.NORMAL)

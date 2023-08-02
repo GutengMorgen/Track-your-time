@@ -16,6 +16,12 @@ public class DataManager {
 	public static String HistoryFile = "history.csv";
 	private static String lastDate = "";
 	
+	/**
+	 * 
+	 * @param tag
+	 * @param description
+	 * @return
+	 */
 	public static String lineFormat(String tag, String description) {
 		LocalDateTime now = LocalDateTime.now();
 		String date = DateHandler.getDate(now);
@@ -26,10 +32,21 @@ public class DataManager {
 		return line;
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 * @param line
+	 */
 	public static void appendToFile(String file, String line) {
 		TaggedManager.appendToFile(file, "\n" + line, StandardOpenOption.APPEND);
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 * @param line
+	 * @param limit
+	 */
 	public static void writeDynamic(String file, String line, int limit) {
 		List<String> lines = TaggedManager.readLines(file);
 		lines.add(line);
@@ -103,55 +120,22 @@ public class DataManager {
 		return line;
 	}
 	
-
 	/**
-	 * @deprecated don't get the date of the last line, witch is important
-	 * @param index
-	 * @param filters
+	 * 
 	 * @return
 	 */
-	public static String readLineByIndex(Integer index, String... filters) {
-		StringBuilder builder = new StringBuilder();
-		String line = "";
-		
-		try {
-			List<String> lines = Files.readAllLines(getDataFile("data.csv"));
-			
-			if(index != null) 
-				line = lines.get(index);
-			else 
-				line = lines.get(lines.size() - 1);
-			
-			if(filters.length != 0) {
-				String[] lineSplited = line.split(";");
-				List<String> parts = new ArrayList<>();
-
-				for (String part : lineSplited) {
-					for (String filter : filters) {
-						if(part.contains(filter)) {
-							parts.add(part);
-						}
-					}
-				}
-				
-				builder.append(String.join(" - ", parts));
-			}
-			
-		} catch (FileNotFoundException e) {
-			builder.append(e.getMessage());
-		} catch (IOException e) {
-			builder.append(e.getMessage());
-		}
-		
-		return builder.toString();
-	}
-	
 	public static Integer getSize() {
 		int size = TaggedManager.readLines(DynamicFile).size();
 		
 		return size;
 	}
 	
+	/**
+	 * 
+	 * @param line
+	 * @param filter
+	 * @return
+	 */
 	public static String splitFilter(String line, String filter) {
 		String text = filter + " not found";
 		int length = filter.length();
@@ -165,6 +149,12 @@ public class DataManager {
 		return text;
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 * @throws FileNotFoundException
+	 */
 	public static Path getDataFile(String file) throws FileNotFoundException {
 		Path filePath = null;
 		

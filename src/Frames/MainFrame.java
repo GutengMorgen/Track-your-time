@@ -15,8 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -28,8 +31,15 @@ import src.Data.TaggedManager;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
@@ -45,7 +55,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JComboBox<MyItems> comboTags;
 	private JTextArea txtTemplate;
 	private JComboBox<String> comboTime;
-	private JButton btnRefresh;
 	private JTextArea txtHistorial;
 	private JLabel lblPopupStatus;
 	private JLabel lblTimeStatus;
@@ -57,6 +66,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnReleased;
 	private JComboBox<String> comboOperations;
 	private static String CREATE = "Create", UPDATE = "Update", DELETE = "Delete";
+	private JButton btnRefresh;
+	private JLabel lblHistory;
 
 	/**
 	 * Launch the application.
@@ -110,31 +121,44 @@ public class MainFrame extends JFrame implements ActionListener {
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel home = new JPanel();
+		home.setBackground(new Color(253, 253, 255));
 		tabbedPane.addTab("Home", null, home, null);
 		tabbedPane.setEnabledAt(0, true);
 		home.setLayout(null);
 
 		btnStartPeriod = new JButton("Start");
 		btnStartPeriod.setBounds(110, 56, 90, 35);
+		btnStartPeriod.setFont(new Font("Lucida Console", Font.PLAIN, 17));
+		btnStartPeriod.setForeground(new Color(248, 248, 241));
+		btnStartPeriod.setBackground(new Color(26, 18, 11));
 		home.add(btnStartPeriod);
 		btnStartPeriod.addActionListener(this);
 		
-		btnStart = new JButton("Start now");
+		btnStart = new JButton("Now");
 		btnStart.setMargin(new Insets(2, 7, 2, 7));
 		btnStart.setBounds(10, 56, 90, 35);
+		btnStart.setFont(new Font("Lucida Console", Font.PLAIN, 17));
+		btnStart.setForeground(new Color(248, 248, 241));
+		btnStart.setBackground(new Color(26, 18, 11));
 		home.add(btnStart);
 		btnStart.addActionListener(this);
 		
 		btnStop = new JButton("Stop");
 		btnStop.setBounds(10, 8, 90, 35);
+		btnStop.setFont(new Font("Lucida Console", Font.PLAIN, 17));
+		btnStop.setForeground(new Color(248, 248, 241));
+		btnStop.setBackground(new Color(26, 18, 11));
 		home.add(btnStop);
 		btnStop.addActionListener(this);
 		
 		JScrollPane scrollPaneHistory = new JScrollPane();
-		scrollPaneHistory.setBounds(10, 110, 516, 437);
+		scrollPaneHistory.setBorder(null);
+		scrollPaneHistory.setBounds(11, 110, 516, 437);
 		home.add(scrollPaneHistory);
 		
 		txtHistorial = new JTextArea("The history data will be print here.");
+		txtHistorial.setBackground(new Color(235, 235, 235));
+		txtHistorial.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(6, 6, 6, 6)));
 		txtHistorial.setFont(new Font("Verdana", Font.PLAIN, 11));
 		txtHistorial.setAutoscrolls(false);
 		scrollPaneHistory.setViewportView(txtHistorial);
@@ -144,41 +168,46 @@ public class MainFrame extends JFrame implements ActionListener {
 		txtHistorial.setEditable(false);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(253, 253, 253));
+		panel.setEnabled(false);
+		panel.setDoubleBuffered(false);
+		panel.setFocusable(false);
+		panel.setFocusTraversalKeysEnabled(false);
 		scrollPaneHistory.setColumnHeaderView(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] {516};
-		gbl_panel.rowHeights = new int[] {40, 0};
-		gbl_panel.columnWeights = new double[]{0.0};
+		gbl_panel.columnWidths = new int[] {445, 40};
+		gbl_panel.rowHeights = new int[] {35, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0};
 		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JPanel panel_1 = new JPanel();
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 0;
-		panel.add(panel_1, gbc_panel_1);
-		panel_1.setLayout(null);
+		lblHistory = new JLabel("History");
+		lblHistory.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblHistory.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHistory.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		GridBagConstraints gbc_lblHistory = new GridBagConstraints();
+		gbc_lblHistory.anchor = GridBagConstraints.WEST;
+		gbc_lblHistory.insets = new Insets(0, 0, 0, 5);
+		gbc_lblHistory.gridx = 0;
+		gbc_lblHistory.gridy = 0;
+		panel.add(lblHistory, gbc_lblHistory);
 		
 		btnRefresh = new JButton("Refresh");
 		btnRefresh.setMargin(new Insets(2, 7, 2, 7));
-		btnRefresh.setFont(new Font("Arial", Font.PLAIN, 10));
-		btnRefresh.setBounds(432, 9, 64, 21);
+		btnRefresh.setFont(new Font("Arial", Font.BOLD, 11));
+		btnRefresh.setForeground(new Color(248, 248, 241));
+		btnRefresh.setBackground(new Color(26, 18, 11));
+		GridBagConstraints gbc_btnRefresh = new GridBagConstraints();
+		gbc_btnRefresh.gridx = 1;
+		gbc_btnRefresh.gridy = 0;
+		panel.add(btnRefresh, gbc_btnRefresh);
 		btnRefresh.addActionListener(this);
-		panel_1.add(btnRefresh);
-		
-		JLabel lblHistory = new JLabel("History");
-		lblHistory.setBounds(10, 7, 481, 25);
-		panel_1.add(lblHistory);
-		lblHistory.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHistory.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblHistory.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		
 		lblPopupStatus = new JLabel("Popup is turn off");
 		lblPopupStatus.setFont(new Font("Verdana", Font.PLAIN, 12));
 		lblPopupStatus.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblPopupStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPopupStatus.setBounds(194, 10, 150, 18);
+		lblPopupStatus.setBounds(209, 10, 120, 18);
 		home.add(lblPopupStatus);
 		
 		lblTimeStatus = new JLabel();
@@ -196,9 +225,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		home.add(lblSetDisplay);
 		
 		comboTime = new JComboBox<String>();
+		comboTime.setBorder(null);
 		comboTime.setModel(new DefaultComboBoxModel<String>(new String[] {"15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "45 min", "50 min", "55 min", "60 min"}));
-		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 13));
-		comboTime.setBounds(336, 56, 190, 35);
+		comboTime.setFont(new Font("Lucida Console", Font.PLAIN, 15));
+		comboTime.setForeground(new Color(248, 248, 241));
+		comboTime.setBackground(new Color(26, 18, 11));
+		comboTime.setBounds(337, 56, 190, 35);
 		home.add(comboTime);
 		
 		JPanel dayReport = new JPanel();
@@ -212,6 +244,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		tabbedPane.addTab("Month Report", null, monthReport, null);
 		
 		settings = new JPanel();
+		settings.setBackground(new Color(253, 253, 253));
 		tabbedPane.addTab("Settings", null, settings, null);
 		tabbedPane.setEnabledAt(4, true);
 		settings.setLayout(null);
@@ -278,43 +311,50 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		JLabel lblCustomTags = new JLabel("Custom Tags");
 		lblCustomTags.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblCustomTags.setBounds(10, 191, 109, 24);
+		lblCustomTags.setBounds(10, 183, 109, 24);
 		settings.add(lblCustomTags);
 		
 		JScrollPane scrollPaneTemplate = new JScrollPane();
-		scrollPaneTemplate.setBounds(20, 345, 492, 103);
+		scrollPaneTemplate.setBorder(null);
+		scrollPaneTemplate.setBounds(23, 345, 492, 118);
 		settings.add(scrollPaneTemplate);
 		
 		txtTemplate = new JTextArea();
+		txtTemplate.setBackground(new Color(235, 235, 235));
+		txtTemplate.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(6, 6, 6, 6)));
+		txtTemplate.setFont(new Font("Verdana", Font.PLAIN, 13));
 		scrollPaneTemplate.setViewportView(txtTemplate);
 		
 		lblResult = new JLabel();
-		lblResult.setText("34234");
 		lblResult.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblResult.setBounds(169, 494, 185, 22);
+		lblResult.setBounds(169, 525, 200, 22);
 		settings.add(lblResult);
 		
 		comboOperations = new JComboBox<String>();
 		comboOperations.setModel(new DefaultComboBoxModel<String>(new String[] {CREATE, UPDATE, DELETE}));
-		comboOperations.setBounds(205, 226, 80, 31);
-		comboOperations.setSelectedIndex(0);
+		comboOperations.setBounds(205, 218, 80, 31);
+		comboOperations.setForeground(new Color(248, 248, 241));
+		comboOperations.setBackground(new Color(26, 18, 11));
 		settings.add(comboOperations);
 		comboOperations.addActionListener(this);
 		
 		btnReleased = new JButton("Released");
-		btnReleased.setBounds(20, 459, 492, 24);
+		btnReleased.setFont(new Font("Lucida Console", Font.PLAIN, 17));
+		btnReleased.setForeground(new Color(248, 248, 241));
+		btnReleased.setBackground(new Color(26, 18, 11));
+		btnReleased.setBounds(23, 474, 492, 40);
 		settings.add(btnReleased);
 		btnReleased.addActionListener(this);
 		
 		JLabel lblSelectOperation = new JLabel("Select Operation:");
 		lblSelectOperation.setFont(new Font("Lucida Console", Font.PLAIN, 15));
-		lblSelectOperation.setBounds(20, 226, 159, 31);
+		lblSelectOperation.setBounds(20, 218, 159, 31);
 		settings.add(lblSelectOperation);
 		
 		JLabel lblCustomTag = new JLabel("New Tag Name");
-		lblCustomTag.setBounds(20, 268, 97, 14);
+		lblCustomTag.setBounds(20, 260, 97, 14);
 		settings.add(lblCustomTag);
 		
 		JLabel lblCustomTemplate = new JLabel("New Template");
@@ -322,15 +362,23 @@ public class MainFrame extends JFrame implements ActionListener {
 		settings.add(lblCustomTemplate);
 		
 		textFieldTag = new JTextField();
-		textFieldTag.setBounds(20, 289, 149, 20);
+		textFieldTag.setBackground(new Color(235, 235, 235));
+		textFieldTag.setBorder(new CompoundBorder(new LineBorder(new Color(187, 187, 187)), new EmptyBorder(0, 4, 0, 4)));
+		textFieldTag.setFont(new Font("Verdana", Font.PLAIN, 12));
+		textFieldTag.setBounds(20, 281, 175, 25);
 		settings.add(textFieldTag);
 		textFieldTag.setColumns(10);
 		
 		comboTags = new JComboBox<MyItems>();
-		comboTags.setBounds(293, 287, 219, 24);
+		comboTags.setBounds(296, 281, 219, 25);
+		comboTags.setForeground(new Color(248, 248, 241));
+		comboTags.setBackground(new Color(26, 18, 11));
 		settings.add(comboTags);
 		comboTags.addActionListener(this);
 		myItems.addItems(comboTags);
+		
+		comboOperations.setSelectedIndex(0);
+		
 		Singleton.getInstance().setFrame(this);
 	}
 	

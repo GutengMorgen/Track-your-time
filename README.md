@@ -47,6 +47,7 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 - [x] en MainFrame/home crear dos botones: 1. para ejecutar el popup inmediatamente y 2. para ejecutar el popup segun el tiempo establecido en el `comboTime`
 - [ ] poner los ActionListener de los botones en una nueva clase
 - [ ] agregar una opcion para poder cambiar la posicion de los tags
+- [ ] crear una alerta general para manejar las excepciones
 
 - [-] refactorizar DataManager
 - [x] refactorizar DateHandler

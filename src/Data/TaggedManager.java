@@ -15,18 +15,26 @@ public class TaggedManager {
 	 * @param line
 	 */
 	public static void createLine(String line) {
-//		writeIntoFile(TEMPLATE, "\n" + newLine, StandardOpenOption.APPEND);
 		List<String> lines = readLines(TemplateFile);
 		lines.add(line);
 		writeToFile(TemplateFile, lines);
 	}
 	
+	/**
+	 * 
+	 * @param index
+	 * @param line
+	 */
 	public static void updateLine(int index, String line) {
 		List<String> lines = readLines(TemplateFile);
 		lines.set(index, line);
 		writeToFile(TemplateFile, lines);
 	}
 	
+	/**
+	 * 
+	 * @param index
+	 */
 	public static void deleteLine(int index) {
 		List<String> lines = readLines(TemplateFile);
 		lines.remove(index);
