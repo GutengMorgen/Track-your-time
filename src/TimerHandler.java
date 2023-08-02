@@ -21,8 +21,7 @@ public class TimerHandler {
 	}
 	
 	public void setPeriod(int periodMins) {
-//		TODO: this.period = periodMins * 60;
-		this.period = periodMins;
+		this.period = periodMins * 60;
 	}
 	
 	public void setLabel(JLabel out) {

@@ -1,8 +1,7 @@
-package src;
+package src.Data;
 
 import java.util.List;
 import javax.swing.JComboBox;
-import src.Data.TaggedManager;
 
 public class MyItems {
 	private String tag;
@@ -17,27 +16,28 @@ public class MyItems {
 	}
 
 	public MyItems() {
-		
+
 	}
-	
+
 	private MyItems(String tag, String template) {
 		this.tag = tag;
 		this.template = template;
 	}
-	
+
 	/**
 	 * Set every line of the file Templates.csv as MyItems in a comboBox
+	 * 
 	 * @param comboBox to set the MyItems as Items
 	 */
 	public void addItems(JComboBox<MyItems> comboBox) {
 		List<String> lines = TaggedManager.readLines("Templates.csv");
-		
+
 		for (String line : lines) {
 			String[] filter = line.split(";");
 			comboBox.addItem(new MyItems(filter[0], filter[1]));
 		}
 	}
-	
+
 	/**
 	 * return the tag of MyItems
 	 */
