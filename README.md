@@ -34,10 +34,10 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 - [x] dar funcionalidad al boton `Stop`
 - [x] actualizar los items del combotag cuando se presione el boton `btnSetTags`
 - [x] actualizar el texto del `lblResult` cuando se presione el boton `btnSetTags` o `btnSetTemplate`
-- [ ] hacer que en el `txtTags` se puedan crear/eliminar tags 
+- [x] hacer que en el `txtTags` se puedan crear/eliminar tags 
 - [ ] hacer los shortcuts editables
 - [ ] hacer que el mainframe aparezca cuando se windows inicie
-- [ ] cambiar el modo de cerrar del mainFrame por el de poner en icono de notificacion
+- [x] cambiar el modo de cerrar del mainFrame por el de poner en icono de notificacion
 - [ ] poner una alerta(o algo parecido) cuando se intenta navegar por el data y existe texto en el `txtDescription`
 - [x] refactorizar el timer o como se llama al popup 
 	- hacer que el timer sea un countdown y que sea manejado por el mainframe
@@ -58,14 +58,12 @@ pero en realidad acabo de darme cuenta que es mejor que luego de guardar la desc
 - [x] refactorizar TimerHandler
 
 
-nueva gui para tags
-- un boton para crear tags
+- [x] nueva gui para tags
+- [x] un boton para crear tags
  	- contendra un textfield para poner el nombre del tag, luego lo guardara el el file y actualizara el comoTags
-- un boton para actualizar tags
+- [x] un boton para actualizar tags
  	- contendra el comboTags y un textField, se seleccionara el item del comboTags y luego se actualizara con el texto del textField
  	- incluir un textArea que cuando se seleccione un item se actualizara el textArea con el template del item
  	- cuando se presione el boton se actualizara el tag con el texto del textField y se actualizara el template con el texto del textArea(iterar las lineas para actualizarlo)
-- un boton para eliminar tags
+- [x] un boton para eliminar tags
 	- contendra el comboTags y cuando se seleccione un item entonces se eliminara ese item del file Template.csv
-- un boton para obtener tags 
-

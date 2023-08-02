@@ -1,13 +1,13 @@
 package src.Frames;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -15,22 +15,20 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
-
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-
 import src.MyItems;
 import src.Singleton;
 import src.TimerHandler;
 import src.Data.DataManager;
 import src.Data.TaggedManager;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.SystemTray;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
@@ -81,7 +79,26 @@ public class MainFrame extends JFrame implements ActionListener {
 	 */
 	public MainFrame() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("stuff/icon.jpg"));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		MainFrame mainFrame = this;
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	if(SystemTray.isSupported())
+            		TrayHandler.minimizeToTray(mainFrame);
+            	else
+            		mainFrame.dispose();
+            }
+			@Override
+			public void windowIconified(WindowEvent e) {
+				if(SystemTray.isSupported())
+            		TrayHandler.minimizeToTray(mainFrame);
+            	else
+            		mainFrame.dispose();
+			}
+        });
+		
 		setBackground(new Color(0, 0, 0));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setResizable(false);
