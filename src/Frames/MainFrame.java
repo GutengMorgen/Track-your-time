@@ -49,7 +49,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JComboBox<MyItems> comboTags;
 	private JTextArea txtTemplate;
 	private JComboBox<String> comboTime;
-	private JButton btnSetTags;
 	private JButton btnRefresh;
 	private JTextArea txtHistorial;
 	private JLabel lblPopupStatus;
@@ -282,10 +281,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		lblResult.setBounds(169, 494, 185, 22);
 		settings.add(lblResult);
 		
-		btnSetTags = new JButton("Set tags");
-		btnSetTags.setBounds(387, 524, 125, 23);
-		settings.add(btnSetTags);
-		
 		comboOperations = new JComboBox<String>();
 		comboOperations.setModel(new DefaultComboBoxModel<String>(new String[] {CREATE, UPDATE, DELETE}));
 		comboOperations.setBounds(205, 226, 80, 31);
@@ -320,10 +315,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		comboTags.setBounds(293, 287, 219, 24);
 		settings.add(comboTags);
 		comboTags.addActionListener(this);
-		myItems.setItems(comboTags);
-		
-		
-		btnSetTags.addActionListener(this);
+		myItems.addItems(comboTags);
 		Singleton.getInstance().setFrame(this);
 	}
 	
@@ -349,12 +341,6 @@ public class MainFrame extends JFrame implements ActionListener {
 				textFieldTag.setText(myItems.toString());
 				txtTemplate.setText(myItems.getTemplate().replace("\\n", "\n"));
 			}
-		}
-		else if(e.getSource() == btnSetTags) {
-			DataManager.saveTags(getArrayTags());
-			comboTags.removeAllItems();
-			myItems.setItems(comboTags);
-			TimerHandler.temporalText(1500, lblResult, "Tags stored in the file");
 		}
 		else if(e.getSource() == btnRefresh) {
 			txtHistorial.setText(DataManager.readHistory());
@@ -399,7 +385,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			String tag = textFieldTag.getText();
 			String template = txtTemplate.getText().replace("\n", "\\n");
 			if(!tag.isEmpty() && !template.isEmpty()) {
-				TaggedManager.createLine(tag, template);
+				String newLine = String.join(";", tag, template);
+				TaggedManager.createLine(newLine);
 				TimerHandler.temporalText(1500, lblResult, "Tags stored in the file");
 			}
 			
@@ -408,7 +395,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			String tag = textFieldTag.getText();
 			String template = txtTemplate.getText().replace("\n", "\\n");
 			if(!tag.isEmpty() && !template.isEmpty()) {
-				TaggedManager.updateLine(tag, template, index);
+				String newLine = String.join(";", tag, template);
+				TaggedManager.updateLine(index, newLine);
 				TimerHandler.temporalText(1500, lblResult, "Updated Tag");
 			}
 			
@@ -417,7 +405,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			TaggedManager.deleteLine(index);
 			//TODO: make a method to update all comboBox with the new items
 			comboTags.removeAllItems();
-			myItems.setItems(comboTags);
+			myItems.addItems(comboTags);
 			
 			TimerHandler.temporalText(1500, lblResult, "Tag removed from the file");
 		}
@@ -433,11 +421,5 @@ public class MainFrame extends JFrame implements ActionListener {
 		String itemString = comboTime.getSelectedItem().toString();
 		String splited = itemString.split(" ")[0]; //return the number of the item
 		return Integer.parseInt(splited);
-	}
-	
-	public String[] getArrayTags() {
-//		String[] txtSplited = txtTags.getText().split("\n");
-		String[] txtSplited = "fwef".split("\n");
-		return txtSplited;
 	}
 }

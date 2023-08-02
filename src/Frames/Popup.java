@@ -105,7 +105,7 @@ public class Popup extends JFrame implements ActionListener {
 		comboTags.setToolTipText("Select any tag");
 		comboTags.setCursor(new Cursor(Cursor.HAND_CURSOR));
 //		comboTags.setModel(new DefaultComboBoxModel<String>(new String[] {"working", "studing", "relax", "working in own project", "offline"}));
-		myItems.setItems(comboTags);
+		myItems.addItems(comboTags);
 		contentPane.add(comboTags);
 		
 		btnSave = new JButton("SAVE (ctrl + s)");
@@ -207,9 +207,13 @@ public class Popup extends JFrame implements ActionListener {
 	 * on Testing
 	 */
 	public void SaveClose() {
-//		String getTextDescription = txtDescription.getText();
-//		String getTagString = comboTags.getSelectedItem().toString();
+		String getTextDescription = txtDescription.getText();
+		String getTagString = comboTags.getSelectedItem().toString();
 //		DataManager.writeData(getTagString, getTextDescription);
+		
+		String newLine = DataManager.lineFormat(getTagString, getTextDescription);
+		DataManager.appendToFile(DataManager.HistoryFile, newLine);
+		DataManager.writeDynamic(DataManager.DataFile, newLine, 5);
 		
 		//close the Pop up frame
 		//TODO: try using HIDE_ON_CLOSE

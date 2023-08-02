@@ -11,14 +11,11 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-
 import src.DateHandler;
-import src.MyItems;
 
 public class DataManager {
+	public static String DataFile = "data.csv";
+	public static String HistoryFile = "history.csv";
 	private static String lastDate = "";
 
 	/**
@@ -64,8 +61,40 @@ public class DataManager {
 		}
 	}
 
+	
+	public static String lineFormat(String tag, String description) {
+		LocalDateTime now = LocalDateTime.now();
+		String date = DateHandler.getDate(now);
+		String time = DateHandler.getTime(now);
+		String format = "DATE: %s;TIME: %s;TAG: %s;DESCRIPTION: %s";
+		String line = String.format(format, date, time, tag, description.replace("\n", "\\n"));
+		
+		return line;
+	}
+	
+	public static void appendToFile(String file, String line) {
+		TaggedManager.writeToFile(file, "\n" + line, StandardOpenOption.APPEND);
+	}
+	
+	public static void writeDynamic(String file, String line, int limit) {
+		List<String> lines = TaggedManager.readLines(file);
+		lines.add(line);
+		
+		if (lines.size() > limit) 
+			lines = lines.subList(lines.size() - limit, lines.size());
+		
+		TaggedManager.writeToFile(file, lines);
+	}
+	
+	public static void createLine(String file, String line) {
+		List<String> lines = TaggedManager.readLines(file);
+		lines.add(line);
+		TaggedManager.writeToFile(file, lines);
+	}
+	
 	/**
 	 * put this method in TimerHandler
+	 * i have to instance DataManager and get lastDate to do it
 	 * @return
 	 */
 	public static String readLastDate() {
@@ -85,7 +114,10 @@ public class DataManager {
 
 	
 	/**
-	 * on Testing, i think is better to make a method to read lines by index
+	 * get a line of a specific index of the file data.csv
+	 * @param index if is null then will return the last line
+	 * @param useFilter if is true will return a string with only tag and description
+	 * @return 
 	 */
 	public static String readLineByIndex(Integer index, Boolean useFilter) {
 		String line = "";
@@ -207,108 +239,6 @@ public class DataManager {
 	}
 	
 	/**
-	 * read all lines with a filter in Templates.csv
-	 * @param dataType can be DataManager.TAG or DataManager.TEMPLATE
-	 * @return a String with all lines read from Templates.csv
-	 */
-	public static String readTemplates(Filters filter) {
-		StringBuilder tagBuilder = new StringBuilder();
-
-		//0 = tags; 1 = templates
-		String lineData = "";
-		try {
-			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
-			
-			for (String line : lines) {
-				if (filter == Filters.TAG) {
-					lineData = line.split(";")[0];
-					
-				} else if(filter == Filters.TEMPLATE) {
-					lineData = line.split(";")[1];
-				}
-				
-				//join all individual line in a string builder
-				tagBuilder.append(lineData).append("\n");
-			}
-			
-		} catch (FileNotFoundException e) {
-			tagBuilder.append(e.getMessage());
-		} catch (IOException e) {
-			tagBuilder.append(e.getMessage());
-		}
-		
-		//trim() to delete the last "\n" of the tagBuilder
-		return tagBuilder.toString().trim();
-	}
-	
-	/**
-	 * return a list of lines with a filter or data type from Templates.csv
-	 * @param filter can be DataManager.TAG or DataManager.TEMPLATE
-	 * @deprecated maybe this method will be delete
-	 */
-	public static List<String> linesTemplate(Filters filter){
-		
-		//0 = tags; 1 = templates
-		List<String> lineData = new ArrayList<String>();
-		try {
-			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
-			
-			for (String line : lines) {
-				if (filter == Filters.TAG) {
-					lineData.add(line.split(";")[0]);
-					
-				} else if(filter == Filters.TEMPLATE) {
-					lineData.add(line.split(";")[1]);
-				}
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return lineData;
-	}
-	
-	/**
-	 * return a list of lines without filters from Templates.csv
-	 */
-	public static List<String> linesTemplate(){
-		List<String> lineData = new ArrayList<String>();
-		try {
-			List<String> lines = Files.readAllLines(getDataPath("Templates.csv"));
-			
-			for (String line : lines) {
-				lineData.add(line);
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return lineData;
-	}
-	
-	public static void writeTemplate(List<String> newTemplates) {
-		try {
-			Files.write(getDataPath("Templates.csv"), newTemplates, StandardCharsets.UTF_8);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-	
-	public static void writeTags(List<String> newTags) {
-		try {
-			Files.write(getDataPath("Templates.csv"), newTags, StandardCharsets.UTF_8);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-	
-	/**
 	 * creo que seria mejor comparar el texto del txtHistorial con las lineas y falta alguna recien modificarlo
 	 */
 	public static String readHistory() {
@@ -325,57 +255,5 @@ public class DataManager {
 		}
 		
 		return txtBuilder.toString().trim();
-	}
-	
-	/**
-	 * save tags in Template.csv
-	 * @param tagArray
-	 */
-	public static void saveTags(String[] tagArray) {
-	    List<String> lines = DataManager.linesTemplate();
-	    String[] tags = tagArray;
-
-	    for (String tag : tags) {
-	        boolean tagExists = false;
-
-	        for (String line : lines) {
-	            String[] split = line.split(";");
-	            if (split[0].equals(tag)) {
-	                tagExists = true;
-	                break;
-	            }
-	        }
-
-	        if (!tagExists)
-	            lines.add(String.join(";", tag, "default template"));
-	    }
-
-	    DataManager.writeTags(lines);
-	}
-	
-	/**
-	 * save template of the current tag in Template.csv
-	 * @param comboTags
-	 * @param txtTemplate
-	 */
-	public static void saveTemplate(JComboBox<MyItems> comboTags, JTextArea txtTemplate) {
-		MyItems currentTag = (MyItems) comboTags.getSelectedItem();
-		String template = txtTemplate.getText().replace("\n", "\\n");
-
-		//TODO: to not create the reset button, although i think i have to
-		currentTag.setTemplate(template);
-		
-		List<String> lines = DataManager.linesTemplate();
-		
-		for (int i = 0; i < lines.size(); i++) {
-			String line = lines.get(i);
-			String[] split = line.split(";");
-			
-			if(split[0].equals(currentTag.toString())) {
-				lines.remove(i);
-				lines.add(i, String.join(";", split[0], template));
-				DataManager.writeTemplate(lines);
-			}
-		}
 	}
 }

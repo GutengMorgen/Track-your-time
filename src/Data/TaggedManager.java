@@ -17,21 +17,17 @@ public class TaggedManager {
 	 * @param tag
 	 * @param template
 	 */
-	public static void createLine(String tag, String template) {
-		String newLine = String.join(";", tag, template);
-		
+	public static void createLine(String line) {
 		//maybe first read the file and then add the newLine into a new list and then write the list
 //		writeIntoFile(TEMPLATE, "\n" + newLine, StandardOpenOption.APPEND);
 		List<String> lines = readLines(TemplateFile);
-		lines.add(newLine);
+		lines.add(line);
 		writeToFile(TemplateFile, lines);
 	}
 	
-	public static void updateLine(String tag, String template, int index) {
-		String newLine = String.join(";", tag, template);
-		
+	public static void updateLine(int index, String line) {
 		List<String> lines = readLines(TemplateFile);
-		lines.set(index, newLine);
+		lines.set(index, line);
 		writeToFile(TemplateFile, lines);
 	}
 	
@@ -46,7 +42,7 @@ public class TaggedManager {
 	 * @param file the file that will be write. the file have to be in Data directory
 	 * @param lines a list of all line to write
 	 */
-	private static void writeToFile(String file, List<String> lines) {
+	public static void writeToFile(String file, List<String> lines) {
 		try {
 			Files.write(DataManager.getDataPath(file), lines);
 		} catch (FileNotFoundException e) {
@@ -59,12 +55,12 @@ public class TaggedManager {
 	}
 	
 	/**
-	 * @deprecated
+	 * 
 	 * @param file
 	 * @param line
 	 * @param Option
 	 */
-	static void writeIntoFile(String file, String line, StandardOpenOption Option) {
+	public static void writeToFile(String file, String line, StandardOpenOption Option) {
 		try {
 			Files.writeString(DataManager.getDataPath(file), line, Option);
 		} catch (FileNotFoundException e) {
@@ -77,11 +73,11 @@ public class TaggedManager {
 	}
 	
 	/**
-	 * read all lines from a file
+	 * return a list of lines without filters from a specific file in Data directory
 	 * @param file the file to read all lines
 	 * @return a list of all lines
 	 */
-	private static List<String> readLines(String file){
+	public static List<String> readLines(String file){
 		List<String> lines = new ArrayList<String>();
 		
 		try {
