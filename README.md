@@ -1,20 +1,44 @@
-# Track your time
-Una simple app de escritorio que aparecera cada cierto tiempo para que tu pongas una breve descripcion de la mierda que hiciste en esa hora, tambien incluira tags como studing, working, relax, offline, etc...
+# Track your time/Time Dial
+Una simple app de escritorio que aparecerá cada cierto tiempo para que puedas poner una breve descripción de lo que hiciste en un tiempo preestablecido. También incluirá etiquetas como studying, working, relax, offline, etc.
+
+## Nota importante
+Esta aplicación aún está en desarrollo ya que:
+- Aún falta implementar los gráficos, que son **muy importantes**.
+- Aún faltan muchas cosas por implementar que creo que serían útiles.
+- Falta limpiar/refactorizar el código con buenas prácticas.
+- Falta cambiar la forma en la que se guardan las descripciones, ya que guardarlas en un archivo .csv puede no ser lo mejor a largo plazo. *Pienso cambiarlo usando SQLite.*
+
+Pero aun así, la cosa más importante es que el Timer funcione y que guardar las descripciones funcione, así que la app se puede usar.
+
+## Usar la app
+Para usar la aplicación, sigue estos pasos:
+1. Clona este repositorio en tu PC.
+2. Abre el archivo **Time Dial.jar**.
+3. Pulsa el botón **Now** para iniciar instantáneamente el **Popup**, o pulsa el botón Start para iniciar el **Popup** cuando el timer llegue a cero.
+4. Cuando el timer llegue a cero, aparecerá una ventana, que es el **Popup**, ahí puedes poner una descripción y seleccionar una etiqueta.
+5. Luego, puedes cerrarlo haciendo clic en el botón **Save** o con el comando `ctrl + s`.
+6. Espera a que el timer llegue a cero nuevamente para que aparezca el **Popup**.
 
 ## About the Descriptions
-Las descripciones se guardaran en dos archivos .csv:
-- data: En este archivo solo se guardaran las 5 ultimas descripciones por 2 motivos:
-  1. para acceder a esas ultimas descripciones y
-  2. para que sea mas rapido leer los datos.
-- history: En este archivo se guardaran todas las descripciones que se utilizaran para hacer los graficos y estadisticas.
+Las descripciones se guardarán en dos archivos .csv:
+- data: En este archivo solo se guardarán las últimas 5 descripciones por 2 motivos:
+  1. Para acceder a esas últimas descripciones y
+  2. Para que sea más rápido leer los datos.
+- history: En este archivo se guardarán todas las descripciones que se utilizarán para hacer los gráficos y estadísticas.
 
 ## About the Tags
 Los tags son tags para clasificar las descripciones, no hay nada mas que agregar
 
 ## About Shortcuts
-luego de usar la app por una semana, he descubirto que es jodidamente/estresantemente/irritantemente/aburridamente/mierdosamente tener que poner manualmente los tags, se podria arreglar facilmente poniendo un shortcut para seleccionar los tags(ctrl + 1 para seleccionar el primer tag), 
+- para navergar por los tags:
+  - `ctrl + left` para ir al siguiente tag
+  - `ctrl + right` para ir al tag previo
+- para navegar por las descripciones de data.csv:
+  - `ctrl + up` para ir a la siguiente descripcion
+  - `ctrl + down` para ir a la descripcion previa
 
-pero en realidad acabo de darme cuenta que es mejor que luego de guardar la descripcion(presionando el boton o con ctrl + s) aparezca una ventana con los tags y luego presionar los `teclados numericos` para guardar y cerrar el popup o seleccionar el tag con las `flechas up and down` y con las `flecha right` guardar y cerrar el popup
+# Contribuciones
+¡Sí, por favor! Solo mira las cosas que faltan/quiero implementar. Además, estoy considerando crear un nuevo repositorio para hacer este proyecto más formal y organizar todo de una mejor manera utilizando Maven o Gradle.
 
 ## new Design
 - [ ] agregar una nueva funcion para que aparezca el popup con un shortcut
